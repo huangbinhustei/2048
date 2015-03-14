@@ -1,0 +1,18 @@
+{
+	"document_class": "Hello2048",
+	"modules": [
+		{
+			"name": "core"
+		},
+		{
+			"name": "res"
+		},
+		{
+			"name": "gui"
+		}
+	],
+	"native": {
+		"path_ignore": []
+	},
+	"egret_version": "1.6.0"
+}

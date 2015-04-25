@@ -24,12 +24,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var egret;
 (function (egret) {
     var gui;
@@ -78,7 +72,8 @@ var egret;
                  */
                 this.explicitMouseEnabled = true;
             }
-            Object.defineProperty(SkinnableComponent.prototype, "skinName", {
+            var __egretProto__ = SkinnableComponent.prototype;
+            Object.defineProperty(__egretProto__, "skinName", {
                 /**
                  * 皮肤标识符。可以为Class,String,或DisplayObject实例等任意类型，具体规则由项目注入的素材适配器决定，
                  * 适配器根据此属性值解析获取对应的显示对象，并赋值给skin属性。
@@ -103,7 +98,7 @@ var egret;
              * 创建该容器的子元素对象
              * @method egret.gui.SkinnableComponent#createChildren
              */
-            SkinnableComponent.prototype.createChildren = function () {
+            __egretProto__.createChildren = function () {
                 _super.prototype.createChildren.call(this);
                 this.parseSkinName();
                 this._createChildrenCalled = true;
@@ -111,7 +106,7 @@ var egret;
             /**
              * 解析skinName
              */
-            SkinnableComponent.prototype.parseSkinName = function () {
+            __egretProto__.parseSkinName = function () {
                 var adapter = SkinnableComponent.skinAdapter;
                 if (!adapter) {
                     adapter = this.getSkinAdapter();
@@ -129,7 +124,7 @@ var egret;
             /**
              * 获取皮肤适配器
              */
-            SkinnableComponent.prototype.getSkinAdapter = function () {
+            __egretProto__.getSkinAdapter = function () {
                 var adapter;
                 try {
                     adapter = egret.Injector.getInstance("egret.gui.ISkinAdapter");
@@ -140,7 +135,7 @@ var egret;
                 SkinnableComponent.skinAdapter = adapter;
                 return adapter;
             };
-            Object.defineProperty(SkinnableComponent.prototype, "skin", {
+            Object.defineProperty(__egretProto__, "skin", {
                 /**
                  * 皮肤对象实例。
                  * @member egret.gui.SkinnableComponent#skin
@@ -154,7 +149,7 @@ var egret;
             /**
              * 设置皮肤
              */
-            SkinnableComponent.prototype._setSkin = function (skin) {
+            __egretProto__._setSkin = function (skin) {
                 var oldSkin = this._skin;
                 this.detachSkin(oldSkin);
                 if (oldSkin instanceof egret.DisplayObject) {
@@ -177,23 +172,23 @@ var egret;
              * @method egret.gui.SkinnableComponent#attachSkin
              * @param skin {any}
              */
-            SkinnableComponent.prototype.attachSkin = function (skin) {
+            __egretProto__.attachSkin = function (skin) {
+                if (skin && !(skin instanceof egret.DisplayObject))
+                    this.skinLayoutEnabled = true;
+                else
+                    this.skinLayoutEnabled = false;
                 if (skin && "hostComponent" in skin) {
                     var newSkin = skin;
                     newSkin.hostComponent = this;
                     this.findSkinParts();
                 }
-                if (skin && !(skin instanceof egret.DisplayObject))
-                    this.skinLayoutEnabled = true;
-                else
-                    this.skinLayoutEnabled = false;
             };
             /**
              * 匹配皮肤和主机组件的公共变量，并完成实例的注入。此方法在附加皮肤时会自动执行一次。
              * 若皮肤中含有延迟实例化的子部件，在子部件实例化完成时需要从外部再次调用此方法,完成注入。
              * @method egret.gui.SkinnableComponent#findSkinParts
              */
-            SkinnableComponent.prototype.findSkinParts = function () {
+            __egretProto__.findSkinParts = function () {
                 var skin = this._skin;
                 if (skin && "skinParts" in skin) {
                     var skinParts = skin.skinParts;
@@ -216,7 +211,7 @@ var egret;
              * @method egret.gui.SkinnableComponent#detachSkin
              * @param skin {any}
              */
-            SkinnableComponent.prototype.detachSkin = function (skin) {
+            __egretProto__.detachSkin = function (skin) {
                 if (skin) {
                     if ("skinParts" in skin) {
                         var skinParts = skin.skinParts;
@@ -240,7 +235,7 @@ var egret;
              * @param partName {string}
              * @param instance {any}
              */
-            SkinnableComponent.prototype.partAdded = function (partName, instance) {
+            __egretProto__.partAdded = function (partName, instance) {
                 gui.SkinPartEvent.dispatchSkinPartEvent(this, gui.SkinPartEvent.PART_ADDED, partName, instance);
             };
             /**
@@ -249,14 +244,14 @@ var egret;
              * @param partName {string}
              * @param instance {any}
              */
-            SkinnableComponent.prototype.partRemoved = function (partName, instance) {
+            __egretProto__.partRemoved = function (partName, instance) {
                 gui.SkinPartEvent.dispatchSkinPartEvent(this, gui.SkinPartEvent.PART_REMOVED, partName, instance);
             };
             /**
              * 标记当前需要重新验证皮肤状态
              * @method egret.gui.SkinnableComponent#invalidateSkinState
              */
-            SkinnableComponent.prototype.invalidateSkinState = function () {
+            __egretProto__.invalidateSkinState = function () {
                 if (this.stateIsDirty)
                     return;
                 this.stateIsDirty = true;
@@ -266,7 +261,7 @@ var egret;
              * 子类覆盖此方法,应用当前的皮肤状态
              * @method egret.gui.SkinnableComponent#validateSkinState
              */
-            SkinnableComponent.prototype.validateSkinState = function () {
+            __egretProto__.validateSkinState = function () {
                 var curState = this.getCurrentSkinState();
                 var skin = this._skin;
                 if (skin && "currentState" in skin) {
@@ -275,7 +270,7 @@ var egret;
                 if (this.hasEventListener("stateChanged"))
                     this.dispatchEventWith("stateChanged");
             };
-            Object.defineProperty(SkinnableComponent.prototype, "autoTouchEnabled", {
+            Object.defineProperty(__egretProto__, "autoTouchEnabled", {
                 /**
                  * 在enabled属性发生改变时是否自动开启或禁用鼠标事件的响应。默认值为true。
                  * @member egret.gui.SkinnableComponent#autoTouchEnabled
@@ -299,7 +294,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(SkinnableComponent.prototype, "touchChildren", {
+            Object.defineProperty(__egretProto__, "touchChildren", {
                 /**
                  * @member egret.gui.SkinnableComponent#touchChildren
                  */
@@ -317,7 +312,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(SkinnableComponent.prototype, "touchEnabled", {
+            Object.defineProperty(__egretProto__, "touchEnabled", {
                 /**
                  * @member egret.gui.SkinnableComponent#touchEnabled
                  */
@@ -335,7 +330,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(SkinnableComponent.prototype, "enabled", {
+            Object.defineProperty(__egretProto__, "enabled", {
                 /**
                  * @member egret.gui.SkinnableComponent#enabled
                  */
@@ -351,7 +346,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            SkinnableComponent.prototype._setEnabled = function (value) {
+            __egretProto__._setEnabled = function (value) {
                 if (this._enabled == value)
                     return;
                 this._enabled = value;
@@ -366,7 +361,7 @@ var egret;
              * @method egret.gui.SkinnableComponent#getCurrentSkinState
              * @returns {string}
              */
-            SkinnableComponent.prototype.getCurrentSkinState = function () {
+            __egretProto__.getCurrentSkinState = function () {
                 return this.enabled ? "normal" : "disabled";
             };
             //========================皮肤视图状态===================end========================
@@ -374,7 +369,7 @@ var egret;
              * 处理对组件设置的属性
              * @method egret.gui.SkinnableComponent#commitProperties
              */
-            SkinnableComponent.prototype.commitProperties = function () {
+            __egretProto__.commitProperties = function () {
                 _super.prototype.commitProperties.call(this);
                 if (this.stateIsDirty) {
                     this.stateIsDirty = false;
@@ -385,7 +380,7 @@ var egret;
              *
              * @private
              */
-            SkinnableComponent.prototype._childXYChanged = function () {
+            __egretProto__._childXYChanged = function () {
                 if (this.skinLayoutEnabled) {
                     this.invalidateSize();
                     this.invalidateDisplayList();
@@ -394,7 +389,7 @@ var egret;
             /**
              * 计算组件的默认大小和（可选）默认最小大小
              */
-            SkinnableComponent.prototype.measure = function () {
+            __egretProto__.measure = function () {
                 _super.prototype.measure.call(this);
                 var skin = this._skin;
                 if (!skin)
@@ -421,7 +416,7 @@ var egret;
              * @param unscaledWidth {number}
              * @param unscaledHeight {number}
              */
-            SkinnableComponent.prototype.updateDisplayList = function (unscaledWidth, unscaledHeight) {
+            __egretProto__.updateDisplayList = function (unscaledWidth, unscaledHeight) {
                 _super.prototype.updateDisplayList.call(this, unscaledWidth, unscaledHeight);
                 var skin = this._skin;
                 if (skin) {
@@ -444,7 +439,7 @@ var egret;
              * @param child {DisplayObject}
              * @returns {DisplayObject}
              */
-            SkinnableComponent.prototype.addChild = function (child) {
+            __egretProto__.addChild = function (child) {
                 throw (new Error(egret.getString(3004, egret.getString(3003))));
             };
             /**
@@ -455,7 +450,7 @@ var egret;
              * @param index {number}
              * @returns {DisplayObject}
              */
-            SkinnableComponent.prototype.addChildAt = function (child, index) {
+            __egretProto__.addChildAt = function (child, index) {
                 throw (new Error(egret.getString(3005, egret.getString(3003))));
             };
             /**
@@ -465,7 +460,7 @@ var egret;
              * @param child {DisplayObject}
              * @returns {DisplayObject}
              */
-            SkinnableComponent.prototype.removeChild = function (child) {
+            __egretProto__.removeChild = function (child) {
                 throw (new Error(egret.getString(3006, egret.getString(3003))));
             };
             /**
@@ -475,7 +470,7 @@ var egret;
              * @param index {number}
              * @returns {DisplayObject}
              */
-            SkinnableComponent.prototype.removeChildAt = function (index) {
+            __egretProto__.removeChildAt = function (index) {
                 throw (new Error(egret.getString(3007, egret.getString(3003))));
             };
             /**
@@ -485,7 +480,7 @@ var egret;
              * @param child {DisplayObject}
              * @param index {number}
              */
-            SkinnableComponent.prototype.setChildIndex = function (child, index) {
+            __egretProto__.setChildIndex = function (child, index) {
                 throw (new Error(egret.getString(3008, egret.getString(3003))));
             };
             /**
@@ -495,7 +490,7 @@ var egret;
              * @param child1 {DisplayObject}
              * @param child2 {DisplayObject}
              */
-            SkinnableComponent.prototype.swapChildren = function (child1, child2) {
+            __egretProto__.swapChildren = function (child1, child2) {
                 throw (new Error(egret.getString(3009, egret.getString(3003))));
             };
             /**
@@ -505,7 +500,7 @@ var egret;
              * @param index1 {number}
              * @param index2 {number}
              */
-            SkinnableComponent.prototype.swapChildrenAt = function (index1, index2) {
+            __egretProto__.swapChildrenAt = function (index1, index2) {
                 throw (new Error(egret.getString(3010, egret.getString(3003))));
             };
             /**

@@ -24,12 +24,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var egret;
 (function (egret) {
     var gui;
@@ -80,11 +74,12 @@ var egret;
                 this._textFlowChanged = false;
                 this._hasNoStyleChild = true;
             }
+            var __egretProto__ = TextBase.prototype;
             /**
              * 检测对样式属性的更改
              * @param styleProp
              */
-            TextBase.prototype.styleChanged = function (styleProp) {
+            __egretProto__.styleChanged = function (styleProp) {
                 if (this.allStyleChanged) {
                     return;
                 }
@@ -120,7 +115,7 @@ var egret;
                 this.invalidateSize();
                 this.invalidateDisplayList();
             };
-            Object.defineProperty(TextBase.prototype, "fontFamily", {
+            Object.defineProperty(__egretProto__, "fontFamily", {
                 /**
                  * 字体名称 。默认值：SimSun
                  * @member egret.gui.TextBase#fontFamily
@@ -138,7 +133,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(TextBase.prototype, "size", {
+            Object.defineProperty(__egretProto__, "size", {
                 /**
                  * 字号大小,默认值30 。
                  * @member egret.gui.TextBase#size
@@ -158,7 +153,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(TextBase.prototype, "focusEnabled", {
+            Object.defineProperty(__egretProto__, "focusEnabled", {
                 get: function () {
                     return this._focusEnabled;
                 },
@@ -172,7 +167,7 @@ var egret;
              * 设置此组件的焦点
              * @inheritDoc
              */
-            TextBase.prototype.setFocus = function () {
+            __egretProto__.setFocus = function () {
                 if (this._focusEnabled == false)
                     return;
                 if (this._textField)
@@ -180,7 +175,7 @@ var egret;
                 //else
                 //	super.setFocus();
             };
-            Object.defineProperty(TextBase.prototype, "bold", {
+            Object.defineProperty(__egretProto__, "bold", {
                 /**
                  * 是否显示为粗体，默认false。
                  * @member egret.gui.TextBase#bold
@@ -198,7 +193,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(TextBase.prototype, "italic", {
+            Object.defineProperty(__egretProto__, "italic", {
                 /**
                  * 是否显示为斜体，默认false。
                  * @member egret.gui.TextBase#italic
@@ -216,7 +211,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(TextBase.prototype, "textAlign", {
+            Object.defineProperty(__egretProto__, "textAlign", {
                 /**
                  * 文字的水平对齐方式 ,请使用HorizontalAlign中定义的常量。
                  * 默认值：HorizontalAlign.LEFT。
@@ -235,7 +230,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(TextBase.prototype, "verticalAlign", {
+            Object.defineProperty(__egretProto__, "verticalAlign", {
                 /**
                  * 文字的垂直对齐方式 ,请使用VerticalAlign中定义的常量。
                  * 默认值：VerticalAlign.TOP。
@@ -254,7 +249,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(TextBase.prototype, "lineSpacing", {
+            Object.defineProperty(__egretProto__, "lineSpacing", {
                 /**
                  * 行间距
                  * @member egret.gui.TextBase#lineSpacing
@@ -268,10 +263,10 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            TextBase.prototype._getLineSpacing = function () {
+            __egretProto__._getLineSpacing = function () {
                 return this._lineSpacing;
             };
-            TextBase.prototype._setLineSpacing = function (value) {
+            __egretProto__._setLineSpacing = function (value) {
                 if (this._lineSpacing == value)
                     return;
                 this._lineSpacing = value;
@@ -280,7 +275,7 @@ var egret;
                 this.invalidateSize();
                 this.invalidateDisplayList();
             };
-            Object.defineProperty(TextBase.prototype, "textColor", {
+            Object.defineProperty(__egretProto__, "textColor", {
                 /**
                  * 文本颜色
                  * @member egret.gui.TextBase#textColor
@@ -298,7 +293,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(TextBase.prototype, "text", {
+            Object.defineProperty(__egretProto__, "text", {
                 /**
                  * 获得文体内容
                  * @member egret.gui.TextBase#text
@@ -320,7 +315,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(TextBase.prototype, "textFlow", {
+            Object.defineProperty(__egretProto__, "textFlow", {
                 get: function () {
                     return this._textFlow;
                 },
@@ -336,7 +331,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(TextBase.prototype, "textHeight", {
+            Object.defineProperty(__egretProto__, "textHeight", {
                 /**
                  * 文本全部显示时的高度（无行间距）
                  */
@@ -346,7 +341,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(TextBase.prototype, "textWidth", {
+            Object.defineProperty(__egretProto__, "textWidth", {
                 /**
                  * 文本全部显示时宽
                  */
@@ -359,7 +354,7 @@ var egret;
             /**
              * 创建组件的子对象
              */
-            TextBase.prototype.createChildren = function () {
+            __egretProto__.createChildren = function () {
                 _super.prototype.createChildren.call(this);
                 if (!this._textField) {
                     this.checkTextField();
@@ -368,7 +363,7 @@ var egret;
             /**
              * 处理对组件设置的属性
              */
-            TextBase.prototype.commitProperties = function () {
+            __egretProto__.commitProperties = function () {
                 _super.prototype.commitProperties.call(this);
                 if (!this._textField) {
                     this.checkTextField();
@@ -431,7 +426,7 @@ var egret;
             /**
              * 检查是否创建了textField对象，没有就创建一个。
              */
-            TextBase.prototype.checkTextField = function () {
+            __egretProto__.checkTextField = function () {
                 if (!this._textField) {
                     this._createTextField();
                     if (this._textChanged) {
@@ -443,7 +438,7 @@ var egret;
                     this.invalidateProperties();
                 }
             };
-            TextBase.prototype._createTextField = function () {
+            __egretProto__._createTextField = function () {
                 this._textField = new egret.TextField;
                 this._textField.fontFamily = this.fontFamily;
                 this._textField.size = this.size;
@@ -454,14 +449,14 @@ var egret;
                 this._textField.multiline = true;
                 this._addToDisplayList(this._textField);
             };
-            TextBase.prototype._textFieldChanged = function () {
+            __egretProto__._textFieldChanged = function () {
                 this._text = this._textField.text;
                 this._textFlow = this._textField.textFlow;
             };
             /**
              * 计算组件的默认大小和（可选）默认最小大小
              */
-            TextBase.prototype.measure = function () {
+            __egretProto__.measure = function () {
                 _super.prototype.measure.call(this);
                 this.measuredWidth = TextBase.DEFAULT_MEASURED_WIDTH;
                 this.measuredHeight = TextBase.DEFAULT_MEASURED_HEIGHT;
@@ -471,14 +466,14 @@ var egret;
              * @param unscaledWidth {number}
              * @param unscaledHeight {number}
              */
-            TextBase.prototype.$updateDisplayList = function (unscaledWidth, unscaledHeight) {
+            __egretProto__.$updateDisplayList = function (unscaledWidth, unscaledHeight) {
                 _super.prototype.updateDisplayList.call(this, unscaledWidth, unscaledHeight);
             };
             /**
              * @param unscaledWidth {number}
              * @param unscaledHeight {number}
              */
-            TextBase.prototype.updateDisplayList = function (unscaledWidth, unscaledHeight) {
+            __egretProto__.updateDisplayList = function (unscaledWidth, unscaledHeight) {
                 _super.prototype.updateDisplayList.call(this, unscaledWidth, unscaledHeight);
                 this._textField.width = unscaledWidth;
                 this._textField.height = unscaledHeight;
@@ -489,7 +484,7 @@ var egret;
              * @param oldValue
              * @param value
              */
-            TextBase.prototype.dispatchPropertyChangeEvent = function (propertyName, oldValue, value) {
+            __egretProto__.dispatchPropertyChangeEvent = function (propertyName, oldValue, value) {
                 if (this.hasEventListener("propertyChange"))
                     gui.PropertyChangeEvent.dispatchPropertyChangeEvent(this, gui.PropertyChangeEventKind.UPDATE, propertyName, oldValue, value, this);
             };

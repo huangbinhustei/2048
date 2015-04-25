@@ -10,7 +10,7 @@ class Hello2048 extends egret.DisplayObjectContainer {
     }
 
     public startGame():void {
-        egret.Profiler.getInstance().run();//看帧率的？
+        //egret.Profiler.getInstance().run();//看帧率的？
 
         RES.addEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
         RES.loadConfig("resource/resource.json", "resource/");
@@ -68,7 +68,16 @@ class Hello2048 extends egret.DisplayObjectContainer {
             topScoreString = egret.localStorage.getItem(this.key);
             this.topScore = +topScoreString;
         }
-        this.topScore = this.topScore > this.score ? this.topScore : this.score;
+
+        //this.score是即时计算出来的总分，我们不需要这个，直接看当前的最大数字（总分仍然在计算，但是被最大数字替换了）。
+        var i,j :number;
+        this.score = this.cell[0][0].valueNew;
+        for (i=0;i<4;i++) {
+            for (j=0;j<4;j++) {
+                this.score = this.cell[i][j].valueNew>this.score ? this.cell[i][j].valueNew:this.score
+            }
+        }
+        this.topScore = Math.max(this.topScore , this.score);
         topScoreString = this.topScore.toString();
         egret.localStorage.setItem("best", topScoreString);
     }   //判断是否创纪录
@@ -76,7 +85,40 @@ class Hello2048 extends egret.DisplayObjectContainer {
     private refresh():void {
         var i, j:number;
         this.setTopScore();
-        this.label.text = "总  分：" + this.score + "\n最高分：" + this.topScore;  //显示总分
+
+        var nowLever,bestLevel :string = "";
+        switch (this.score) {
+            case 2: nowLever = "学渣";break;
+            case 4: nowLever = "学沫";break;
+            case 8: nowLever = "学残";break;
+            case 16: nowLever = "学水";break;
+            case 32: nowLever = "学弱";break;
+            case 64: nowLever = "学民";break;
+            case 128: nowLever = "学优";break;
+            case 256: nowLever = "学帝";break;
+            case 512: nowLever = "学霸";break;
+            case 1024: nowLever = "学圣";break;
+            case 2048: nowLever = "学神";break;
+            case 4096: nowLever = "超神";break;
+        }
+        switch (this.topScore) {
+            case 2: bestLevel = "学渣";break;
+            case 4: bestLevel = "学沫";break;
+            case 8: bestLevel = "学残";break;
+            case 16: bestLevel = "学水";break;
+            case 32: bestLevel = "学弱";break;
+            case 64: bestLevel = "学民";break;
+            case 128: bestLevel = "学优";break;
+            case 256: bestLevel = "学帝";break;
+            case 512: bestLevel = "学霸";break;
+            case 1024: bestLevel = "学圣";break;
+            case 2048: bestLevel = "学神";break;
+            case 4096: bestLevel = "超神";break;
+        }
+
+        this.label.text = "当前成绩：" + nowLever + "\n最高成绩：" + bestLevel;  //显示总分
+
+        //this.label.text = "当前段位：" + this.score + "\n最高段位：" + this.topScore;  //显示总分
         for (i = 0; i < 4; i++) {
             for (j = 0; j < 4; j++) {
                 this.cell[i][j].drawSelf();
@@ -89,7 +131,7 @@ class Hello2048 extends egret.DisplayObjectContainer {
         var nullGroup:number[];
 
         nullCount = 0;
-        nullGroup = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        nullGroup = new Array(16);
 
         for (var i = 0; i < 4; i++) {
             for (var j = 0; j < 4; j++) {
@@ -104,12 +146,12 @@ class Hello2048 extends egret.DisplayObjectContainer {
         newbieNumber = ((Math.random() + 1.5) ^ 0) * 2;  //随机一个2~4的数字
 
         var newRow = (nullGroup[newbieLocation] / 4) ^ 0;//row
-        var newcol = nullGroup[newbieLocation] % 4;//col
-        this.cell[newRow][newcol].valueNew = newbieNumber;
+        var newCol = nullGroup[newbieLocation] % 4;//col
+        this.cell[newRow][newCol].valueNew = newbieNumber;
 
         var self = this;
         setTimeout(function () {
-            self.cell[newRow][newcol].drawSelfLatter();
+            self.cell[newRow][newCol].drawSelfLatter();
         }, 1);//延迟刷新新单元格
 
         if (nullCount == 1) {
@@ -302,7 +344,7 @@ class Hello2048 extends egret.DisplayObjectContainer {
         this.title.addChild(titleBg);
 
         var gameName = new egret.gui.Label();
-        gameName.text = "2048";
+        gameName.text = "学霸成长记";
         gameName.size = 36;
         gameName.height = titleHeight;
         gameName.verticalAlign = egret.VerticalAlign.MIDDLE;

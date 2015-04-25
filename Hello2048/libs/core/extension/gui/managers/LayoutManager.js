@@ -24,12 +24,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var egret;
 (function (egret) {
     var gui;
@@ -65,12 +59,13 @@ var egret;
                  */
                 this.listenersAttached = false;
             }
+            var __egretProto__ = LayoutManager.prototype;
             /**
              * 标记组件提交过属性
              * @method egret.gui.LayoutManager#invalidateProperties
              * @param client {ILayoutManagerClient}
              */
-            LayoutManager.prototype.invalidateProperties = function (client) {
+            __egretProto__.invalidateProperties = function (client) {
                 if (!this.invalidatePropertiesFlag) {
                     this.invalidatePropertiesFlag = true;
                     if (!this.listenersAttached)
@@ -83,7 +78,7 @@ var egret;
             /**
              * 使提交的属性生效
              */
-            LayoutManager.prototype.validateProperties = function () {
+            __egretProto__.validateProperties = function () {
                 var client = this.invalidatePropertiesQueue.shift();
                 while (client) {
                     if (client.parent) {
@@ -103,7 +98,7 @@ var egret;
              * @method egret.gui.LayoutManager#invalidateSize
              * @param client {ILayoutManagerClient}
              */
-            LayoutManager.prototype.invalidateSize = function (client) {
+            __egretProto__.invalidateSize = function (client) {
                 if (!this.invalidateSizeFlag) {
                     this.invalidateSizeFlag = true;
                     if (!this.listenersAttached)
@@ -116,7 +111,7 @@ var egret;
             /**
              * 测量属性
              */
-            LayoutManager.prototype.validateSize = function () {
+            __egretProto__.validateSize = function () {
                 var client = this.invalidateSizeQueue.pop();
                 while (client) {
                     if (client.parent) {
@@ -136,7 +131,7 @@ var egret;
              * @method egret.gui.LayoutManager#invalidateDisplayList
              * @param client {ILayoutManagerClient}
              */
-            LayoutManager.prototype.invalidateDisplayList = function (client) {
+            __egretProto__.invalidateDisplayList = function (client) {
                 if (!this.invalidateDisplayListFlag) {
                     this.invalidateDisplayListFlag = true;
                     if (!this.listenersAttached)
@@ -147,7 +142,7 @@ var egret;
             /**
              * 测量属性
              */
-            LayoutManager.prototype.validateDisplayList = function () {
+            __egretProto__.validateDisplayList = function () {
                 var client = this.invalidateDisplayListQueue.shift();
                 while (client) {
                     if (client.parent) {
@@ -165,7 +160,7 @@ var egret;
             /**
              * 添加事件监听
              */
-            LayoutManager.prototype.attachListeners = function () {
+            __egretProto__.attachListeners = function () {
                 gui.UIGlobals.stage.addEventListener(egret.Event.ENTER_FRAME, this.doPhasedInstantiationCallBack, this);
                 gui.UIGlobals.stage.addEventListener(egret.Event.RENDER, this.doPhasedInstantiationCallBack, this);
                 gui.UIGlobals.stage.invalidate();
@@ -174,13 +169,13 @@ var egret;
             /**
              * 执行属性应用
              */
-            LayoutManager.prototype.doPhasedInstantiationCallBack = function (event) {
+            __egretProto__.doPhasedInstantiationCallBack = function (event) {
                 if (event === void 0) { event = null; }
                 gui.UIGlobals.stage.removeEventListener(egret.Event.ENTER_FRAME, this.doPhasedInstantiationCallBack, this);
                 gui.UIGlobals.stage.removeEventListener(egret.Event.RENDER, this.doPhasedInstantiationCallBack, this);
                 this.doPhasedInstantiation();
             };
-            LayoutManager.prototype.doPhasedInstantiation = function () {
+            __egretProto__.doPhasedInstantiation = function () {
                 if (this.invalidatePropertiesFlag) {
                     this.validateProperties();
                 }
@@ -211,7 +206,7 @@ var egret;
              * 立即应用所有延迟的属性
              * @method egret.gui.LayoutManager#validateNow
              */
-            LayoutManager.prototype.validateNow = function () {
+            __egretProto__.validateNow = function () {
                 var infiniteLoopGuard = 0;
                 while (this.listenersAttached && infiniteLoopGuard++ < 100)
                     this.doPhasedInstantiationCallBack();
@@ -222,7 +217,7 @@ var egret;
              * @param target {ILayoutManagerClient} 要立即应用属性的组件
              * @param skipDisplayList {boolean} 是否跳过更新显示列表阶段
              */
-            LayoutManager.prototype.validateClient = function (target, skipDisplayList) {
+            __egretProto__.validateClient = function (target, skipDisplayList) {
                 if (skipDisplayList === void 0) { skipDisplayList = false; }
                 var obj;
                 var i = 0;

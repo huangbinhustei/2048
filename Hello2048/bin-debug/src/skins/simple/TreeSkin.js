@@ -1,9 +1,3 @@
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var skins;
 (function (skins) {
     var simple;
@@ -19,27 +13,28 @@ var skins;
                     new egret.gui.State("disabled", [])
                 ];
             }
-            Object.defineProperty(TreeSkin.prototype, "skinParts", {
+            var __egretProto__ = TreeSkin.prototype;
+            Object.defineProperty(__egretProto__, "skinParts", {
                 get: function () {
                     return TreeSkin._skinParts;
                 },
                 enumerable: true,
                 configurable: true
             });
-            TreeSkin.prototype.__4_i = function () {
+            __egretProto__.__4_i = function () {
                 var t = new egret.gui.Scroller();
                 this.__s(t, ["percentHeight", "percentWidth"], [100, 100]);
                 t.viewport = this.dataGroup_i();
                 return t;
             };
-            TreeSkin.prototype.dataGroup_i = function () {
+            __egretProto__.dataGroup_i = function () {
                 var t = new egret.gui.DataGroup();
                 this.dataGroup = t;
                 t.itemRendererSkinName = skins.simple.TreeItemRendererSkin;
                 t.layout = this.__3_i();
                 return t;
             };
-            TreeSkin.prototype.__3_i = function () {
+            __egretProto__.__3_i = function () {
                 var t = new egret.gui.VerticalLayout();
                 this.__s(t, ["gap", "horizontalAlign"], [2, "justify"]);
                 return t;

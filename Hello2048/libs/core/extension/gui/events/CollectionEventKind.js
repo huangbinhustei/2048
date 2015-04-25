@@ -37,6 +37,7 @@ var egret;
         var CollectionEventKind = (function () {
             function CollectionEventKind() {
             }
+            var __egretProto__ = CollectionEventKind.prototype;
             /**
              * 指示集合添加了一个或多个项目。
              * @constant egret.gui.CollectionEventKind.ADD

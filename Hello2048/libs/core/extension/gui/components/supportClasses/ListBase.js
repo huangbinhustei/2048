@@ -24,12 +24,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var egret;
 (function (egret) {
     var gui;
@@ -80,7 +74,8 @@ var egret;
                 this._useVirtualLayout = false;
                 this.selectedIndexAdjusted = false;
             }
-            ListBase.prototype._setDataProvider = function (value) {
+            var __egretProto__ = ListBase.prototype;
+            __egretProto__._setDataProvider = function (value) {
                 if (this.dataProvider)
                     this.dataProvider.removeEventListener(gui.CollectionEvent.COLLECTION_CHANGE, this.dataProvider_collectionChangeHandler, this);
                 this.dataProviderChanged = true;
@@ -90,7 +85,7 @@ var egret;
                 _super.prototype._setDataProvider.call(this, value);
                 this.invalidateProperties();
             };
-            Object.defineProperty(ListBase.prototype, "layout", {
+            Object.defineProperty(__egretProto__, "layout", {
                 /**
                  * 布局对象
                  * @member egret.gui.ListBase#layout
@@ -109,7 +104,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(ListBase.prototype, "labelField", {
+            Object.defineProperty(__egretProto__, "labelField", {
                 /**
                  * 数据项如果是一个对象，此属性为数据项中用来显示标签文字的字段名称。
                  * 若设置了labelFunction，则设置此属性无效。
@@ -124,14 +119,14 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            ListBase.prototype._setLabelField = function (value) {
+            __egretProto__._setLabelField = function (value) {
                 if (value == this._labelField)
                     return;
                 this._labelField = value;
                 this.labelFieldOrFunctionChanged = true;
                 this.invalidateProperties();
             };
-            Object.defineProperty(ListBase.prototype, "labelFunction", {
+            Object.defineProperty(__egretProto__, "labelFunction", {
                 /**
                  * 用户提供的函数，在每个项目上运行以确定其标签。
                  * 示例：function labelFunc(item:Object):String 。
@@ -146,14 +141,14 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            ListBase.prototype._setLabelFunction = function (value) {
+            __egretProto__._setLabelFunction = function (value) {
                 if (value == this._labelFunction)
                     return;
                 this._labelFunction = value;
                 this.labelFieldOrFunctionChanged = true;
                 this.invalidateProperties();
             };
-            Object.defineProperty(ListBase.prototype, "requireSelection", {
+            Object.defineProperty(__egretProto__, "requireSelection", {
                 /**
                  * 如果为 true，则必须始终在控件中选中数据项目。<br/>
                  * 如果该值为 true，则始终将 selectedIndex 属性设置为 0 和 (dataProvider.length - 1) 之间的一个值。
@@ -168,7 +163,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            ListBase.prototype._setRequireSelection = function (value) {
+            __egretProto__._setRequireSelection = function (value) {
                 if (value == this._requireSelection)
                     return;
                 this._requireSelection = value;
@@ -177,7 +172,7 @@ var egret;
                     this.invalidateProperties();
                 }
             };
-            Object.defineProperty(ListBase.prototype, "selectedIndex", {
+            Object.defineProperty(__egretProto__, "selectedIndex", {
                 /**
                  * 选中项目的基于 0 的索引。<br/>
                  * 或者如果未选中项目，则为-1。设置 selectedIndex 属性会取消选择当前选定的项目并选择指定索引位置的数据项目。 <br/>
@@ -194,7 +189,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            ListBase.prototype._getSelectedIndex = function () {
+            __egretProto__._getSelectedIndex = function () {
                 if (this._proposedSelectedIndex != ListBase.NO_PROPOSED_SELECTION)
                     return this._proposedSelectedIndex;
                 return this._selectedIndex;
@@ -202,7 +197,7 @@ var egret;
             /**
              * 设置选中项
              */
-            ListBase.prototype._setSelectedIndex = function (value, dispatchChangeEvent) {
+            __egretProto__._setSelectedIndex = function (value, dispatchChangeEvent) {
                 if (dispatchChangeEvent === void 0) { dispatchChangeEvent = false; }
                 if (value == this.selectedIndex) {
                     return;
@@ -212,7 +207,7 @@ var egret;
                 this._proposedSelectedIndex = value;
                 this.invalidateProperties();
             };
-            Object.defineProperty(ListBase.prototype, "selectedItem", {
+            Object.defineProperty(__egretProto__, "selectedItem", {
                 /**
                  * 当前已选中的项目。设置此属性会取消选中当前选定的项目并选择新指定的项目。<br/>
                  * 当用户通过与控件交互来更改 selectedItem 属性时，此控件将分派 change 和 changing 事件。<br/>
@@ -240,7 +235,7 @@ var egret;
              * @param value {any}
              * @param dispatchChangeEvent {boolean}
              */
-            ListBase.prototype._setSelectedItem = function (value, dispatchChangeEvent) {
+            __egretProto__._setSelectedItem = function (value, dispatchChangeEvent) {
                 if (dispatchChangeEvent === void 0) { dispatchChangeEvent = false; }
                 if (this.selectedItem === value)
                     return;
@@ -249,7 +244,7 @@ var egret;
                 this._pendingSelectedItem = value;
                 this.invalidateProperties();
             };
-            Object.defineProperty(ListBase.prototype, "useVirtualLayout", {
+            Object.defineProperty(__egretProto__, "useVirtualLayout", {
                 /**
                  * 是否使用虚拟布局,默认flase
                  * @member egret.gui.ListBase#useVirtualLayout
@@ -263,10 +258,10 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            ListBase.prototype._getUseVirtualLayout = function () {
+            __egretProto__._getUseVirtualLayout = function () {
                 return (this.layout) ? this.layout.useVirtualLayout : this._useVirtualLayout;
             };
-            ListBase.prototype._setUseVirtualLayout = function (value) {
+            __egretProto__._setUseVirtualLayout = function (value) {
                 if (value == this.useVirtualLayout)
                     return;
                 this._useVirtualLayout = value;
@@ -277,7 +272,7 @@ var egret;
              * 处理对组件设置的属性
              * @method egret.gui.ListBase#commitProperties
              */
-            ListBase.prototype.commitProperties = function () {
+            __egretProto__.commitProperties = function () {
                 _super.prototype.commitProperties.call(this);
                 if (this.dataProviderChanged) {
                     this.dataProviderChanged = false;
@@ -339,7 +334,7 @@ var egret;
             /**
              *  更新项呈示器文字标签
              */
-            ListBase.prototype.updateRendererLabelProperty = function (itemIndex) {
+            __egretProto__.updateRendererLabelProperty = function (itemIndex) {
                 var renderer = (this.dataGroup.getElementAt(itemIndex));
                 if (renderer)
                     renderer.label = this.itemToLabel(renderer.data);
@@ -350,7 +345,7 @@ var egret;
              * @param partName {string}
              * @param instance {any}
              */
-            ListBase.prototype.partAdded = function (partName, instance) {
+            __egretProto__.partAdded = function (partName, instance) {
                 _super.prototype.partAdded.call(this, partName, instance);
                 if (instance == this.dataGroup) {
                     if (this._useVirtualLayout && this.dataGroup.layout)
@@ -365,7 +360,7 @@ var egret;
              * @param partName {string}
              * @param instance {any}
              */
-            ListBase.prototype.partRemoved = function (partName, instance) {
+            __egretProto__.partRemoved = function (partName, instance) {
                 _super.prototype.partRemoved.call(this, partName, instance);
                 if (instance == this.dataGroup) {
                     this.dataGroup.removeEventListener(gui.RendererExistenceEvent.RENDERER_ADD, this.dataGroup_rendererAddHandler, this);
@@ -380,7 +375,7 @@ var egret;
              * @param data {any}
              * @returns {IItemRenderer}
              */
-            ListBase.prototype.updateRenderer = function (renderer, itemIndex, data) {
+            __egretProto__.updateRenderer = function (renderer, itemIndex, data) {
                 this.itemSelected(itemIndex, this._isItemIndexSelected(itemIndex));
                 return _super.prototype.updateRenderer.call(this, renderer, itemIndex, data);
             };
@@ -390,7 +385,7 @@ var egret;
              * @param item {any}
              * @returns {string}
              */
-            ListBase.prototype.itemToLabel = function (item) {
+            __egretProto__.itemToLabel = function (item) {
                 if (this._labelFunction != null)
                     return this._labelFunction(item);
                 if (typeof (item) == "string")
@@ -427,7 +422,7 @@ var egret;
              * @param index {number} 已选中的项目索引。
              * @param selected {boolean} true为选中，false取消选中
              */
-            ListBase.prototype.itemSelected = function (index, selected) {
+            __egretProto__.itemSelected = function (index, selected) {
                 if (!this.dataGroup)
                     return;
                 var renderer = (this.dataGroup.getElementAt(index));
@@ -438,7 +433,7 @@ var egret;
             /**
              * 返回指定索引是否等于当前选中索引
              */
-            ListBase.prototype._isItemIndexSelected = function (index) {
+            __egretProto__._isItemIndexSelected = function (index) {
                 return index == this.selectedIndex;
             };
             /**
@@ -447,7 +442,7 @@ var egret;
              * @param dispatchChangedEvents {boolean}
              * @returns {boolean}
              */
-            ListBase.prototype.commitSelection = function (dispatchChangedEvents) {
+            __egretProto__.commitSelection = function (dispatchChangedEvents) {
                 if (dispatchChangedEvents === void 0) { dispatchChangedEvents = true; }
                 var maxIndex = this.dataProvider ? this.dataProvider.length - 1 : -1;
                 var oldSelectedIndex = this._selectedIndex;
@@ -496,7 +491,7 @@ var egret;
              * @param newIndex {number} 新索引。
              * @param add {boolean} 如果已将项目添加到组件，则为 true；如果已删除项目，则为 false。
              */
-            ListBase.prototype.adjustSelection = function (newIndex, add) {
+            __egretProto__.adjustSelection = function (newIndex, add) {
                 if (add === void 0) { add = false; }
                 if (this._proposedSelectedIndex != ListBase.NO_PROPOSED_SELECTION)
                     this._proposedSelectedIndex = newIndex;
@@ -510,7 +505,7 @@ var egret;
              * @method egret.gui.ListBase#itemAdded
              * @param index {number}
              */
-            ListBase.prototype.itemAdded = function (index) {
+            __egretProto__.itemAdded = function (index) {
                 if (this._doingWholesaleChanges)
                     return;
                 if (this.selectedIndex == ListBase.NO_SELECTION) {
@@ -526,7 +521,7 @@ var egret;
              * @method egret.gui.ListBase#itemRemoved
              * @param index {number}
              */
-            ListBase.prototype.itemRemoved = function (index) {
+            __egretProto__.itemRemoved = function (index) {
                 if (this.selectedIndex == ListBase.NO_SELECTION || this._doingWholesaleChanges)
                     return;
                 if (index == this.selectedIndex) {
@@ -550,7 +545,7 @@ var egret;
              * @method egret.gui.ListBase#dataGroup_rendererAddHandler
              * @param event {RendererExistenceEvent}
              */
-            ListBase.prototype.dataGroup_rendererAddHandler = function (event) {
+            __egretProto__.dataGroup_rendererAddHandler = function (event) {
                 var renderer = (event.renderer);
                 if (renderer == null)
                     return;
@@ -562,7 +557,7 @@ var egret;
              * @method egret.gui.ListBase#dataGroup_rendererRemoveHandler
              * @param event {RendererExistenceEvent}
              */
-            ListBase.prototype.dataGroup_rendererRemoveHandler = function (event) {
+            __egretProto__.dataGroup_rendererRemoveHandler = function (event) {
                 var renderer = (event.renderer);
                 if (renderer == null)
                     return;
@@ -572,7 +567,7 @@ var egret;
             /**
              * 项呈示器鼠标事件
              */
-            ListBase.prototype.item_mouseEventHandler = function (event) {
+            __egretProto__.item_mouseEventHandler = function (event) {
                 var type = event.type;
                 type = ListBase.TYPE_MAP[type];
                 if (this.hasEventListener(type)) {
@@ -587,7 +582,7 @@ var egret;
              * @param type {string} 事件名称
              * @param itemRenderer {IItemRenderer} 关联的条目渲染器实例
              */
-            ListBase.prototype._dispatchListEvent = function (touchEvent, type, itemRenderer) {
+            __egretProto__._dispatchListEvent = function (touchEvent, type, itemRenderer) {
                 var itemIndex = -1;
                 if (itemRenderer)
                     itemIndex = itemRenderer.itemIndex;
@@ -601,7 +596,7 @@ var egret;
              * @method egret.gui.ListBase#dataProvider_collectionChangeHandler
              * @param event {CollectionEvent}
              */
-            ListBase.prototype.dataProvider_collectionChangeHandler = function (event) {
+            __egretProto__.dataProvider_collectionChangeHandler = function (event) {
                 var items = event.items;
                 if (event.kind == gui.CollectionEventKind.ADD) {
                     var length = items.length;
@@ -635,7 +630,7 @@ var egret;
             /**
              * 数据源刷新
              */
-            ListBase.prototype.dataProviderRefreshed = function () {
+            __egretProto__.dataProviderRefreshed = function () {
                 this._setSelectedIndex(ListBase.NO_SELECTION, false);
             };
             /**

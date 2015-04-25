@@ -36,6 +36,7 @@ var egret;
         var ProgressBarDirection = (function () {
             function ProgressBarDirection() {
             }
+            var __egretProto__ = ProgressBarDirection.prototype;
             /**
              * 水平从左到右增长
              * @constant egret.gui.ProgressBarDirection.LEFT_TO_RIGHT

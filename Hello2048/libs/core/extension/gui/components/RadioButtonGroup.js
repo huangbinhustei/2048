@@ -24,12 +24,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var egret;
 (function (egret) {
     var gui;
@@ -62,7 +56,8 @@ var egret;
                 this._name = "_radioButtonGroup" + RadioButtonGroup.groupCount;
                 RadioButtonGroup.groupCount++;
             }
-            Object.defineProperty(RadioButtonGroup.prototype, "enabled", {
+            var __egretProto__ = RadioButtonGroup.prototype;
+            Object.defineProperty(__egretProto__, "enabled", {
                 /**
                  * 组件是否可以接受用户交互。默认值为true。设置此属性将影响组内所有单选按钮。
                  * @member egret.gui.RadioButtonGroup#enabled
@@ -80,7 +75,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(RadioButtonGroup.prototype, "numRadioButtons", {
+            Object.defineProperty(__egretProto__, "numRadioButtons", {
                 /**
                  * 组内单选按钮数量
                  * @member egret.gui.RadioButtonGroup#numRadioButtons
@@ -91,7 +86,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(RadioButtonGroup.prototype, "selectedValue", {
+            Object.defineProperty(__egretProto__, "selectedValue", {
                 /**
                  * 当前被选中的单选按钮的value属性值。注意，此属性仅当目标RadioButton在显示列表时有效。
                  * @member egret.gui.RadioButtonGroup#selectedValue
@@ -122,7 +117,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(RadioButtonGroup.prototype, "selection", {
+            Object.defineProperty(__egretProto__, "selection", {
                 /**
                  * 当前被选中的单选按钮引用,注意，此属性仅当目标RadioButton在显示列表时有效。
                  * @member egret.gui.RadioButtonGroup#selection
@@ -144,7 +139,7 @@ var egret;
              * @param index {number} 单选按钮的索引
              * @returns {RadioButton}
              */
-            RadioButtonGroup.prototype.getRadioButtonAt = function (index) {
+            __egretProto__.getRadioButtonAt = function (index) {
                 if (index >= 0 && index < this.numRadioButtons)
                     return this.radioButtons[index];
                 return null;
@@ -153,7 +148,7 @@ var egret;
              * 添加单选按钮到组内
              * @param instance {RadioButton}
              */
-            RadioButtonGroup.prototype._addInstance = function (instance) {
+            __egretProto__._addInstance = function (instance) {
                 instance.addEventListener(egret.Event.REMOVED, this.radioButton_removedHandler, this);
                 this.radioButtons.push(instance);
                 this.radioButtons.sort(breadthOrderCompare);
@@ -199,13 +194,13 @@ var egret;
              * 从组里移除单选按钮
              * @param instance {RadioButton}
              */
-            RadioButtonGroup.prototype._removeInstance = function (instance) {
+            __egretProto__._removeInstance = function (instance) {
                 this.doRemoveInstance(instance, false);
             };
             /**
              * 执行从组里移除单选按钮
              */
-            RadioButtonGroup.prototype.doRemoveInstance = function (instance, addListener) {
+            __egretProto__.doRemoveInstance = function (instance, addListener) {
                 if (addListener === void 0) { addListener = true; }
                 if (instance) {
                     var foundInstance = false;
@@ -235,7 +230,7 @@ var egret;
              * @param value {RadioButton}
              * @param fireChange {boolean}
              */
-            RadioButtonGroup.prototype._setSelection = function (value, fireChange) {
+            __egretProto__._setSelection = function (value, fireChange) {
                 if (fireChange === void 0) { fireChange = true; }
                 if (this._selection == value)
                     return;
@@ -261,7 +256,7 @@ var egret;
             /**
              * 改变选中项
              */
-            RadioButtonGroup.prototype.changeSelection = function (index, fireChange) {
+            __egretProto__.changeSelection = function (index, fireChange) {
                 if (fireChange === void 0) { fireChange = true; }
                 var rb = this.getRadioButtonAt(index);
                 if (rb && rb != this._selection) {
@@ -276,7 +271,7 @@ var egret;
             /**
              * 单选按钮添加到显示列表
              */
-            RadioButtonGroup.prototype.radioButton_addedHandler = function (event) {
+            __egretProto__.radioButton_addedHandler = function (event) {
                 var rb = (event.target);
                 if (rb) {
                     rb.removeEventListener(egret.Event.ADDED, this.radioButton_addedHandler, this);
@@ -286,7 +281,7 @@ var egret;
             /**
              * 单选按钮从显示列表移除
              */
-            RadioButtonGroup.prototype.radioButton_removedHandler = function (event) {
+            __egretProto__.radioButton_removedHandler = function (event) {
                 var rb = (event.target);
                 if (rb) {
                     rb.removeEventListener(egret.Event.REMOVED, this.radioButton_removedHandler, this);

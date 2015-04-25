@@ -24,12 +24,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var egret;
 (function (egret) {
     var gui;
@@ -64,7 +58,8 @@ var egret;
                 this.childOrderingChanged = false;
                 this._setLayout(new gui.BasicLayout());
             }
-            Object.defineProperty(ViewStack.prototype, "layout", {
+            var __egretProto__ = ViewStack.prototype;
+            Object.defineProperty(__egretProto__, "layout", {
                 /**
                  * 此容器的布局对象为只读,默认限制为BasicLayout。
                  * @member egret.gui.ViewStack#layout
@@ -77,7 +72,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(ViewStack.prototype, "createAllChildren", {
+            Object.defineProperty(__egretProto__, "createAllChildren", {
                 /**
                  * 是否立即初始化化所有子项。false表示当子项第一次被显示时再初始化它。默认值false。
                  * @member egret.gui.ViewStack#createAllChildren
@@ -106,7 +101,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(ViewStack.prototype, "selectedChild", {
+            Object.defineProperty(__egretProto__, "selectedChild", {
                 /**
                  * 当前选中的子项
                  * @member egret.gui.ViewStack#selectedChild
@@ -125,7 +120,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(ViewStack.prototype, "selectedIndex", {
+            Object.defineProperty(__egretProto__, "selectedIndex", {
                 /**
                  * 当前选中子项的索引
                  * @member egret.gui.ViewStack#selectedIndex
@@ -145,7 +140,7 @@ var egret;
              * @param value {number}
              * @param notifyListeners {boolean}
              */
-            ViewStack.prototype._setSelectedIndex = function (value, notifyListeners) {
+            __egretProto__._setSelectedIndex = function (value, notifyListeners) {
                 if (notifyListeners === void 0) { notifyListeners = true; }
                 if (value == this.selectedIndex) {
                     return;
@@ -161,7 +156,7 @@ var egret;
              * @param index {number}
              * @param notifyListeners {boolean}
              */
-            ViewStack.prototype._elementAdded = function (element, index, notifyListeners) {
+            __egretProto__._elementAdded = function (element, index, notifyListeners) {
                 if (notifyListeners === void 0) { notifyListeners = true; }
                 if (this._createAllChildren) {
                     if (element instanceof egret.DisplayObject) {
@@ -189,7 +184,7 @@ var egret;
              * @param index {number}
              * @param notifyListeners {boolean}
              */
-            ViewStack.prototype._elementRemoved = function (element, index, notifyListeners) {
+            __egretProto__._elementRemoved = function (element, index, notifyListeners) {
                 if (notifyListeners === void 0) { notifyListeners = true; }
                 _super.prototype._elementRemoved.call(this, element, index, notifyListeners);
                 element.visible = true;
@@ -214,7 +209,7 @@ var egret;
             /**
              * 处理对组件设置的属性
              */
-            ViewStack.prototype.commitProperties = function () {
+            __egretProto__.commitProperties = function () {
                 _super.prototype.commitProperties.call(this);
                 if (this.proposedSelectedIndex != ViewStack.NO_PROPOSED_SELECTION) {
                     this.commitSelection(this.proposedSelectedIndex);
@@ -240,7 +235,7 @@ var egret;
              *
              * @param newIndex
              */
-            ViewStack.prototype.commitSelection = function (newIndex) {
+            __egretProto__.commitSelection = function (newIndex) {
                 var oldIndex = this._selectedIndex;
                 if (newIndex >= 0 && newIndex < this.numElements) {
                     this._selectedIndex = newIndex;
@@ -265,7 +260,7 @@ var egret;
                 this.invalidateSize();
                 this.invalidateDisplayList();
             };
-            Object.defineProperty(ViewStack.prototype, "length", {
+            Object.defineProperty(__egretProto__, "length", {
                 /**
                  * 子项数量
                  * @member egret.gui.ViewStack#length
@@ -280,7 +275,7 @@ var egret;
              * @param index {number}
              * @returns {any}
              */
-            ViewStack.prototype.getItemAt = function (index) {
+            __egretProto__.getItemAt = function (index) {
                 var element = this.getElementAt(index);
                 if (element)
                     return element.name;
@@ -290,7 +285,7 @@ var egret;
              * @param item {any}
              * @returns {number}
              */
-            ViewStack.prototype.getItemIndex = function (item) {
+            __egretProto__.getItemIndex = function (item) {
                 var list = this._getElementsContent();
                 var length = list.length;
                 for (var i = 0; i < length; i++) {
@@ -303,7 +298,7 @@ var egret;
             /**
              * 抛出事件
              */
-            ViewStack.prototype.dispatchCoEvent = function (kind, location, oldLocation, items, oldItems) {
+            __egretProto__.dispatchCoEvent = function (kind, location, oldLocation, items, oldItems) {
                 if (kind === void 0) { kind = null; }
                 if (location === void 0) { location = -1; }
                 if (oldLocation === void 0) { oldLocation = -1; }

@@ -1,9 +1,3 @@
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var skins;
 (function (skins) {
     var simple;
@@ -20,26 +14,27 @@ var skins;
                     new egret.gui.State("disabled", [])
                 ];
             }
-            Object.defineProperty(HSliderSkin.prototype, "skinParts", {
+            var __egretProto__ = HSliderSkin.prototype;
+            Object.defineProperty(__egretProto__, "skinParts", {
                 get: function () {
                     return HSliderSkin._skinParts;
                 },
                 enumerable: true,
                 configurable: true
             });
-            HSliderSkin.prototype.thumb_i = function () {
+            __egretProto__.thumb_i = function () {
                 var t = new egret.gui.Button();
                 this.thumb = t;
                 this.__s(t, ["height", "skinName", "verticalCenter", "width"], [24, skins.simple.HSliderThumbSkin, 0, 24]);
                 return t;
             };
-            HSliderSkin.prototype.trackHighlight_i = function () {
+            __egretProto__.trackHighlight_i = function () {
                 var t = new egret.gui.UIAsset();
                 this.trackHighlight = t;
                 this.__s(t, ["height", "source", "verticalCenter"], [10, "hslider_fill_png", 0]);
                 return t;
             };
-            HSliderSkin.prototype.track_i = function () {
+            __egretProto__.track_i = function () {
                 var t = new egret.gui.UIAsset();
                 this.track = t;
                 this.__s(t, ["height", "source", "verticalCenter", "percentWidth"], [10, "hslider_track_png", 0, 100]);

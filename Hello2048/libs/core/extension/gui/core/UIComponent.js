@@ -24,12 +24,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var egret;
 (function (egret) {
     var gui;
@@ -149,17 +143,18 @@ var egret;
                     UIComponent.prototypeCanSet = (chain.__proto__ !== undefined);
                 }
             }
+            var __egretProto__ = UIComponent.prototype;
             /**
              * 添加到舞台
              */
-            UIComponent.prototype.onAddedToStage = function (e) {
+            __egretProto__.onAddedToStage = function (e) {
                 this.removeEventListener(egret.Event.ADDED_TO_STAGE, this.onAddedToStage, this);
                 this._initialize();
                 gui.UIGlobals._initlize(this.stage);
                 if (this._nestLevel > 0)
                     this.checkInvalidateFlag();
             };
-            Object.defineProperty(UIComponent.prototype, "id", {
+            Object.defineProperty(__egretProto__, "id", {
                 /**
                  * 组件 ID。此值将作为对象的实例名称，因此不应包含任何空格或特殊字符。应用程序中的每个组件都应具有唯一的 ID。
                  * @constant egret.gui.UIComponent#id
@@ -173,7 +168,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(UIComponent.prototype, "isPopUp", {
+            Object.defineProperty(__egretProto__, "isPopUp", {
                 /**
                  * @member egret.gui.UIComponent#isPopUp
                  */
@@ -186,7 +181,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(UIComponent.prototype, "owner", {
+            Object.defineProperty(__egretProto__, "owner", {
                 /**
                  * @member egret.gui.UIComponent#owner
                  */
@@ -200,10 +195,10 @@ var egret;
              * @method egret.gui.UIComponent#ownerChanged
              * @param value {any}
              */
-            UIComponent.prototype.ownerChanged = function (value) {
+            __egretProto__.ownerChanged = function (value) {
                 this._owner = value;
             };
-            Object.defineProperty(UIComponent.prototype, "updateCompletePendingFlag", {
+            Object.defineProperty(__egretProto__, "updateCompletePendingFlag", {
                 /**
                  * @member egret.gui.UIComponent#updateCompletePendingFlag
                  */
@@ -216,7 +211,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(UIComponent.prototype, "initialized", {
+            Object.defineProperty(__egretProto__, "initialized", {
                 /**
                  * @member egret.gui.UIComponent#initialized
                  */
@@ -239,7 +234,7 @@ var egret;
              * 初始化组件
              * @method egret.gui.UIComponent#_initialize
              */
-            UIComponent.prototype._initialize = function () {
+            __egretProto__._initialize = function () {
                 if (this.initializeCalled)
                     return;
                 if (gui.UIGlobals.stage) {
@@ -257,15 +252,15 @@ var egret;
              * 请务必调用super.createChildren()以完成父类组件的初始化
              * @method egret.gui.UIComponent#createChildren
              */
-            UIComponent.prototype.createChildren = function () {
+            __egretProto__.createChildren = function () {
             };
             /**
              * 子项创建完成
              * @method egret.gui.UIComponent#childrenCreated
              */
-            UIComponent.prototype.childrenCreated = function () {
+            __egretProto__.childrenCreated = function () {
             };
-            Object.defineProperty(UIComponent.prototype, "nestLevel", {
+            Object.defineProperty(__egretProto__, "nestLevel", {
                 /**
                  * @member egret.gui.UIComponent#nestLevel
                  */
@@ -288,7 +283,7 @@ var egret;
             /**
              * 更新子项的nestLevel属性
              */
-            UIComponent.prototype._updateChildrenNestLevel = function () {
+            __egretProto__._updateChildrenNestLevel = function () {
                 for (var i = this.numChildren - 1; i >= 0; i--) {
                     var child = (this.getChildAt(i));
                     if (child && "nestLevel" in child) {
@@ -299,7 +294,7 @@ var egret;
             /**
              * 获取指定的名称的样式属性值
              */
-            UIComponent.prototype.getStyle = function (styleProp) {
+            __egretProto__.getStyle = function (styleProp) {
                 var chain = this._styleProtoChain;
                 if (!chain) {
                     return undefined;
@@ -309,7 +304,7 @@ var egret;
             /**
              * 对此组件实例设置样式属性。在此组件上设置的样式会覆盖父级容器的同名样式。推荐在子项较少的组件上使用，尽量避免在全局调用此方法，有可能造成性能问题。
              */
-            UIComponent.prototype.setStyle = function (styleProp, newValue) {
+            __egretProto__.setStyle = function (styleProp, newValue) {
                 var chain = this._styleProtoChain;
                 if (!this._hasOwnStyleChain) {
                     chain = this._createOwnStyleProtoChain(chain);
@@ -318,12 +313,12 @@ var egret;
                 this.styleChanged(styleProp);
                 this.notifyStyleChangeInChildren(styleProp);
             };
-            UIComponent.prototype.styleChanged = function (styleProp) {
+            __egretProto__.styleChanged = function (styleProp) {
             };
             /**
              * 通知子项列表样式发生改变
              */
-            UIComponent.prototype.notifyStyleChangeInChildren = function (styleProp) {
+            __egretProto__.notifyStyleChangeInChildren = function (styleProp) {
                 if (this._hasNoStyleChild) {
                     return;
                 }
@@ -338,7 +333,7 @@ var egret;
                     }
                 }
             };
-            UIComponent.prototype._createOwnStyleProtoChain = function (chain) {
+            __egretProto__._createOwnStyleProtoChain = function (chain) {
                 this._hasOwnStyleChain = true;
                 if (UIComponent.prototypeCanSet) {
                     this._styleProtoChain = {};
@@ -361,7 +356,7 @@ var egret;
             /**
              * 创建一个原型链节点
              */
-            UIComponent.prototype.createProtoChain = function (parentChain) {
+            __egretProto__.createProtoChain = function (parentChain) {
                 function factory() {
                 }
                 ;
@@ -373,7 +368,7 @@ var egret;
             /**
              * 清除在此组件实例上设置过的指定样式名。
              */
-            UIComponent.prototype.clearStyle = function (styleProp) {
+            __egretProto__.clearStyle = function (styleProp) {
                 if (!this._hasOwnStyleChain) {
                     return;
                 }
@@ -385,7 +380,7 @@ var egret;
             /**
              * 重新生成自身以及所有子项的原型链
              */
-            UIComponent.prototype.regenerateStyleCache = function (parentChain) {
+            __egretProto__.regenerateStyleCache = function (parentChain) {
                 if (!UIComponent.prototypeCanSet) {
                     this.regenerateStyleCacheForIE(parentChain);
                     return;
@@ -406,7 +401,7 @@ var egret;
             /**
              * 兼容IE9，10的写法。
              */
-            UIComponent.prototype.regenerateStyleCacheForIE = function (parentChain) {
+            __egretProto__.regenerateStyleCacheForIE = function (parentChain) {
                 if (this._hasOwnStyleChain) {
                     var chain = this._styleProtoChain;
                     var childChain = this.createProtoChain(parentChain);
@@ -434,7 +429,7 @@ var egret;
              * 添加对象到显示列表,此接口仅预留给框架内部使用
              * 如果需要管理子项，若有，请使用容器的addElement()方法，非法使用有可能造成无法自动布局。
              */
-            UIComponent.prototype._addToDisplayList = function (child, notifyListeners) {
+            __egretProto__._addToDisplayList = function (child, notifyListeners) {
                 if (notifyListeners === void 0) { notifyListeners = true; }
                 var index = this.numChildren;
                 if (child.parent == this)
@@ -448,7 +443,7 @@ var egret;
              * 添加对象到显示列表,此接口仅预留给框架内部使用
              * 如果需要管理子项，若有，请使用容器的addElementAt()方法，非法使用有可能造成无法自动布局。
              */
-            UIComponent.prototype._addToDisplayListAt = function (child, index, notifyListeners) {
+            __egretProto__._addToDisplayListAt = function (child, index, notifyListeners) {
                 if (notifyListeners === void 0) { notifyListeners = true; }
                 this._addingChild(child);
                 this._doAddChild(child, index, notifyListeners);
@@ -459,7 +454,7 @@ var egret;
              * 添加对象到显示列表,此接口仅预留给框架内部使用
              * 如果需要管理子项，若有，请使用容器的removeElement()方法,非法使用有可能造成无法自动布局。
              */
-            UIComponent.prototype._removeFromDisplayList = function (child, notifyListeners) {
+            __egretProto__._removeFromDisplayList = function (child, notifyListeners) {
                 if (notifyListeners === void 0) { notifyListeners = true; }
                 var index = this._children.indexOf(child);
                 if (index >= 0) {
@@ -476,7 +471,7 @@ var egret;
              * 从显示列表移除指定索引的子项,此接口仅预留给框架内部使用
              * 如果需要管理子项，若有，请使用容器的removeElementAt()方法,非法使用有可能造成无法自动布局。
              */
-            UIComponent.prototype._removeFromDisplayListAt = function (index, notifyListeners) {
+            __egretProto__._removeFromDisplayListAt = function (index, notifyListeners) {
                 if (notifyListeners === void 0) { notifyListeners = true; }
                 if (index >= 0 && index < this._children.length) {
                     var child = this._doRemoveChild(index, notifyListeners);
@@ -495,7 +490,7 @@ var egret;
              * @param child {DisplayObject}
              * @returns {DisplayObject}
              */
-            UIComponent.prototype.addChild = function (child) {
+            __egretProto__.addChild = function (child) {
                 this._addingChild(child);
                 _super.prototype.addChild.call(this, child);
                 this._childAdded(child);
@@ -509,7 +504,7 @@ var egret;
              * @param index {number}
              * @returns {DisplayObject}
              */
-            UIComponent.prototype.addChildAt = function (child, index) {
+            __egretProto__.addChildAt = function (child, index) {
                 this._addingChild(child);
                 _super.prototype.addChildAt.call(this, child, index);
                 this._childAdded(child);
@@ -518,7 +513,7 @@ var egret;
             /**
              * 即将添加一个子项
              */
-            UIComponent.prototype._addingChild = function (child) {
+            __egretProto__._addingChild = function (child) {
                 if (!child) {
                     return;
                 }
@@ -537,7 +532,7 @@ var egret;
             /**
              * 已经添加一个子项
              */
-            UIComponent.prototype._childAdded = function (child) {
+            __egretProto__._childAdded = function (child) {
                 if (child instanceof UIComponent) {
                     child._initialize();
                     child.checkInvalidateFlag();
@@ -550,7 +545,7 @@ var egret;
              * @param child {DisplayObject}
              * @returns {DisplayObject}
              */
-            UIComponent.prototype.removeChild = function (child) {
+            __egretProto__.removeChild = function (child) {
                 _super.prototype.removeChild.call(this, child);
                 this._childRemoved(child);
                 return child;
@@ -562,7 +557,7 @@ var egret;
              * @param index {number}
              * @returns {DisplayObject}
              */
-            UIComponent.prototype.removeChildAt = function (index) {
+            __egretProto__.removeChildAt = function (index) {
                 var child = _super.prototype.removeChildAt.call(this, index);
                 this._childRemoved(child);
                 return child;
@@ -570,7 +565,7 @@ var egret;
             /**
              * 已经移除一个子项
              */
-            UIComponent.prototype._childRemoved = function (child) {
+            __egretProto__._childRemoved = function (child) {
                 if (!child) {
                     return;
                 }
@@ -581,7 +576,7 @@ var egret;
             /**
              * 检查属性失效标记并应用
              */
-            UIComponent.prototype.checkInvalidateFlag = function (event) {
+            __egretProto__.checkInvalidateFlag = function (event) {
                 if (event === void 0) { event = null; }
                 if (!gui.UIGlobals._layoutManager)
                     return;
@@ -599,7 +594,7 @@ var egret;
                     this._validateNowFlag = false;
                 }
             };
-            Object.defineProperty(UIComponent.prototype, "enabled", {
+            Object.defineProperty(__egretProto__, "enabled", {
                 /**
                  * @member egret.gui.UIComponent#enabled
                  */
@@ -612,7 +607,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(UIComponent.prototype, "width", {
+            Object.defineProperty(__egretProto__, "width", {
                 /**
                  * @member egret.gui.UIComponent#width
                  */
@@ -628,7 +623,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            UIComponent.prototype._setWidth = function (value) {
+            __egretProto__._setWidth = function (value) {
                 if (this._width == value && this._explicitWidth == value)
                     return;
                 _super.prototype._setWidth.call(this, value);
@@ -640,7 +635,7 @@ var egret;
                 this.invalidateDisplayList();
                 this.invalidateParentSizeAndDisplayList();
             };
-            Object.defineProperty(UIComponent.prototype, "height", {
+            Object.defineProperty(__egretProto__, "height", {
                 /**
                  * @member egret.gui.UIComponent#height
                  */
@@ -656,7 +651,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            UIComponent.prototype._setHeight = function (value) {
+            __egretProto__._setHeight = function (value) {
                 if (this._height == value && this._explicitHeight == value)
                     return;
                 _super.prototype._setHeight.call(this, value);
@@ -668,7 +663,7 @@ var egret;
                 this.invalidateDisplayList();
                 this.invalidateParentSizeAndDisplayList();
             };
-            Object.defineProperty(UIComponent.prototype, "scaleX", {
+            Object.defineProperty(__egretProto__, "scaleX", {
                 /**
                  * @member egret.gui.UIComponent#scaleX
                  */
@@ -684,13 +679,13 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            UIComponent.prototype._setScaleX = function (value) {
+            __egretProto__._setScaleX = function (value) {
                 if (this._scaleX == value)
                     return;
                 this._scaleX = value;
                 this.invalidateParentSizeAndDisplayList();
             };
-            Object.defineProperty(UIComponent.prototype, "scaleY", {
+            Object.defineProperty(__egretProto__, "scaleY", {
                 /**
                  * @member egret.gui.UIComponent#scaleY
                  */
@@ -706,13 +701,13 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            UIComponent.prototype._setScaleY = function (value) {
+            __egretProto__._setScaleY = function (value) {
                 if (this._scaleY == value)
                     return;
                 this._scaleY = value;
                 this.invalidateParentSizeAndDisplayList();
             };
-            Object.defineProperty(UIComponent.prototype, "minWidth", {
+            Object.defineProperty(__egretProto__, "minWidth", {
                 /**
                  * @member egret.gui.UIComponent#minWidth
                  */
@@ -728,7 +723,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(UIComponent.prototype, "maxWidth", {
+            Object.defineProperty(__egretProto__, "maxWidth", {
                 /**
                  * @member egret.gui.UIComponent#maxWidth
                  */
@@ -744,10 +739,10 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            UIComponent.prototype._getMaxWidth = function () {
+            __egretProto__._getMaxWidth = function () {
                 return this._maxWidth;
             };
-            Object.defineProperty(UIComponent.prototype, "minHeight", {
+            Object.defineProperty(__egretProto__, "minHeight", {
                 /**
                  * @member egret.gui.UIComponent#minHeight
                  */
@@ -763,7 +758,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(UIComponent.prototype, "maxHeight", {
+            Object.defineProperty(__egretProto__, "maxHeight", {
                 /**
                  * @member egret.gui.UIComponent#maxHeight
                  */
@@ -779,7 +774,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(UIComponent.prototype, "measuredWidth", {
+            Object.defineProperty(__egretProto__, "measuredWidth", {
                 /**
                  * 组件的默认宽度（以像素为单位）。此值由 measure() 方法设置。
                  * @member egret.gui.UIComponent#measuredWidth
@@ -793,7 +788,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(UIComponent.prototype, "measuredHeight", {
+            Object.defineProperty(__egretProto__, "measuredHeight", {
                 /**
                  * 组件的默认高度（以像素为单位）。此值由 measure() 方法设置。
                  * @member egret.gui.UIComponent#measuredHeight
@@ -812,7 +807,7 @@ var egret;
              * @param w {number}
              * @param h {number}
              */
-            UIComponent.prototype.setActualSize = function (w, h) {
+            __egretProto__.setActualSize = function (w, h) {
                 var change = false;
                 if (this._width != w) {
                     this._width = w;
@@ -827,7 +822,7 @@ var egret;
                     this.dispatchResizeEvent();
                 }
             };
-            Object.defineProperty(UIComponent.prototype, "x", {
+            Object.defineProperty(__egretProto__, "x", {
                 /**
                  * @constant egret.gui.UIComponent#x
                  */
@@ -848,7 +843,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(UIComponent.prototype, "y", {
+            Object.defineProperty(__egretProto__, "y", {
                 /**
                  * @constant egret.gui.UIComponent#y
                  */
@@ -872,7 +867,7 @@ var egret;
             /**
              * @method egret.gui.UIComponent#invalidateProperties
              */
-            UIComponent.prototype.invalidateProperties = function () {
+            __egretProto__.invalidateProperties = function () {
                 if (!this._invalidatePropertiesFlag) {
                     this._invalidatePropertiesFlag = true;
                     if (this.parent && gui.UIGlobals._layoutManager)
@@ -882,7 +877,7 @@ var egret;
             /**
              * @method egret.gui.UIComponent#validateProperties
              */
-            UIComponent.prototype.validateProperties = function () {
+            __egretProto__.validateProperties = function () {
                 if (this._invalidatePropertiesFlag) {
                     this.commitProperties();
                     this._invalidatePropertiesFlag = false;
@@ -891,7 +886,7 @@ var egret;
             /**
              * @method egret.gui.UIComponent#invalidateSize
              */
-            UIComponent.prototype.invalidateSize = function () {
+            __egretProto__.invalidateSize = function () {
                 if (!this._invalidateSizeFlag) {
                     this._invalidateSizeFlag = true;
                     if (this.parent && gui.UIGlobals._layoutManager)
@@ -902,7 +897,7 @@ var egret;
              * @method egret.gui.UIComponent#validateSize
              * @param recursive {boolean}
              */
-            UIComponent.prototype.validateSize = function (recursive) {
+            __egretProto__.validateSize = function (recursive) {
                 if (recursive === void 0) { recursive = false; }
                 if (recursive) {
                     for (var i = 0; i < this.numChildren; i++) {
@@ -923,7 +918,7 @@ var egret;
             /**
              * 测量组件尺寸，返回尺寸是否发生变化
              */
-            UIComponent.prototype.measureSizes = function () {
+            __egretProto__.measureSizes = function () {
                 var changed = false;
                 if (!this._invalidateSizeFlag)
                     return changed;
@@ -958,7 +953,7 @@ var egret;
             /**
              * @method egret.gui.UIComponent#invalidateDisplayList
              */
-            UIComponent.prototype.invalidateDisplayList = function () {
+            __egretProto__.invalidateDisplayList = function () {
                 if (!this._invalidateDisplayListFlag) {
                     this._invalidateDisplayListFlag = true;
                     if (this.parent && gui.UIGlobals._layoutManager)
@@ -969,7 +964,7 @@ var egret;
             /**
              * @method egret.gui.UIComponent#validateDisplayList
              */
-            UIComponent.prototype.validateDisplayList = function () {
+            __egretProto__.validateDisplayList = function () {
                 if (this._invalidateDisplayListFlag) {
                     var unscaledWidth = 0;
                     var unscaledHeight = 0;
@@ -1004,7 +999,7 @@ var egret;
              * @method egret.gui.UIComponent#validateNow
              * @param skipDisplayList {boolean}
              */
-            UIComponent.prototype.validateNow = function (skipDisplayList) {
+            __egretProto__.validateNow = function (skipDisplayList) {
                 if (skipDisplayList === void 0) { skipDisplayList = false; }
                 if (!this._validateNowFlag && gui.UIGlobals._layoutManager != null)
                     gui.UIGlobals._layoutManager.validateClient(this, skipDisplayList);
@@ -1015,7 +1010,7 @@ var egret;
              * 标记父级容器的尺寸和显示列表为失效
              * @method egret.gui.UIComponent#invalidateParentSizeAndDisplayList
              */
-            UIComponent.prototype.invalidateParentSizeAndDisplayList = function () {
+            __egretProto__.invalidateParentSizeAndDisplayList = function () {
                 if (!this.parent || !this._includeInLayout || !("invalidateSize" in this.parent))
                     return;
                 var p = (this.parent);
@@ -1028,18 +1023,18 @@ var egret;
              * @param unscaledWidth {number}
              * @param unscaledHeight {number}
              */
-            UIComponent.prototype.updateDisplayList = function (unscaledWidth, unscaledHeight) {
+            __egretProto__.updateDisplayList = function (unscaledWidth, unscaledHeight) {
             };
             /**
              * 是否可以跳过测量尺寸阶段,返回true则不执行measure()方法
              */
-            UIComponent.prototype.canSkipMeasurement = function () {
+            __egretProto__.canSkipMeasurement = function () {
                 return !isNaN(this._explicitWidth) && !isNaN(this._explicitHeight);
             };
             /**
              * 提交属性，子类在调用完invalidateProperties()方法后，应覆盖此方法以应用属性
              */
-            UIComponent.prototype.commitProperties = function () {
+            __egretProto__.commitProperties = function () {
                 if (this.oldWidth != this._width || this.oldHeight != this._height) {
                     this.dispatchResizeEvent();
                 }
@@ -1051,14 +1046,14 @@ var egret;
              * 测量组件尺寸
              * @method egret.gui.UIComponent#measure
              */
-            UIComponent.prototype.measure = function () {
+            __egretProto__.measure = function () {
                 this._measuredHeight = 0;
                 this._measuredWidth = 0;
             };
             /**
              *  抛出移动事件
              */
-            UIComponent.prototype.dispatchMoveEvent = function () {
+            __egretProto__.dispatchMoveEvent = function () {
                 if (this.hasEventListener(gui.MoveEvent.MOVE)) {
                     gui.MoveEvent.dispatchMoveEvent(this, this.oldX, this.oldY);
                 }
@@ -1068,19 +1063,19 @@ var egret;
             /**
              * 子项的xy位置发生改变
              */
-            UIComponent.prototype._childXYChanged = function () {
+            __egretProto__._childXYChanged = function () {
             };
             /**
              *  抛出尺寸改变事件
              */
-            UIComponent.prototype.dispatchResizeEvent = function () {
+            __egretProto__.dispatchResizeEvent = function () {
                 if (this.hasEventListener(gui.ResizeEvent.RESIZE)) {
                     gui.ResizeEvent.dispatchResizeEvent(this, this.oldWidth, this.oldHeight);
                 }
                 this.oldWidth = this._width;
                 this.oldHeight = this._height;
             };
-            Object.defineProperty(UIComponent.prototype, "includeInLayout", {
+            Object.defineProperty(__egretProto__, "includeInLayout", {
                 /**
                  * @member egret.gui.UIComponent#includeInLayout
                  */
@@ -1097,7 +1092,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(UIComponent.prototype, "left", {
+            Object.defineProperty(__egretProto__, "left", {
                 /**
                  * @member egret.gui.UIComponent#left
                  */
@@ -1113,7 +1108,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(UIComponent.prototype, "right", {
+            Object.defineProperty(__egretProto__, "right", {
                 /**
                  * @member egret.gui.UIComponent#right
                  */
@@ -1129,7 +1124,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(UIComponent.prototype, "top", {
+            Object.defineProperty(__egretProto__, "top", {
                 /**
                  * @member egret.gui.UIComponent#top
                  */
@@ -1145,7 +1140,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(UIComponent.prototype, "bottom", {
+            Object.defineProperty(__egretProto__, "bottom", {
                 /**
                  * @member egret.gui.UIComponent#bottom
                  */
@@ -1161,7 +1156,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(UIComponent.prototype, "horizontalCenter", {
+            Object.defineProperty(__egretProto__, "horizontalCenter", {
                 /**
                  * @member egret.gui.UIComponent#horizontalCenter
                  */
@@ -1177,7 +1172,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(UIComponent.prototype, "verticalCenter", {
+            Object.defineProperty(__egretProto__, "verticalCenter", {
                 /**
                  * @member egret.gui.UIComponent#verticalCenter
                  */
@@ -1193,7 +1188,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(UIComponent.prototype, "percentWidth", {
+            Object.defineProperty(__egretProto__, "percentWidth", {
                 /**
                  * @member egret.gui.UIComponent#percentWidth
                  */
@@ -1209,7 +1204,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(UIComponent.prototype, "percentHeight", {
+            Object.defineProperty(__egretProto__, "percentHeight", {
                 /**
                  * @member egret.gui.UIComponent#percentHeight
                  */
@@ -1230,7 +1225,7 @@ var egret;
              * @param layoutWidth {number}
              * @param layoutHeight {number}
              */
-            UIComponent.prototype.setLayoutBoundsSize = function (layoutWidth, layoutHeight) {
+            __egretProto__.setLayoutBoundsSize = function (layoutWidth, layoutHeight) {
                 if (isNaN(layoutWidth)) {
                     this._layoutWidthExplicitlySet = false;
                     layoutWidth = this.preferredWidth;
@@ -1252,7 +1247,7 @@ var egret;
              * @param x {number}
              * @param y {number}
              */
-            UIComponent.prototype.setLayoutBoundsPosition = function (x, y) {
+            __egretProto__.setLayoutBoundsPosition = function (x, y) {
                 if (this._scaleX < 0) {
                     x += this.layoutBoundsWidth;
                 }
@@ -1272,7 +1267,7 @@ var egret;
                     this.dispatchMoveEvent();
                 }
             };
-            Object.defineProperty(UIComponent.prototype, "preferredWidth", {
+            Object.defineProperty(__egretProto__, "preferredWidth", {
                 /**
                  * @member egret.gui.UIComponent#preferredWidth
                  */
@@ -1287,7 +1282,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(UIComponent.prototype, "preferredHeight", {
+            Object.defineProperty(__egretProto__, "preferredHeight", {
                 /**
                  * @member egret.gui.UIComponent#preferredHeight
                  */
@@ -1302,7 +1297,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(UIComponent.prototype, "preferredX", {
+            Object.defineProperty(__egretProto__, "preferredX", {
                 /**
                  * @member egret.gui.UIComponent#preferredX
                  */
@@ -1316,7 +1311,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(UIComponent.prototype, "preferredY", {
+            Object.defineProperty(__egretProto__, "preferredY", {
                 /**
                  * @member egret.gui.UIComponent#preferredY
                  */
@@ -1330,7 +1325,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(UIComponent.prototype, "layoutBoundsX", {
+            Object.defineProperty(__egretProto__, "layoutBoundsX", {
                 /**
                  * @member egret.gui.UIComponent#layoutBoundsX
                  */
@@ -1344,7 +1339,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(UIComponent.prototype, "layoutBoundsY", {
+            Object.defineProperty(__egretProto__, "layoutBoundsY", {
                 /**
                  * @member egret.gui.UIComponent#layoutBoundsY
                  */
@@ -1358,7 +1353,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(UIComponent.prototype, "layoutBoundsWidth", {
+            Object.defineProperty(__egretProto__, "layoutBoundsWidth", {
                 /**
                  * @member egret.gui.UIComponent#layoutBoundsWidth
                  */
@@ -1382,7 +1377,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(UIComponent.prototype, "layoutBoundsHeight", {
+            Object.defineProperty(__egretProto__, "layoutBoundsHeight", {
                 /**
                  * 组件的布局高度,常用于父级的updateDisplayList()方法中
                  * 按照：布局高度>外部显式设置高度>测量高度 的优先级顺序返回高度

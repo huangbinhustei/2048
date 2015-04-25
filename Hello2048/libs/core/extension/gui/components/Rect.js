@@ -24,12 +24,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var egret;
 (function (egret) {
     var gui;
@@ -56,7 +50,8 @@ var egret;
                 this._strokeWeight = 1;
                 this.touchChildren = false;
             }
-            Object.defineProperty(Rect.prototype, "graphics", {
+            var __egretProto__ = Rect.prototype;
+            Object.defineProperty(__egretProto__, "graphics", {
                 get: function () {
                     if (!this._graphics) {
                         this._graphics = new egret.Graphics();
@@ -67,12 +62,12 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Rect.prototype._render = function (renderContext) {
+            __egretProto__._render = function (renderContext) {
                 if (this._graphics)
                     this._graphics._draw(renderContext);
                 _super.prototype._render.call(this, renderContext);
             };
-            Object.defineProperty(Rect.prototype, "fillColor", {
+            Object.defineProperty(__egretProto__, "fillColor", {
                 /**
                  * 填充颜色
                  * @member egret.gui.Rect#fillColor
@@ -89,7 +84,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(Rect.prototype, "fillAlpha", {
+            Object.defineProperty(__egretProto__, "fillAlpha", {
                 /**
                  * 填充透明度,默认值为0。
                  * @member egret.gui.Rect#fillAlpha
@@ -106,7 +101,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(Rect.prototype, "strokeColor", {
+            Object.defineProperty(__egretProto__, "strokeColor", {
                 /**
                  * 边框颜色,注意：当strokeAlpha为0时，不显示边框。
                  * @member egret.gui.Rect#strokeColor
@@ -123,7 +118,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(Rect.prototype, "strokeAlpha", {
+            Object.defineProperty(__egretProto__, "strokeAlpha", {
                 /**
                  * 边框透明度，默认值为0。
                  * @member egret.gui.Rect#strokeAlpha
@@ -140,7 +135,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(Rect.prototype, "strokeWeight", {
+            Object.defineProperty(__egretProto__, "strokeWeight", {
                 /**
                  * 边框粗细(像素),注意：当strokeAlpha为0时，不显示边框。
                  * @member egret.gui.Rect#strokeWeight
@@ -162,7 +157,7 @@ var egret;
              * @returns {Rectangle}
              * @private
              */
-            Rect.prototype._measureBounds = function () {
+            __egretProto__._measureBounds = function () {
                 var bounds = _super.prototype._measureBounds.call(this);
                 var w = this.width;
                 var h = this.height;
@@ -188,7 +183,7 @@ var egret;
              * @param unscaledWidth {number}
              * @param unscaledHeight {number}
              */
-            Rect.prototype.updateDisplayList = function (unscaledWidth, unscaledHeight) {
+            __egretProto__.updateDisplayList = function (unscaledWidth, unscaledHeight) {
                 _super.prototype.updateDisplayList.call(this, unscaledWidth, unscaledWidth);
                 var g = this.graphics;
                 g.clear();
@@ -206,7 +201,7 @@ var egret;
              * @param ignoreTouchEnabled
              * @returns {*}
              */
-            Rect.prototype.hitTest = function (x, y, ignoreTouchEnabled) {
+            __egretProto__.hitTest = function (x, y, ignoreTouchEnabled) {
                 if (ignoreTouchEnabled === void 0) { ignoreTouchEnabled = false; }
                 var result = _super.prototype.hitTest.call(this, x, y, ignoreTouchEnabled);
                 if (result) {

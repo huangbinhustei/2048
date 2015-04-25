@@ -51,12 +51,13 @@ var egret;
                  */
                 this.maxDepth = -1;
             }
+            var __egretProto__ = DepthQueue.prototype;
             /**
              * 插入一个元素
              * @method egret.gui.DepthQueue#insert
              * @param client {ILayoutManagerClient}
              */
-            DepthQueue.prototype.insert = function (client) {
+            __egretProto__.insert = function (client) {
                 var depth = client.nestLevel;
                 var hashCode = client.hashCode;
                 if (this.maxDepth < this.minDepth) {
@@ -87,7 +88,7 @@ var egret;
              * @method egret.gui.DepthQueue#pop
              * @returns {ILayoutManagerClient}
              */
-            DepthQueue.prototype.pop = function () {
+            __egretProto__.pop = function () {
                 var client = null;
                 if (this.minDepth <= this.maxDepth) {
                     var bin = this.depthBins[this.maxDepth];
@@ -117,7 +118,7 @@ var egret;
              * @method egret.gui.DepthQueue#shift
              * @returns {ILayoutManagerClient}
              */
-            DepthQueue.prototype.shift = function () {
+            __egretProto__.shift = function () {
                 var client = null;
                 if (this.minDepth <= this.maxDepth) {
                     var bin = this.depthBins[this.minDepth];
@@ -148,7 +149,7 @@ var egret;
              * @param client {ILayoutManagerClient}
              * @returns {any}
              */
-            DepthQueue.prototype.removeLargestChild = function (client) {
+            __egretProto__.removeLargestChild = function (client) {
                 var max = this.maxDepth;
                 var min = client.nestLevel;
                 var hashCode = client.hashCode;
@@ -189,7 +190,7 @@ var egret;
              * @param client {ILayoutManagerClient}
              * @returns {any}
              */
-            DepthQueue.prototype.removeSmallestChild = function (client) {
+            __egretProto__.removeSmallestChild = function (client) {
                 var min = client.nestLevel;
                 var hashCode = client.hashCode;
                 while (min <= this.maxDepth) {
@@ -230,7 +231,7 @@ var egret;
              * @param level {number}
              * @returns {ILayoutManagerClient}
              */
-            DepthQueue.prototype.remove = function (client, level) {
+            __egretProto__.remove = function (client, level) {
                 if (level === void 0) { level = -1; }
                 var depth = (level >= 0) ? level : client.nestLevel;
                 var hashCode = client.hashCode;
@@ -246,7 +247,7 @@ var egret;
              * 清空队列
              * @method egret.gui.DepthQueue#removeAll
              */
-            DepthQueue.prototype.removeAll = function () {
+            __egretProto__.removeAll = function () {
                 this.depthBins.length = 0;
                 this.minDepth = 0;
                 this.maxDepth = -1;
@@ -256,7 +257,7 @@ var egret;
              * @method egret.gui.DepthQueue#isEmpty
              * @returns {boolean}
              */
-            DepthQueue.prototype.isEmpty = function () {
+            __egretProto__.isEmpty = function () {
                 return this.minDepth > this.maxDepth;
             };
             return DepthQueue;
@@ -271,6 +272,7 @@ var egret;
                 this.length = 0;
                 this.items = [];
             }
+            var __egretProto__ = DepthBin.prototype;
             return DepthBin;
         })();
         gui.DepthBin = DepthBin;

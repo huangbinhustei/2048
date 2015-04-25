@@ -24,12 +24,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var egret;
 (function (egret) {
     var gui;
@@ -59,7 +53,8 @@ var egret;
                 this._rollOverOpenDelay = NaN;
                 this.rollOverOpenDelayTimer = null;
             }
-            Object.defineProperty(DropDownController.prototype, "openButton", {
+            var __egretProto__ = DropDownController.prototype;
+            Object.defineProperty(__egretProto__, "openButton", {
                 /**
                  * 下拉按钮实例
                  * @member egret.gui.DropDownController#openButton
@@ -77,7 +72,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(DropDownController.prototype, "dropDown", {
+            Object.defineProperty(__egretProto__, "dropDown", {
                 /**
                  * 下拉区域显示对象
                  * @member egret.gui.DropDownController#dropDown
@@ -93,7 +88,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(DropDownController.prototype, "isOpen", {
+            Object.defineProperty(__egretProto__, "isOpen", {
                 /**
                  * 下拉列表已经打开的标志
                  * @member egret.gui.DropDownController#isOpen
@@ -104,7 +99,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(DropDownController.prototype, "closeOnResize", {
+            Object.defineProperty(__egretProto__, "closeOnResize", {
                 /**
                  * 如果为 true，则在调整舞台大小时会关闭下拉列表。
                  * @member egret.gui.DropDownController#closeOnResize
@@ -123,7 +118,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(DropDownController.prototype, "rollOverOpenDelay", {
+            Object.defineProperty(__egretProto__, "rollOverOpenDelay", {
                 /**
                  * 指定滑过锚点按钮时打开下拉列表要等待的延迟（以毫秒为单位）。
                  * 如果设置为 NaN，则下拉列表会在单击时打开，而不是在滑过时打开。默认值NaN
@@ -145,7 +140,7 @@ var egret;
             /**
              * 添加触发下拉列表打开的事件监听
              */
-            DropDownController.prototype.addOpenTriggers = function () {
+            __egretProto__.addOpenTriggers = function () {
                 if (this.openButton) {
                     if (isNaN(this.rollOverOpenDelay))
                         this.openButton.addEventListener(gui.UIEvent.BUTTON_DOWN, this._openButton_buttonDownHandler, this);
@@ -156,7 +151,7 @@ var egret;
             /**
              * 移除触发下拉列表打开的事件监听
              */
-            DropDownController.prototype.removeOpenTriggers = function () {
+            __egretProto__.removeOpenTriggers = function () {
                 if (this.openButton) {
                     if (isNaN(this.rollOverOpenDelay))
                         this.openButton.removeEventListener(gui.UIEvent.BUTTON_DOWN, this._openButton_buttonDownHandler, this);
@@ -167,7 +162,7 @@ var egret;
             /**
              * 添加触发下拉列表关闭的事件监听
              */
-            DropDownController.prototype.addCloseTriggers = function () {
+            __egretProto__.addCloseTriggers = function () {
                 if (gui.UIGlobals.stage) {
                     if (isNaN(this.rollOverOpenDelay)) {
                         gui.UIGlobals.stage.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.stage_mouseDownHandler, this);
@@ -182,7 +177,7 @@ var egret;
             /**
              * 移除触发下拉列表关闭的事件监听
              */
-            DropDownController.prototype.removeCloseTriggers = function () {
+            __egretProto__.removeCloseTriggers = function () {
                 if (gui.UIGlobals.stage) {
                     if (isNaN(this.rollOverOpenDelay)) {
                         gui.UIGlobals.stage.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.stage_mouseDownHandler, this);
@@ -199,21 +194,21 @@ var egret;
             /**
              * 添加舞台尺寸改变的事件监听
              */
-            DropDownController.prototype.addCloseOnResizeTrigger = function () {
+            __egretProto__.addCloseOnResizeTrigger = function () {
                 if (this.closeOnResize)
                     gui.UIGlobals.stage.addEventListener(egret.Event.RESIZE, this.stage_resizeHandler, this);
             };
             /**
              * 移除舞台尺寸改变的事件监听
              */
-            DropDownController.prototype.removeCloseOnResizeTrigger = function () {
+            __egretProto__.removeCloseOnResizeTrigger = function () {
                 if (this.closeOnResize)
                     gui.UIGlobals.stage.removeEventListener(egret.Event.RESIZE, this.stage_resizeHandler, this);
             };
             /**
              * 检查鼠标是否在DropDown或者openButton区域内。
              */
-            DropDownController.prototype.isTargetOverDropDownOrOpenButton = function (target) {
+            __egretProto__.isTargetOverDropDownOrOpenButton = function (target) {
                 if (target) {
                     if (this.openButton && this.openButton.contains(target))
                         return true;
@@ -238,13 +233,13 @@ var egret;
              * 打开下拉列表
              * @method egret.gui.DropDownController#openDropDown
              */
-            DropDownController.prototype.openDropDown = function () {
+            __egretProto__.openDropDown = function () {
                 this.openDropDownHelper();
             };
             /**
              * 执行打开下拉列表
              */
-            DropDownController.prototype.openDropDownHelper = function () {
+            __egretProto__.openDropDownHelper = function () {
                 if (!this.isOpen) {
                     this.addCloseTriggers();
                     this._isOpen = true;
@@ -258,7 +253,7 @@ var egret;
              * @method egret.gui.DropDownController#closeDropDown
              * @param commit {boolean}
              */
-            DropDownController.prototype.closeDropDown = function (commit) {
+            __egretProto__.closeDropDown = function (commit) {
                 if (this.isOpen) {
                     this._isOpen = false;
                     if (this.openButton)
@@ -275,7 +270,7 @@ var egret;
              * @method egret.gui.DropDownController#_openButton_buttonDownHandler
              * @param event {Event}
              */
-            DropDownController.prototype._openButton_buttonDownHandler = function (event) {
+            __egretProto__._openButton_buttonDownHandler = function (event) {
                 if (this.isOpen)
                     this.closeDropDown(true);
                 else {
@@ -288,7 +283,7 @@ var egret;
              * @method egret.gui.DropDownController#_openButton_rollOverHandler
              * @param event {TouchEvent}
              */
-            DropDownController.prototype._openButton_rollOverHandler = function (event) {
+            __egretProto__._openButton_rollOverHandler = function (event) {
                 if (this.rollOverOpenDelay == 0)
                     this.openDropDownHelper();
                 else {
@@ -301,7 +296,7 @@ var egret;
             /**
              * openButton上鼠标移出事件
              */
-            DropDownController.prototype.openButton_rollOutHandler = function (event) {
+            __egretProto__.openButton_rollOutHandler = function (event) {
                 if (this.rollOverOpenDelayTimer && this.rollOverOpenDelayTimer.running) {
                     this.rollOverOpenDelayTimer.stop();
                     this.rollOverOpenDelayTimer = null;
@@ -311,7 +306,7 @@ var egret;
             /**
              * 到达鼠标移入等待延迟打开的时间。
              */
-            DropDownController.prototype.rollOverDelay_timerCompleteHandler = function (event) {
+            __egretProto__.rollOverDelay_timerCompleteHandler = function (event) {
                 this.openButton.removeEventListener(egret.TouchEvent.TOUCH_ROLL_OUT, this.openButton_rollOutHandler, this);
                 this.rollOverOpenDelayTimer = null;
                 this.openDropDownHelper();
@@ -321,7 +316,7 @@ var egret;
              * @method egret.gui.DropDownController#stage_mouseDownHandler
              * @param event {Event}
              */
-            DropDownController.prototype.stage_mouseDownHandler = function (event) {
+            __egretProto__.stage_mouseDownHandler = function (event) {
                 if (this.mouseIsDown) {
                     this.mouseIsDown = false;
                     return;
@@ -344,7 +339,7 @@ var egret;
              * @method egret.gui.DropDownController#stage_mouseMoveHandler
              * @param event {Event}
              */
-            DropDownController.prototype.stage_mouseMoveHandler = function (event) {
+            __egretProto__.stage_mouseMoveHandler = function (event) {
                 var target = (event.target);
                 var containedTarget = this.isTargetOverDropDownOrOpenButton(target);
                 if (containedTarget)
@@ -361,7 +356,7 @@ var egret;
              * @method egret.gui.DropDownController#stage_mouseUpHandler_noRollOverOpenDelay
              * @param event {Event}
              */
-            DropDownController.prototype.stage_mouseUpHandler_noRollOverOpenDelay = function (event) {
+            __egretProto__.stage_mouseUpHandler_noRollOverOpenDelay = function (event) {
                 if (this.mouseIsDown) {
                     this.mouseIsDown = false;
                     return;
@@ -372,7 +367,7 @@ var egret;
              * @method egret.gui.DropDownController#stage_mouseUpHandler
              * @param event {Event}
              */
-            DropDownController.prototype.stage_mouseUpHandler = function (event) {
+            __egretProto__.stage_mouseUpHandler = function (event) {
                 var target = (event.target);
                 var containedTarget = this.isTargetOverDropDownOrOpenButton(target);
                 if (containedTarget) {
@@ -387,13 +382,13 @@ var egret;
              * @method egret.gui.DropDownController#stage_resizeHandler
              * @param event {Event}
              */
-            DropDownController.prototype.stage_resizeHandler = function (event) {
+            __egretProto__.stage_resizeHandler = function (event) {
                 this.closeDropDown(true);
             };
             /**
              * 舞台上鼠标滚轮事件
              */
-            DropDownController.prototype.stage_mouseWheelHandler = function (event) {
+            __egretProto__.stage_mouseWheelHandler = function (event) {
                 if (this.dropDown && !((this.dropDown).contains((event.target)) && event.isDefaultPrevented()))
                     this.closeDropDown(false);
             };

@@ -36,6 +36,7 @@ var egret;
         var TileOrientation = (function () {
             function TileOrientation() {
             }
+            var __egretProto__ = TileOrientation.prototype;
             /**
              * 逐行排列元素。
              * @constant egret.gui.TileOrientation.ROWS

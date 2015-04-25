@@ -24,12 +24,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var egret;
 (function (egret) {
     var gui;
@@ -59,7 +53,8 @@ var egret;
                 this.addEventListener("focus", this.focusInHandler, this);
                 this.addEventListener("blur", this.focusOutHandler, this);
             }
-            Object.defineProperty(SkinnableTextBase.prototype, "focusEnabled", {
+            var __egretProto__ = SkinnableTextBase.prototype;
+            Object.defineProperty(__egretProto__, "focusEnabled", {
                 get: function () {
                     return this._focusEnabled;
                 },
@@ -72,7 +67,7 @@ var egret;
             /**
              * 焦点移入
              */
-            SkinnableTextBase.prototype.focusInHandler = function (event) {
+            __egretProto__.focusInHandler = function (event) {
                 if (event.target == this) {
                     this.setFocus();
                     return;
@@ -82,12 +77,12 @@ var egret;
             /**
              * 焦点移出
              */
-            SkinnableTextBase.prototype.focusOutHandler = function (event) {
+            __egretProto__.focusOutHandler = function (event) {
                 if (event.target == this)
                     return;
                 this.invalidateSkinState();
             };
-            Object.defineProperty(SkinnableTextBase.prototype, "prompt", {
+            Object.defineProperty(__egretProto__, "prompt", {
                 /**
                  * 当text属性为空字符串时要显示的文本内容。 <p/>
                  * 先创建文本控件时将显示提示文本。控件获得焦点时或控件的 text 属性为非空字符串时，提示文本将消失。
@@ -111,7 +106,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(SkinnableTextBase.prototype, "maxWidth", {
+            Object.defineProperty(__egretProto__, "maxWidth", {
                 /**
                  * @inheritDoc
                  */
@@ -137,7 +132,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(SkinnableTextBase.prototype, "textColor", {
+            Object.defineProperty(__egretProto__, "textColor", {
                 /**
                  * 文本颜色。
                  */
@@ -161,7 +156,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(SkinnableTextBase.prototype, "displayAsPassword", {
+            Object.defineProperty(__egretProto__, "displayAsPassword", {
                 /**
                  * 指定文本字段是否是密码文本字段。如果此属性的值为 true，则文本字段被视为密码文本字段，并使用星号而不是实际字符来隐藏输入的字符。
                  * 如果为 false，则不会将文本字段视为密码文本字段。启用密码模式时，“剪切”和“复制”命令及其对应的键盘快捷键将不起作用。
@@ -186,7 +181,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(SkinnableTextBase.prototype, "editable", {
+            Object.defineProperty(__egretProto__, "editable", {
                 /**
                  * 文本是否可编辑的标志。
                  */
@@ -209,7 +204,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(SkinnableTextBase.prototype, "maxChars", {
+            Object.defineProperty(__egretProto__, "maxChars", {
                 /**
                  * 文本字段中最多可包含的字符数（即用户输入的字符数）。脚本可以插入比 maxChars 允许的字符数更多的文本；
                  * maxChars 属性仅表示用户可以输入多少文本。如果此属性的值为 0，则用户可以输入无限数量的文本。
@@ -233,7 +228,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(SkinnableTextBase.prototype, "restrict", {
+            Object.defineProperty(__egretProto__, "restrict", {
                 /**
                  * 表示用户可输入到文本字段中的字符集。如果 restrict 属性的值为 null，则可以输入任何字符。
                  * 如果 restrict 属性的值为空字符串，则不能输入任何字符。如果 restrict 属性的值为一串字符，
@@ -261,7 +256,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(SkinnableTextBase.prototype, "selectable", {
+            Object.defineProperty(__egretProto__, "selectable", {
                 /**
                  * 一个布尔值，表示文本字段是否可选。值 true 表示文本可选。selectable 属性控制文本字段是否可选，
                  * 而不控制文本字段是否可编辑。动态文本字段即使不可编辑，它也可能是可选的。如果动态文本字段是不可选的，
@@ -289,7 +284,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(SkinnableTextBase.prototype, "selectionBeginIndex", {
+            Object.defineProperty(__egretProto__, "selectionBeginIndex", {
                 /**
                  * 当前所选内容中第一个字符从零开始的字符索引值。例如，第一个字符的索引值是 0，
                  * 第二个字符的索引值是 1，依此类推。如果未选定任何文本，此属性为 caretIndex 的值
@@ -304,7 +299,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(SkinnableTextBase.prototype, "selectionEndIndex", {
+            Object.defineProperty(__egretProto__, "selectionEndIndex", {
                 /**
                  * 当前所选内容中最后一个字符从零开始的字符索引值。例如，第一个字符的索引值是 0，第二个字符的索引值是 1，
                  * 依此类推。如果未选定任何文本，此属性为 caretIndex 的值。
@@ -319,7 +314,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(SkinnableTextBase.prototype, "caretIndex", {
+            Object.defineProperty(__egretProto__, "caretIndex", {
                 /**
                  * 插入点（尖号）位置的索引。如果没有显示任何插入点，则在将焦点恢复到字段时，
                  * 值将为插入点所在的位置（通常为插入点上次所在的位置，如果字段不曾具有焦点，则为 0）。
@@ -334,7 +329,7 @@ var egret;
              * 将第一个字符和最后一个字符的索引值（使用 beginIndex 和 endIndex 参数指定）指定的文本设置为所选内容。
              * 如果两个参数值相同，则此方法会设置插入点，就如同设置 caretIndex 属性一样。
              */
-            SkinnableTextBase.prototype.setSelection = function (beginIndex, endIndex) {
+            __egretProto__.setSelection = function (beginIndex, endIndex) {
                 if (endIndex === void 0) { endIndex = 0; }
                 if (this.textDisplay) {
                     this.textDisplay.setSelection(beginIndex, endIndex);
@@ -347,7 +342,7 @@ var egret;
             /**
              * 选中所有文本。
              */
-            SkinnableTextBase.prototype.selectAll = function () {
+            __egretProto__.selectAll = function () {
                 if (this.textDisplay) {
                     this.textDisplay.selectAll();
                 }
@@ -355,7 +350,7 @@ var egret;
                     this.setSelection(0, this.textDisplayProperties.text.length - 1);
                 }
             };
-            Object.defineProperty(SkinnableTextBase.prototype, "text", {
+            Object.defineProperty(__egretProto__, "text", {
                 /**
                  * 此文本组件所显示的文本。
                  */
@@ -368,13 +363,13 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            SkinnableTextBase.prototype._getText = function () {
+            __egretProto__._getText = function () {
                 if (this.textDisplay)
                     return this.textDisplay.text;
                 var v = this.textDisplayProperties.text;
                 return (v === undefined) ? "" : v;
             };
-            SkinnableTextBase.prototype._setText = function (value) {
+            __egretProto__._setText = function (value) {
                 if (this.textDisplay) {
                     this.textDisplay.text = value;
                     this.textDisplayProperties.text = true;
@@ -387,14 +382,14 @@ var egret;
                 this.invalidateProperties();
                 this.invalidateSkinState();
             };
-            SkinnableTextBase.prototype._getWidthInChars = function () {
+            __egretProto__._getWidthInChars = function () {
                 var richEditableText = (this.textDisplay);
                 if (richEditableText)
                     return richEditableText.widthInChars;
                 var v = this.textDisplay ? undefined : this.textDisplayProperties.widthInChars;
                 return (v === undefined) ? NaN : v;
             };
-            SkinnableTextBase.prototype._setWidthInChars = function (value) {
+            __egretProto__._setWidthInChars = function (value) {
                 if (this.textDisplay) {
                     var richEditableText = (this.textDisplay);
                     if (richEditableText)
@@ -406,14 +401,14 @@ var egret;
                 }
                 this.invalidateProperties();
             };
-            SkinnableTextBase.prototype._getHeightInLines = function () {
+            __egretProto__._getHeightInLines = function () {
                 var richEditableText = (this.textDisplay);
                 if (richEditableText)
                     return richEditableText.heightInLines;
                 var v = this.textDisplay ? undefined : this.textDisplayProperties.heightInLines;
                 return (v === undefined) ? NaN : v;
             };
-            SkinnableTextBase.prototype._setHeightInLines = function (value) {
+            __egretProto__._setHeightInLines = function (value) {
                 if (this.textDisplay) {
                     var richEditableText = (this.textDisplay);
                     if (richEditableText)
@@ -429,7 +424,7 @@ var egret;
              * 返回要应用到外观的状态的名称
              * @inheritDoc
              */
-            SkinnableTextBase.prototype.getCurrentSkinState = function () {
+            __egretProto__.getCurrentSkinState = function () {
                 var focus = gui.UIGlobals.stage.focus;
                 var skin = this.skin;
                 if (this._prompt && (!focus || !this.contains(focus)) && this.text == "") {
@@ -444,7 +439,7 @@ var egret;
              * 添加外观部件时调用
              * @inheritDoc
              */
-            SkinnableTextBase.prototype.partAdded = function (partName, instance) {
+            __egretProto__.partAdded = function (partName, instance) {
                 _super.prototype.partAdded.call(this, partName, instance);
                 if (instance == this.textDisplay) {
                     this.textDisplayAdded();
@@ -459,7 +454,7 @@ var egret;
              * 正删除外观部件的实例时调用
              * @inheritDoc
              */
-            SkinnableTextBase.prototype.partRemoved = function (partName, instance) {
+            __egretProto__.partRemoved = function (partName, instance) {
                 _super.prototype.partRemoved.call(this, partName, instance);
                 if (instance == this.textDisplay) {
                     this.textDisplayRemoved();
@@ -471,7 +466,7 @@ var egret;
              * 设置此组件的焦点
              * @inheritDoc
              */
-            SkinnableTextBase.prototype.setFocus = function () {
+            __egretProto__.setFocus = function () {
                 if (this._focusEnabled == false)
                     return;
                 if (this.textDisplay)
@@ -482,12 +477,12 @@ var egret;
             /**
              * 当皮肤不为ISkinPartHost时，创建TextDisplay显示对象
              */
-            SkinnableTextBase.prototype._createTextDisplay = function () {
+            __egretProto__._createTextDisplay = function () {
             };
             /**
              * @inheritDoc
              */
-            SkinnableTextBase.prototype._removeSkinParts = function () {
+            __egretProto__._removeSkinParts = function () {
                 if (!this.textDisplay)
                     return;
                 this.partRemoved("textDisplay", this.textDisplay);
@@ -497,7 +492,7 @@ var egret;
             /**
              * textDisplay附加
              */
-            SkinnableTextBase.prototype.textDisplayAdded = function () {
+            __egretProto__.textDisplayAdded = function () {
                 var newTextDisplayProperties = {};
                 var richEditableText = (this.textDisplay);
                 if (this.textDisplayProperties.displayAsPassword !== undefined) {
@@ -552,7 +547,7 @@ var egret;
             /**
              * textDisplay移除
              */
-            SkinnableTextBase.prototype.textDisplayRemoved = function () {
+            __egretProto__.textDisplayRemoved = function () {
                 var newTextDisplayProperties = {};
                 var richEditableText = (this.textDisplay);
                 if (this.textDisplayProperties.displayAsPassword) {
@@ -593,14 +588,14 @@ var egret;
             /**
              * textDisplay文字改变事件
              */
-            SkinnableTextBase.prototype.textDisplay_changeHandler = function (event) {
+            __egretProto__.textDisplay_changeHandler = function (event) {
                 this.invalidateDisplayList();
                 this.dispatchEvent(event);
             };
             /**
              * textDisplay文字即将改变事件
              */
-            SkinnableTextBase.prototype.textDisplay_changingHandler = function (event) {
+            __egretProto__.textDisplay_changingHandler = function (event) {
                 var newEvent = new egret.Event(event.type, false, true);
                 newEvent.data = event.data;
                 this.dispatchEvent(newEvent);

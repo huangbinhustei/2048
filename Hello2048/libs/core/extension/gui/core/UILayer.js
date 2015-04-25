@@ -61,7 +61,8 @@ var egret;
                 this.lowerBoundReference = lowerBoundReference;
                 this.upperBoundReference = upperBoundReference;
             }
-            Object.defineProperty(UILayer.prototype, "numElements", {
+            var __egretProto__ = UILayer.prototype;
+            Object.defineProperty(__egretProto__, "numElements", {
                 get: function () {
                     return this.owner[this.upperBoundReference] - this.owner[this.lowerBoundReference];
                 },
@@ -73,7 +74,7 @@ var egret;
              * @param index
              * @returns {IVisualElement}
              */
-            UILayer.prototype.getElementAt = function (index) {
+            __egretProto__.getElementAt = function (index) {
                 var retval = this.owner[this.raw_getElementAt](this.owner[this.lowerBoundReference] + index);
                 return retval;
             };
@@ -82,7 +83,7 @@ var egret;
              * @param element
              * @returns {IVisualElement}
              */
-            UILayer.prototype.addElement = function (element) {
+            __egretProto__.addElement = function (element) {
                 var index = this.owner[this.upperBoundReference];
                 if (element.parent === this.owner)
                     index--;
@@ -97,7 +98,7 @@ var egret;
              * @param index
              * @returns {IVisualElement}
              */
-            UILayer.prototype.addElementAt = function (element, index) {
+            __egretProto__.addElementAt = function (element, index) {
                 this.owner[this.upperBoundReference]++;
                 this.owner[this.raw_addElementAt](element, this.owner[this.lowerBoundReference] + index);
                 element.ownerChanged(this);
@@ -108,7 +109,7 @@ var egret;
              * @param element
              * @returns {IVisualElement}
              */
-            UILayer.prototype.removeElement = function (element) {
+            __egretProto__.removeElement = function (element) {
                 var index = this.owner[this.raw_getElementIndex](element);
                 if (this.owner[this.lowerBoundReference] <= index && index < this.owner[this.upperBoundReference]) {
                     this.owner[this.raw_removeElement](element);
@@ -122,7 +123,7 @@ var egret;
              * @param index
              * @returns {IVisualElement}
              */
-            UILayer.prototype.removeElementAt = function (index) {
+            __egretProto__.removeElementAt = function (index) {
                 index += this.owner[this.lowerBoundReference];
                 var element;
                 if (this.owner[this.lowerBoundReference] <= index && index < this.owner[this.upperBoundReference]) {
@@ -137,7 +138,7 @@ var egret;
              * @param element
              * @returns {number}
              */
-            UILayer.prototype.getElementIndex = function (element) {
+            __egretProto__.getElementIndex = function (element) {
                 var retval = this.owner[this.raw_getElementIndex](element);
                 retval -= this.owner[this.lowerBoundReference];
                 return retval;
@@ -147,7 +148,7 @@ var egret;
              * @param element
              * @param index
              */
-            UILayer.prototype.setElementIndex = function (element, index) {
+            __egretProto__.setElementIndex = function (element, index) {
                 this.owner[this.raw_setElementIndex](element, this.owner[this.lowerBoundReference] + index);
             };
             return UILayer;

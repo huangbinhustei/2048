@@ -24,12 +24,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var egret;
 (function (egret) {
     var gui;
@@ -62,7 +56,8 @@ var egret;
                 this._value = null;
                 this.groupName = "radioGroup";
             }
-            Object.defineProperty(RadioButton.prototype, "enabled", {
+            var __egretProto__ = RadioButton.prototype;
+            Object.defineProperty(__egretProto__, "enabled", {
                 /**
                  * 组件是否可以接受用户交互。默认值为true。设置此属性将影响组内所有单选按钮
                  * @member egret.gui.RadioButton#enabled
@@ -81,7 +76,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(RadioButton.prototype, "group", {
+            Object.defineProperty(__egretProto__, "group", {
                 /**
                  * 此单选按钮所属的组。同一个组的多个单选按钮之间互斥。
                  * 若不设置此属性，则根据groupName属性自动创建一个唯一的RadioButtonGroup。
@@ -115,7 +110,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(RadioButton.prototype, "groupName", {
+            Object.defineProperty(__egretProto__, "groupName", {
                 /**
                  * 所属组的名称,具有相同组名的多个单选按钮之间互斥。默认值:"radioGroup"。
                  * 可以把此属性当做设置组的一个简便方式，作用与设置group属性相同,。
@@ -143,11 +138,11 @@ var egret;
              * @param value
              * @private
              */
-            RadioButton.prototype._setSelected = function (value) {
+            __egretProto__._setSelected = function (value) {
                 _super.prototype._setSelected.call(this, value);
                 this.invalidateDisplayList();
             };
-            Object.defineProperty(RadioButton.prototype, "value", {
+            Object.defineProperty(__egretProto__, "value", {
                 /**
                  * 与此单选按钮关联的自定义数据。
                  * 当被点击时，所属的RadioButtonGroup对象会把此属性赋值给ItemClickEvent.item属性并抛出事件。
@@ -170,7 +165,7 @@ var egret;
              * 处理对组件设置的属性
              * @method egret.gui.RadioButton#commitProperties
              */
-            RadioButton.prototype.commitProperties = function () {
+            __egretProto__.commitProperties = function () {
                 if (this.groupChanged) {
                     this.addToGroup();
                     this.groupChanged = false;
@@ -183,7 +178,7 @@ var egret;
              * @param unscaledWidth {number}
              * @param unscaledHeight {number}
              */
-            RadioButton.prototype.updateDisplayList = function (unscaledWidth, unscaledHeight) {
+            __egretProto__.updateDisplayList = function (unscaledWidth, unscaledHeight) {
                 _super.prototype.updateDisplayList.call(this, unscaledWidth, unscaledHeight);
                 if (this.group) {
                     if (this.selected)
@@ -196,7 +191,7 @@ var egret;
              * 当在用户单击按钮之后处理 MouseEvent.MOUSE_UP 事件时，将调用此方法
              * @method egret.gui.RadioButton#buttonReleased
              */
-            RadioButton.prototype.buttonReleased = function () {
+            __egretProto__.buttonReleased = function () {
                 if (!this.enabled || this.selected)
                     return;
                 if (!this._radioButtonGroup)
@@ -207,7 +202,7 @@ var egret;
             /**
              * 添此单选按钮加到组
              */
-            RadioButton.prototype.addToGroup = function () {
+            __egretProto__.addToGroup = function () {
                 var g = this.group;
                 if (g)
                     g._addInstance(this);

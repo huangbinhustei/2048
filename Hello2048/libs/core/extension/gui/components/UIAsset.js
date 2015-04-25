@@ -24,12 +24,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var egret;
 (function (egret) {
     var gui;
@@ -80,7 +74,8 @@ var egret;
                 }
                 this.autoScale = autoScale;
             }
-            Object.defineProperty(UIAsset.prototype, "source", {
+            var __egretProto__ = UIAsset.prototype;
+            Object.defineProperty(__egretProto__, "source", {
                 /**
                  * 素材标识符。可以为Class,String,或DisplayObject实例等任意类型，具体规则由项目注入的素材适配器决定，
                  * 适配器根据此属性值解析获取对应的显示对象，并赋值给content属性。
@@ -104,7 +99,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(UIAsset.prototype, "content", {
+            Object.defineProperty(__egretProto__, "content", {
                 /**
                  * 解析source得到的对象，通常为显示对象或Texture。
                  * @member egret.gui.UIAsset#content
@@ -118,7 +113,7 @@ var egret;
             /**
              * 创建该容器的子元素对象
              */
-            UIAsset.prototype.createChildren = function () {
+            __egretProto__.createChildren = function () {
                 _super.prototype.createChildren.call(this);
                 if (this.sourceChanged) {
                     this.parseSource();
@@ -128,7 +123,7 @@ var egret;
             /**
              * 解析source
              */
-            UIAsset.prototype.parseSource = function () {
+            __egretProto__.parseSource = function () {
                 this.sourceChanged = false;
                 var adapter = UIAsset.assetAdapter;
                 if (!adapter) {
@@ -146,7 +141,7 @@ var egret;
             /**
              * 获取资源适配器
              */
-            UIAsset.prototype.getAdapter = function () {
+            __egretProto__.getAdapter = function () {
                 var adapter;
                 try {
                     adapter = egret.Injector.getInstance("egret.gui.IAssetAdapter");
@@ -160,7 +155,7 @@ var egret;
             /**
              * 皮肤发生改变
              */
-            UIAsset.prototype.contentChanged = function (content, source) {
+            __egretProto__.contentChanged = function (content, source) {
                 if (source !== this._source)
                     return;
                 var oldContent = this._content;
@@ -197,7 +192,7 @@ var egret;
             /**
              * 计算组件的默认大小和（可选）默认最小大小
              */
-            UIAsset.prototype.measure = function () {
+            __egretProto__.measure = function () {
                 _super.prototype.measure.call(this);
                 var content = this._content;
                 if (content instanceof egret.DisplayObject) {
@@ -226,7 +221,7 @@ var egret;
              * @param unscaledWidth {number}
              * @param unscaledHeight {number}
              */
-            UIAsset.prototype.updateDisplayList = function (unscaledWidth, unscaledHeight) {
+            __egretProto__.updateDisplayList = function (unscaledWidth, unscaledHeight) {
                 _super.prototype.updateDisplayList.call(this, unscaledWidth, unscaledHeight);
                 var content = this._content;
                 if (this.autoScale && content instanceof egret.DisplayObject) {
@@ -245,7 +240,7 @@ var egret;
              * @param renderContext
              * @private
              */
-            UIAsset.prototype._render = function (renderContext) {
+            __egretProto__._render = function (renderContext) {
                 if (this._contentIsTexture) {
                     var texture = this._content;
                     var w;
@@ -267,7 +262,7 @@ var egret;
              * @returns {Rectangle}
              * @private
              */
-            UIAsset.prototype._measureBounds = function () {
+            __egretProto__._measureBounds = function () {
                 if (this._contentIsTexture) {
                     var texture = this._content;
                     var textureW = texture._textureWidth;
@@ -286,7 +281,7 @@ var egret;
              * @param child {DisplayObject}
              * @returns {DisplayObject}
              */
-            UIAsset.prototype.addChild = function (child) {
+            __egretProto__.addChild = function (child) {
                 throw (new Error(egret.getString(3004, egret.getString(3003))));
             };
             /**
@@ -296,7 +291,7 @@ var egret;
              * @param index {number}
              * @returns {DisplayObject}
              */
-            UIAsset.prototype.addChildAt = function (child, index) {
+            __egretProto__.addChildAt = function (child, index) {
                 throw (new Error(egret.getString(3005, egret.getString(3003))));
             };
             /**
@@ -305,7 +300,7 @@ var egret;
              * @param child {DisplayObject}
              * @returns {DisplayObject}
              */
-            UIAsset.prototype.removeChild = function (child) {
+            __egretProto__.removeChild = function (child) {
                 throw (new Error(egret.getString(3006, egret.getString(3003))));
             };
             /**
@@ -314,7 +309,7 @@ var egret;
              * @param index {number}
              * @returns {DisplayObject}
              */
-            UIAsset.prototype.removeChildAt = function (index) {
+            __egretProto__.removeChildAt = function (index) {
                 throw (new Error(egret.getString(3007, egret.getString(3003))));
             };
             /**
@@ -323,7 +318,7 @@ var egret;
              * @param child {DisplayObject}
              * @param index {number}
              */
-            UIAsset.prototype.setChildIndex = function (child, index) {
+            __egretProto__.setChildIndex = function (child, index) {
                 throw (new Error(egret.getString(3008, egret.getString(3003))));
             };
             /**
@@ -332,7 +327,7 @@ var egret;
              * @param child1 {DisplayObject}
              * @param child2 {DisplayObject}
              */
-            UIAsset.prototype.swapChildren = function (child1, child2) {
+            __egretProto__.swapChildren = function (child1, child2) {
                 throw (new Error(egret.getString(3009, egret.getString(3003))));
             };
             /**
@@ -341,7 +336,7 @@ var egret;
              * @param index1 {number}
              * @param index2 {number}
              */
-            UIAsset.prototype.swapChildrenAt = function (index1, index2) {
+            __egretProto__.swapChildrenAt = function (index1, index2) {
                 throw (new Error(egret.getString(3010, egret.getString(3003))));
             };
             /**

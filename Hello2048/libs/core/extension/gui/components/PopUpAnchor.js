@@ -24,12 +24,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var egret;
 (function (egret) {
     var gui;
@@ -76,7 +70,8 @@ var egret;
                 this.addEventListener(egret.Event.ADDED_TO_STAGE, this.addedToStageHandler, this);
                 this.addEventListener(egret.Event.REMOVED_FROM_STAGE, this.removedFromStageHandler, this);
             }
-            Object.defineProperty(PopUpAnchor.prototype, "popUpHeightMatchesAnchorHeight", {
+            var __egretProto__ = PopUpAnchor.prototype;
+            Object.defineProperty(__egretProto__, "popUpHeightMatchesAnchorHeight", {
                 /**
                  * 如果为 true，则将popUp控件的高度设置为 PopUpAnchor的高度值。
                  * @member egret.gui.PopUpAnchor#popUpHeightMatchesAnchorHeight
@@ -93,7 +88,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(PopUpAnchor.prototype, "popUpWidthMatchesAnchorWidth", {
+            Object.defineProperty(__egretProto__, "popUpWidthMatchesAnchorWidth", {
                 /**
                  * 如果为true，则将popUp控件的宽度设置为PopUpAnchor的宽度值。
                  * @member egret.gui.PopUpAnchor#popUpWidthMatchesAnchorWidth
@@ -110,7 +105,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(PopUpAnchor.prototype, "displayPopUp", {
+            Object.defineProperty(__egretProto__, "displayPopUp", {
                 /**
                  * 如果为 true，则将popUp对象弹出。若为false，关闭弹出的popUp。
                  * @member egret.gui.PopUpAnchor#displayPopUp
@@ -127,7 +122,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(PopUpAnchor.prototype, "popUp", {
+            Object.defineProperty(__egretProto__, "popUp", {
                 /**
                  * 要弹出或移除的目标显示对象。
                  * @member egret.gui.PopUpAnchor#popUp
@@ -144,7 +139,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(PopUpAnchor.prototype, "popUpPosition", {
+            Object.defineProperty(__egretProto__, "popUpPosition", {
                 /**
                  * popUp相对于PopUpAnchor的弹出位置。请使用PopUpPosition里定义的常量。默认值TOP_LEFT。
                  * @member egret.gui.PopUpAnchor#popUpPosition
@@ -167,7 +162,7 @@ var egret;
              * @param unscaledWidth {number}
              * @param unscaledHeight {number}
              */
-            PopUpAnchor.prototype.updateDisplayList = function (unscaledWidth, unscaledHeight) {
+            __egretProto__.updateDisplayList = function (unscaledWidth, unscaledHeight) {
                 _super.prototype.updateDisplayList.call(this, unscaledWidth, unscaledHeight);
                 this.applyPopUpTransform(unscaledWidth, unscaledHeight);
             };
@@ -175,13 +170,13 @@ var egret;
              * 手动刷新popUp的弹出位置和尺寸。
              * @method egret.gui.PopUpAnchor#updatePopUpTransform
              */
-            PopUpAnchor.prototype.updatePopUpTransform = function () {
+            __egretProto__.updatePopUpTransform = function () {
                 this.applyPopUpTransform(this.width, this.height);
             };
             /**
              * 计算popUp的弹出位置
              */
-            PopUpAnchor.prototype.calculatePopUpPosition = function () {
+            __egretProto__.calculatePopUpPosition = function () {
                 var registrationPoint = egret.Point.identity;
                 switch (this._popUpPosition) {
                     case gui.PopUpPosition.SCREEN_CENTER:
@@ -213,7 +208,7 @@ var egret;
                 registrationPoint = this.popUp.parent.globalToLocal(registrationPoint.x, registrationPoint.y, registrationPoint);
                 return registrationPoint;
             };
-            Object.defineProperty(PopUpAnchor.prototype, "openDuration", {
+            Object.defineProperty(__egretProto__, "openDuration", {
                 /**
                  * 窗口弹出的动画时间(以毫秒为单位)，设置为0则直接弹出窗口而不播放动画效果。默认值250。
                  * @member egret.gui.PopUpAnchor#openDuration
@@ -227,7 +222,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(PopUpAnchor.prototype, "closeDuration", {
+            Object.defineProperty(__egretProto__, "closeDuration", {
                 /**
                  * 窗口关闭的动画时间(以毫秒为单位)，设置为0则直接关闭窗口而不播放动画效果。默认值150。
                  * @member egret.gui.PopUpAnchor#closeDuration
@@ -244,7 +239,7 @@ var egret;
             /**
              * 动画开始播放触发的函数
              */
-            PopUpAnchor.prototype.animationStartHandler = function (animation) {
+            __egretProto__.animationStartHandler = function (animation) {
                 this.inAnimation = true;
                 if (this.popUp && "enabled" in this.popUp)
                     (this.popUp).enabled = false;
@@ -252,7 +247,7 @@ var egret;
             /**
              * 动画播放过程中触发的更新数值函数
              */
-            PopUpAnchor.prototype.animationUpdateHandler = function (animation) {
+            __egretProto__.animationUpdateHandler = function (animation) {
                 var rect = (this.popUp)._scrollRect;
                 var x = Math.round(animation.currentValue["x"]);
                 var y = Math.round(animation.currentValue["y"]);
@@ -261,16 +256,16 @@ var egret;
                     rect.y = y;
                     rect.width = this.popUp.width;
                     rect.height = this.popUp.height;
+                    (this.popUp)._setScrollRect(rect);
                 }
                 else {
                     (this.popUp)._scrollRect = new egret.Rectangle(x, y, this.popUp.width, this.popUp.height);
                 }
-                (this.popUp)._setScrollRect(rect);
             };
             /**
              * 动画播放完成触发的函数
              */
-            PopUpAnchor.prototype.animationEndHandler = function (animation) {
+            __egretProto__.animationEndHandler = function (animation) {
                 this.inAnimation = false;
                 if (this.popUp && "enabled" in this.popUp)
                     (this.popUp).enabled = true;
@@ -283,7 +278,7 @@ var egret;
             /**
              * 添加或移除popUp
              */
-            PopUpAnchor.prototype.addOrRemovePopUp = function () {
+            __egretProto__.addOrRemovePopUp = function () {
                 if (!this.addedToStage || !this.popUp)
                     return;
                 if (this.popUp.parent == null && this.displayPopUp) {
@@ -311,7 +306,7 @@ var egret;
             /**
              * 移除并重置popUp
              */
-            PopUpAnchor.prototype.removeAndResetPopUp = function () {
+            __egretProto__.removeAndResetPopUp = function () {
                 if (this.inAnimation)
                     this.animator.end();
                 this.popUpIsDisplayed = false;
@@ -326,7 +321,7 @@ var egret;
             /**
              * 对popUp应用尺寸和位置调整
              */
-            PopUpAnchor.prototype.applyPopUpTransform = function (unscaledWidth, unscaledHeight) {
+            __egretProto__.applyPopUpTransform = function (unscaledWidth, unscaledHeight) {
                 if (!this.popUpIsDisplayed)
                     return;
                 if (this.popUpWidthMatchesAnchorWidth)
@@ -342,7 +337,7 @@ var egret;
             /**
              * 开始播放动画
              */
-            PopUpAnchor.prototype.startAnimation = function () {
+            __egretProto__.startAnimation = function () {
                 if (!this.animator) {
                     this.animator = new gui.Animation(this.animationUpdateHandler, this);
                     this.animator.endFunction = this.animationEndHandler;
@@ -360,35 +355,35 @@ var egret;
             /**
              * 创建动画轨迹
              */
-            PopUpAnchor.prototype.createMotionPath = function () {
-                var xPath = { prop: "x" };
-                var yPath = { prop: "y" };
+            __egretProto__.createMotionPath = function () {
+                var xPath = new gui.SimpleMotionPath("x");
+                var yPath = new gui.SimpleMotionPath("y");
                 var path = [xPath, yPath];
                 switch (this._popUpPosition) {
                     case gui.PopUpPosition.TOP_LEFT:
                     case gui.PopUpPosition.CENTER:
                     case gui.PopUpPosition.BELOW:
-                        xPath.from = xPath.to = 0;
-                        yPath.from = this.popUp.height;
-                        yPath.to = 0;
+                        xPath.valueFrom = xPath.valueTo = 0;
+                        yPath.valueFrom = this.popUp.height;
+                        yPath.valueTo = 0;
                         this.valueRange = this.popUp.height;
                         break;
                     case gui.PopUpPosition.ABOVE:
-                        xPath.from = xPath.to = 0;
-                        yPath.from = -this.popUp.height;
-                        yPath.to = 0;
+                        xPath.valueFrom = xPath.valueTo = 0;
+                        yPath.valueFrom = -this.popUp.height;
+                        yPath.valueTo = 0;
                         this.valueRange = this.popUp.height;
                         break;
                     case gui.PopUpPosition.LEFT:
-                        yPath.from = yPath.to = 0;
-                        xPath.from = -this.popUp.width;
-                        xPath.to = 0;
+                        yPath.valueFrom = yPath.valueTo = 0;
+                        xPath.valueFrom = -this.popUp.width;
+                        xPath.valueTo = 0;
                         this.valueRange = this.popUp.width;
                         break;
                     case gui.PopUpPosition.RIGHT:
-                        yPath.from = yPath.to = 0;
-                        xPath.from = this.popUp.width;
-                        xPath.to = 0;
+                        yPath.valueFrom = yPath.valueTo = 0;
+                        xPath.valueFrom = this.popUp.width;
+                        xPath.valueTo = 0;
                         this.valueRange = this.popUp.width;
                         break;
                     default:
@@ -397,26 +392,26 @@ var egret;
                 }
                 this.valueRange = Math.abs(this.valueRange);
                 if (!this.popUpIsDisplayed) {
-                    var tempValue = xPath.from;
-                    xPath.from = xPath.to;
-                    xPath.to = tempValue;
-                    tempValue = yPath.from;
-                    yPath.from = yPath.to;
-                    yPath.to = tempValue;
+                    var tempValue = xPath.valueFrom;
+                    xPath.valueFrom = xPath.valueTo;
+                    xPath.valueTo = tempValue;
+                    tempValue = yPath.valueFrom;
+                    yPath.valueFrom = yPath.valueTo;
+                    yPath.valueTo = tempValue;
                 }
                 return path;
             };
             /**
              * 添加到舞台事件
              */
-            PopUpAnchor.prototype.addedToStageHandler = function (event) {
+            __egretProto__.addedToStageHandler = function (event) {
                 this.addedToStage = true;
                 egret.callLater(this.checkPopUpState, this);
             };
             /**
              * 延迟检查弹出状态，防止堆栈溢出。
              */
-            PopUpAnchor.prototype.checkPopUpState = function () {
+            __egretProto__.checkPopUpState = function () {
                 if (this.addedToStage) {
                     this.addOrRemovePopUp();
                 }
@@ -428,7 +423,7 @@ var egret;
             /**
              * 从舞台移除事件
              */
-            PopUpAnchor.prototype.removedFromStageHandler = function (event) {
+            __egretProto__.removedFromStageHandler = function (event) {
                 this.addedToStage = false;
                 egret.callLater(this.checkPopUpState, this);
             };

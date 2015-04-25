@@ -24,12 +24,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var egret;
 (function (egret) {
     var gui;
@@ -78,13 +72,14 @@ var egret;
                 this._paddingBottom = NaN;
                 this.addEventListener(gui.UIEvent.UPDATE_COMPLETE, this.updateCompleteHandler, this);
             }
+            var __egretProto__ = BitmapLabel.prototype;
             /**
              * 一个验证阶段完成
              */
-            BitmapLabel.prototype.updateCompleteHandler = function (event) {
+            __egretProto__.updateCompleteHandler = function (event) {
                 this.lastUnscaledWidth = NaN;
             };
-            Object.defineProperty(BitmapLabel.prototype, "text", {
+            Object.defineProperty(__egretProto__, "text", {
                 get: function () {
                     return this._text;
                 },
@@ -104,7 +99,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(BitmapLabel.prototype, "font", {
+            Object.defineProperty(__egretProto__, "font", {
                 /**
                  * 位图字体标识符，可以是BitmapFont对象或者在资源表中的key。
                  * @member egret.gui.BitmapLabel#font
@@ -132,7 +127,7 @@ var egret;
             /**
              * 创建子对象
              */
-            BitmapLabel.prototype.createChildren = function () {
+            __egretProto__.createChildren = function () {
                 _super.prototype.createChildren.call(this);
                 if (!this._bitmapText) {
                     this.checkBitmapText();
@@ -145,7 +140,7 @@ var egret;
             /**
              * 解析source
              */
-            BitmapLabel.prototype.parseFont = function () {
+            __egretProto__.parseFont = function () {
                 this.fontChanged = false;
                 var adapter = BitmapLabel.assetAdapter;
                 if (!adapter) {
@@ -161,7 +156,7 @@ var egret;
             /**
              * 获取资源适配器
              */
-            BitmapLabel.prototype.getAdapter = function () {
+            __egretProto__.getAdapter = function () {
                 var adapter;
                 try {
                     adapter = egret.Injector.getInstance("egret.gui.IAssetAdapter");
@@ -175,14 +170,14 @@ var egret;
             /**
              * 皮肤发生改变
              */
-            BitmapLabel.prototype.onFontChanged = function (bitmapFont, font) {
+            __egretProto__.onFontChanged = function (bitmapFont, font) {
                 if (font !== this._font)
                     return;
                 this._bitmapText.font = bitmapFont;
                 this.invalidateSize();
                 this.invalidateDisplayList();
             };
-            Object.defineProperty(BitmapLabel.prototype, "padding", {
+            Object.defineProperty(__egretProto__, "padding", {
                 /**
                  * 四个边缘的共同内边距。若单独设置了任一边缘的内边距，则该边缘的内边距以单独设置的值为准。
                  * 此属性主要用于快速设置多个边缘的相同内边距。默认值：0。
@@ -201,7 +196,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(BitmapLabel.prototype, "paddingLeft", {
+            Object.defineProperty(__egretProto__, "paddingLeft", {
                 /**
                  * 文字距离左边缘的空白像素,若为NaN将使用padding的值，默认值：NaN。
                  * @member egret.gui.BitmapLabel#paddingLeft
@@ -219,7 +214,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(BitmapLabel.prototype, "paddingRight", {
+            Object.defineProperty(__egretProto__, "paddingRight", {
                 /**
                  * 文字距离右边缘的空白像素,若为NaN将使用padding的值，默认值：NaN。
                  * @member egret.gui.BitmapLabel#paddingRight
@@ -237,7 +232,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(BitmapLabel.prototype, "paddingTop", {
+            Object.defineProperty(__egretProto__, "paddingTop", {
                 /**
                  * 文字距离顶部边缘的空白像素,若为NaN将使用padding的值，默认值：NaN。
                  * @member egret.gui.BitmapLabel#paddingTop
@@ -255,7 +250,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(BitmapLabel.prototype, "paddingBottom", {
+            Object.defineProperty(__egretProto__, "paddingBottom", {
                 /**
                  * 文字距离底部边缘的空白像素,若为NaN将使用padding的值，默认值：NaN。
                  * @member egret.gui.BitmapLabel#paddingBottom
@@ -277,7 +272,7 @@ var egret;
              * 计算  容器默认大小的最小值和最大值
              * @method egret.gui.BitmapLabel#measure
              */
-            BitmapLabel.prototype.measure = function () {
+            __egretProto__.measure = function () {
                 //先提交属性，防止样式发生改变导致的测量不准确问题。
                 if (this._invalidatePropertiesFlag)
                     this.validateProperties();
@@ -301,13 +296,13 @@ var egret;
             /**
              * 特殊情况，组件尺寸由父级决定，要等到父级UpdateDisplayList的阶段才能测量
              */
-            BitmapLabel.prototype.isSpecialCase = function () {
+            __egretProto__.isSpecialCase = function () {
                 return (!isNaN(this.percentWidth) || (!isNaN(this.left) && !isNaN(this.right))) && isNaN(this.explicitHeight) && isNaN(this.percentHeight);
             };
             /**
              * 使用指定的宽度进行测量
              */
-            BitmapLabel.prototype.measureUsingWidth = function (w) {
+            __egretProto__.measureUsingWidth = function (w) {
                 if (this._textChanged) {
                     this._bitmapText.text = this._text;
                 }
@@ -336,7 +331,7 @@ var egret;
              * @param unscaledWidth {number}
              * @param unscaledHeight {number}
              */
-            BitmapLabel.prototype.updateDisplayList = function (unscaledWidth, unscaledHeight) {
+            __egretProto__.updateDisplayList = function (unscaledWidth, unscaledHeight) {
                 _super.prototype.updateDisplayList.call(this, unscaledWidth, unscaledHeight);
                 if (!this._bitmapText)
                     return;
@@ -367,7 +362,7 @@ var egret;
                 var unscaledTextHeight = unscaledHeight - paddingT - paddingB;
                 this._bitmapText.height = unscaledTextHeight;
             };
-            BitmapLabel.prototype.checkBitmapText = function () {
+            __egretProto__.checkBitmapText = function () {
                 if (this._bitmapText)
                     return;
                 this._bitmapText = new egret.BitmapText();
@@ -378,7 +373,7 @@ var egret;
             /**
              * 处理对组件设置的属性
              */
-            BitmapLabel.prototype.commitProperties = function () {
+            __egretProto__.commitProperties = function () {
                 _super.prototype.commitProperties.call(this);
                 if (!this._bitmapText) {
                     this.checkBitmapText();

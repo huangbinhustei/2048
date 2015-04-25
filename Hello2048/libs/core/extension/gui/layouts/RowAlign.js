@@ -36,6 +36,7 @@ var egret;
         var RowAlign = (function () {
             function RowAlign() {
             }
+            var __egretProto__ = RowAlign.prototype;
             /**
              * 不进行两端对齐。
              * @constant egret.gui.RowAlign.TOP

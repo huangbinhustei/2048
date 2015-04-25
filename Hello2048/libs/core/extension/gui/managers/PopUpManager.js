@@ -43,6 +43,7 @@ var egret;
              */
             function PopUpManager() {
             }
+            var __egretProto__ = PopUpManager.prototype;
             /**
              * 获取单例
              */

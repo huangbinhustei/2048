@@ -36,6 +36,7 @@ var egret;
         var ColumnAlign = (function () {
             function ColumnAlign() {
             }
+            var __egretProto__ = ColumnAlign.prototype;
             /**
              * 不将行两端对齐。
              * @constant egret.gui.ColumnAlign.LEFT

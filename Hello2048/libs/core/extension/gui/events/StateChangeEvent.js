@@ -24,12 +24,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var egret;
 (function (egret) {
     var gui;
@@ -69,6 +63,7 @@ var egret;
                 this.oldState = oldState;
                 this.newState = newState;
             }
+            var __egretProto__ = StateChangeEvent.prototype;
             /**
              * 使用指定的EventDispatcher对象来抛出事件对象。抛出的对象将会缓存在对象池上，供下次循环复用。
              * @method egret.gui.StateChangeEvent.dispatchStateChangeEvent
@@ -92,6 +87,10 @@ var egret;
              * @constant egret.gui.StateChangeEvent.CURRENT_STATE_CHANGING
              */
             StateChangeEvent.CURRENT_STATE_CHANGING = "currentStateChanging";
+            /**
+             * 状态过渡完成
+             */
+            StateChangeEvent.STATE_CHANGE_COMPLETE = "stateChangeComplete";
             return StateChangeEvent;
         })(egret.Event);
         gui.StateChangeEvent = StateChangeEvent;

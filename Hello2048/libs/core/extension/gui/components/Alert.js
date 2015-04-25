@@ -24,12 +24,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var egret;
 (function (egret) {
     var gui;
@@ -81,6 +75,7 @@ var egret;
                  */
                 this.secondButton = null;
             }
+            var __egretProto__ = Alert.prototype;
             /**
              * 弹出Alert控件的静态方法。在Alert控件中选择一个按钮，将关闭该控件。
              * @method egret.gui.Alert.show
@@ -92,9 +87,10 @@ var egret;
              * @param secondButtonLabel {string} 第二个按钮上显示的文本，若为null，则不显示第二个按钮。
              * @param modal {boolean} 是否启用模态。即禁用弹出框以下的鼠标事件。默认true。
              * @param center {boolean} 是否居中。默认true。
+             * @param thisObject {any} 回掉函数绑定的this对象
              * @returns {Alert}
              */
-            Alert.show = function (text, title, closeHandler, firstButtonLabel, secondButtonLabel, modal, center) {
+            Alert.show = function (text, title, closeHandler, firstButtonLabel, secondButtonLabel, modal, center, thisObject) {
                 if (text === void 0) { text = ""; }
                 if (title === void 0) { title = ""; }
                 if (closeHandler === void 0) { closeHandler = null; }
@@ -108,10 +104,11 @@ var egret;
                 alert._firstButtonLabel = firstButtonLabel;
                 alert._secondButtonLabel = secondButtonLabel;
                 alert.closeHandler = closeHandler;
+                alert.thisObject = thisObject;
                 gui.PopUpManager.addPopUp(alert, modal, center);
                 return alert;
             };
-            Object.defineProperty(Alert.prototype, "firstButtonLabel", {
+            Object.defineProperty(__egretProto__, "firstButtonLabel", {
                 /**
                  * 第一个按钮上显示的文本
                  * @member egret.gui.Alert#firstButtonLabel
@@ -129,7 +126,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(Alert.prototype, "secondButtonLabel", {
+            Object.defineProperty(__egretProto__, "secondButtonLabel", {
                 /**
                  * 第二个按钮上显示的文本
                  * @member egret.gui.Alert#secondButtonLabel
@@ -149,7 +146,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(Alert.prototype, "contentText", {
+            Object.defineProperty(__egretProto__, "contentText", {
                 /**
                  * 文本内容
                  * @member egret.gui.Alert#contentText
@@ -170,7 +167,7 @@ var egret;
             /**
              * 关闭事件
              */
-            Alert.prototype.onClose = function (event) {
+            __egretProto__.onClose = function (event) {
                 gui.PopUpManager.removePopUp(this);
                 if (this.closeHandler != null) {
                     var closeEvent = new gui.CloseEvent(gui.CloseEvent.CLOSE);
@@ -182,19 +179,24 @@ var egret;
                             closeEvent.detail = Alert.SECOND_BUTTON;
                             break;
                     }
-                    this.closeHandler(closeEvent);
+                    this.callCloseHandler(closeEvent);
                 }
             };
             /**
              * @method egret.gui.Alert#closeButton_clickHandler
              * @param event {TouchEvent}
              */
-            Alert.prototype.closeButton_clickHandler = function (event) {
+            __egretProto__.closeButton_clickHandler = function (event) {
                 _super.prototype.closeButton_clickHandler.call(this, event);
                 gui.PopUpManager.removePopUp(this);
                 var closeEvent = new gui.CloseEvent(gui.CloseEvent.CLOSE, false, false, Alert.CLOSE_BUTTON);
-                if (this.closeHandler != null)
-                    this.closeHandler(closeEvent);
+                this.callCloseHandler(closeEvent);
+            };
+            __egretProto__.callCloseHandler = function (closeEvent) {
+                if (this.closeHandler == null)
+                    return;
+                var target = this.thisObject || this;
+                this.closeHandler.call(target, closeEvent);
             };
             /**
              * 添加外观部件时调用
@@ -202,7 +204,7 @@ var egret;
              * @param partName {string}
              * @param instance {any}
              */
-            Alert.prototype.partAdded = function (partName, instance) {
+            __egretProto__.partAdded = function (partName, instance) {
                 _super.prototype.partAdded.call(this, partName, instance);
                 if (instance == this.contentDisplay) {
                     this.contentDisplay.text = this._contentText;
@@ -223,7 +225,7 @@ var egret;
              * @param partName {string}
              * @param instance {any}
              */
-            Alert.prototype.partRemoved = function (partName, instance) {
+            __egretProto__.partRemoved = function (partName, instance) {
                 _super.prototype.partRemoved.call(this, partName, instance);
                 if (instance == this.firstButton) {
                     this.firstButton.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.onClose, this);

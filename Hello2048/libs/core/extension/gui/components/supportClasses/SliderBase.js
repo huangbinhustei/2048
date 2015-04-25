@@ -24,12 +24,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var egret;
 (function (egret) {
     var gui;
@@ -66,7 +60,8 @@ var egret;
                 this._liveDragging = true;
                 this.maximum = 10;
             }
-            Object.defineProperty(SliderBase.prototype, "showTrackHighlight", {
+            var __egretProto__ = SliderBase.prototype;
+            Object.defineProperty(__egretProto__, "showTrackHighlight", {
                 /**
                  * 是否启用轨道高亮效果。默认值为true。
                  * 注意，皮肤里的子部件trackHighlight要同时为非空才能显示高亮效果。
@@ -86,7 +81,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(SliderBase.prototype, "pendingValue", {
+            Object.defineProperty(__egretProto__, "pendingValue", {
                 /**
                  * 释放鼠标按键时滑块将具有的值。无论liveDragging是否为true，在滑块拖动期间始终更新此属性。
                  * 而value属性在当liveDragging为false时，只在鼠标释放时更新一次。
@@ -109,20 +104,20 @@ var egret;
              * @method egret.gui.SliderBase#setValue
              * @param value {number}
              */
-            SliderBase.prototype.setValue = function (value) {
+            __egretProto__.setValue = function (value) {
                 this._pendingValue = value;
                 _super.prototype.setValue.call(this, value);
             };
             /**
              * 动画播放更新数值
              */
-            SliderBase.prototype._animationUpdateHandler = function (animation) {
+            __egretProto__._animationUpdateHandler = function (animation) {
                 this.pendingValue = animation.currentValue["value"];
             };
             /**
              * 动画播放完毕
              */
-            SliderBase.prototype.animationEndHandler = function (animation) {
+            __egretProto__.animationEndHandler = function (animation) {
                 this.setValue(this.slideToValue);
                 this.dispatchEventWith(egret.Event.CHANGE);
                 gui.UIEvent.dispatchUIEvent(this, gui.UIEvent.CHANGE_END);
@@ -130,7 +125,7 @@ var egret;
             /**
              * 停止播放动画
              */
-            SliderBase.prototype.stopAnimation = function () {
+            __egretProto__.stopAnimation = function () {
                 this.animator.stop();
                 this.setValue(this.nearestValidValue(this.pendingValue, this.snapInterval));
                 this.dispatchEventWith(egret.Event.CHANGE);
@@ -140,12 +135,12 @@ var egret;
              * @method egret.gui.SliderBase#thumb_mouseDownHandler
              * @param event {TouchEvent}
              */
-            SliderBase.prototype.thumb_mouseDownHandler = function (event) {
+            __egretProto__.thumb_mouseDownHandler = function (event) {
                 if (this.animator && this.animator.isPlaying)
                     this.stopAnimation();
                 _super.prototype.thumb_mouseDownHandler.call(this, event);
             };
-            Object.defineProperty(SliderBase.prototype, "liveDragging", {
+            Object.defineProperty(__egretProto__, "liveDragging", {
                 /**
                  * 如果为 true，则将在沿着轨道拖动滑块时，而不是在释放滑块按钮时，提交此滑块的值。
                  * @member egret.gui.SliderBase#liveDragging
@@ -162,7 +157,7 @@ var egret;
             /**
              * @method egret.gui.SliderBase#updateWhenMouseMove
              */
-            SliderBase.prototype.updateWhenMouseMove = function () {
+            __egretProto__.updateWhenMouseMove = function () {
                 if (!this.track)
                     return;
                 var pos = this.track.globalToLocal(this._moveStageX, this._moveStageY, egret.Point.identity);
@@ -183,7 +178,7 @@ var egret;
              * @method egret.gui.SliderBase#stage_mouseUpHandler
              * @param event {Event}
              */
-            SliderBase.prototype.stage_mouseUpHandler = function (event) {
+            __egretProto__.stage_mouseUpHandler = function (event) {
                 _super.prototype.stage_mouseUpHandler.call(this, event);
                 if ((this.liveDragging == false) && (this.value != this.pendingValue)) {
                     this.setValue(this.pendingValue);
@@ -194,7 +189,7 @@ var egret;
              * @method egret.gui.SliderBase#track_mouseDownHandler
              * @param event {TouchEvent}
              */
-            SliderBase.prototype.track_mouseDownHandler = function (event) {
+            __egretProto__.track_mouseDownHandler = function (event) {
                 if (!this.enabled)
                     return;
                 var thumbW = (this.thumb) ? this.thumb.width : 0;
@@ -214,7 +209,9 @@ var egret;
                             this.stopAnimation();
                         this.slideToValue = newValue;
                         this.animator.duration = this.slideDuration * (Math.abs(this.pendingValue - this.slideToValue) / (this.maximum - this.minimum));
-                        this.animator.motionPaths = [{ prop: "value", from: this.pendingValue, to: this.slideToValue }];
+                        this.animator.motionPaths = [
+                            new gui.SimpleMotionPath("value", this.pendingValue, this.slideToValue)
+                        ];
                         gui.UIEvent.dispatchUIEvent(this, gui.UIEvent.CHANGE_START);
                         this.animator.play();
                     }
@@ -230,7 +227,7 @@ var egret;
              * @param partName {string}
              * @param instance {any}
              */
-            SliderBase.prototype.partAdded = function (partName, instance) {
+            __egretProto__.partAdded = function (partName, instance) {
                 _super.prototype.partAdded.call(this, partName, instance);
                 if (instance == this.trackHighlight) {
                     this.trackHighlight.touchEnabled = false;

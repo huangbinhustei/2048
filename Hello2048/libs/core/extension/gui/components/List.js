@@ -24,12 +24,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var egret;
 (function (egret) {
     var gui;
@@ -60,15 +54,16 @@ var egret;
                 this._mouseDownItemRenderer = null;
                 this.useVirtualLayout = true;
             }
+            var __egretProto__ = List.prototype;
             /**
              * 创建容器的子元素
              */
-            List.prototype.createChildren = function () {
+            __egretProto__.createChildren = function () {
                 if (!this.itemRenderer)
                     this.itemRenderer = gui.DataGroup.defaultRendererFactory;
                 _super.prototype.createChildren.call(this);
             };
-            Object.defineProperty(List.prototype, "useVirtualLayout", {
+            Object.defineProperty(__egretProto__, "useVirtualLayout", {
                 /**
                  * 是否使用虚拟布局,默认true
                  * @member egret.gui.List#useVirtualLayout
@@ -85,7 +80,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(List.prototype, "allowMultipleSelection", {
+            Object.defineProperty(__egretProto__, "allowMultipleSelection", {
                 /**
                  * 是否允许同时选中多项
                  * @member egret.gui.List#allowMultipleSelection
@@ -99,7 +94,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(List.prototype, "selectedIndices", {
+            Object.defineProperty(__egretProto__, "selectedIndices", {
                 /**
                  * 当前选中的一个或多个项目的索引列表
                  * @member egret.gui.List#selectedIndices
@@ -115,7 +110,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(List.prototype, "selectedIndex", {
+            Object.defineProperty(__egretProto__, "selectedIndex", {
                 /**
                  * @member egret.gui.List#selectedIndex
                  */
@@ -133,7 +128,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(List.prototype, "selectedItems", {
+            Object.defineProperty(__egretProto__, "selectedItems", {
                 /**
                  * 当前选中的一个或多个项目的数据源列表
                  * @member egret.gui.List#selectedItems
@@ -171,7 +166,7 @@ var egret;
             /**
              * 设置多个选中项
              */
-            List.prototype._setSelectedIndices = function (value, dispatchChangeEvent) {
+            __egretProto__._setSelectedIndices = function (value, dispatchChangeEvent) {
                 if (dispatchChangeEvent === void 0) { dispatchChangeEvent = false; }
                 if (dispatchChangeEvent)
                     this._dispatchChangeAfterSelection = (this._dispatchChangeAfterSelection || dispatchChangeEvent);
@@ -185,7 +180,7 @@ var egret;
              * 处理对组件设置的属性
              * @method egret.gui.List#commitProperties
              */
-            List.prototype.commitProperties = function () {
+            __egretProto__.commitProperties = function () {
                 _super.prototype.commitProperties.call(this);
                 if (this._proposedSelectedIndices) {
                     this.commitSelection();
@@ -196,7 +191,7 @@ var egret;
              * @param dispatchChangedEvents {boolean}
              * @returns {boolean}
              */
-            List.prototype.commitSelection = function (dispatchChangedEvents) {
+            __egretProto__.commitSelection = function (dispatchChangedEvents) {
                 if (dispatchChangedEvents === void 0) { dispatchChangedEvents = true; }
                 var oldSelectedIndex = this._selectedIndex;
                 if (this._proposedSelectedIndices) {
@@ -244,7 +239,7 @@ var egret;
             /**
              * 提交多项选中项属性
              */
-            List.prototype.commitMultipleSelection = function () {
+            __egretProto__.commitMultipleSelection = function () {
                 var removedItems = [];
                 var addedItems = [];
                 var i;
@@ -288,12 +283,12 @@ var egret;
              * @returns {boolean}
              * @private
              */
-            List.prototype._isItemIndexSelected = function (index) {
+            __egretProto__._isItemIndexSelected = function (index) {
                 if (this._allowMultipleSelection)
                     return this._selectedIndices.indexOf(index) != -1;
                 return _super.prototype._isItemIndexSelected.call(this, index);
             };
-            List.prototype.dataGroup_rendererAddHandler = function (event) {
+            __egretProto__.dataGroup_rendererAddHandler = function (event) {
                 _super.prototype.dataGroup_rendererAddHandler.call(this, event);
                 var renderer = (event.renderer);
                 if (renderer == null)
@@ -306,13 +301,13 @@ var egret;
             /**
              * 数据源发生刷新
              */
-            List.prototype.dataProviderRefreshed = function () {
+            __egretProto__.dataProviderRefreshed = function () {
                 if (this._allowMultipleSelection) {
                     return;
                 }
                 _super.prototype.dataProviderRefreshed.call(this);
             };
-            List.prototype.dataGroup_rendererRemoveHandler = function (event) {
+            __egretProto__.dataGroup_rendererRemoveHandler = function (event) {
                 _super.prototype.dataGroup_rendererRemoveHandler.call(this, event);
                 var renderer = (event.renderer);
                 if (renderer == null)
@@ -325,7 +320,7 @@ var egret;
              * @method egret.gui.List#item_mouseDownHandler
              * @param event {TouchEvent}
              */
-            List.prototype._item_touchBeginHandler = function (event) {
+            __egretProto__._item_touchBeginHandler = function (event) {
                 if (event._isDefaultPrevented)
                     return;
                 var itemRenderer = (event.currentTarget);
@@ -336,7 +331,7 @@ var egret;
             /**
              * 计算当前的选中项列表
              */
-            List.prototype.calculateSelectedIndices = function (index, shiftKey, ctrlKey) {
+            __egretProto__.calculateSelectedIndices = function (index, shiftKey, ctrlKey) {
                 var i;
                 var interval = [];
                 if (!shiftKey) {
@@ -391,7 +386,7 @@ var egret;
             /**
              * 鼠标在项呈示器上弹起，抛出ItemClick事件。
              */
-            List.prototype._item_touchEndHandler = function (event) {
+            __egretProto__._item_touchEndHandler = function (event) {
                 var itemRenderer = (event.currentTarget);
                 if (itemRenderer != this._mouseDownItemRenderer)
                     return;
@@ -413,7 +408,7 @@ var egret;
             /**
              * 鼠标在舞台上弹起
              */
-            List.prototype.stage_touchEndHandler = function (event) {
+            __egretProto__.stage_touchEndHandler = function (event) {
                 gui.UIGlobals.stage.removeEventListener(egret.TouchEvent.TOUCH_END, this.stage_touchEndHandler, this);
                 gui.UIGlobals.stage.removeEventListener(egret.Event.LEAVE_STAGE, this.stage_touchEndHandler, this);
                 this._mouseDownItemRenderer = null;

@@ -41,6 +41,7 @@ var egret;
              */
             function DefaultSkinAdapter() {
             }
+            var __egretProto__ = DefaultSkinAdapter.prototype;
             /**
              * 获取皮肤显示对象
              * @method egret.gui.ISkinAdapter#getSkin
@@ -48,7 +49,7 @@ var egret;
              * @param hostComponentKey {string} 主机组件标识符
              * @returns {any} 皮肤对象实例
              */
-            DefaultSkinAdapter.prototype.getSkin = function (skinName, hostComponentKey) {
+            __egretProto__.getSkin = function (skinName, hostComponentKey) {
                 if (!skinName)
                     return null;
                 if (skinName.prototype) {

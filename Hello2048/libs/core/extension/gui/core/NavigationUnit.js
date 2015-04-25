@@ -31,6 +31,7 @@ var egret;
         var NavigationUnit = (function () {
             function NavigationUnit() {
             }
+            var __egretProto__ = NavigationUnit.prototype;
             NavigationUnit.DOWN = 40;
             NavigationUnit.END = 35;
             NavigationUnit.HOME = 36;

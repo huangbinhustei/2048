@@ -24,12 +24,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var egret;
 (function (egret) {
     var gui;
@@ -69,13 +63,14 @@ var egret;
                 this._paddingBottom = NaN;
                 this.addEventListener(gui.UIEvent.UPDATE_COMPLETE, this.updateCompleteHandler, this);
             }
+            var __egretProto__ = Label.prototype;
             /**
              * 一个验证阶段完成
              */
-            Label.prototype.updateCompleteHandler = function (event) {
+            __egretProto__.updateCompleteHandler = function (event) {
                 this.lastUnscaledWidth = NaN;
             };
-            Object.defineProperty(Label.prototype, "maxDisplayedLines", {
+            Object.defineProperty(__egretProto__, "maxDisplayedLines", {
                 /**
                  * 最大显示行数,0或负值代表不限制。
                  * @member egret.gui.Label#maxDisplayedLines
@@ -93,7 +88,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(Label.prototype, "strokeColor", {
+            Object.defineProperty(__egretProto__, "strokeColor", {
                 /**
                  * 表示文本的描边颜色。
                  * 包含三个 8 位 RGB 颜色成分的数字；例如，0xFF0000 为红色，0x00FF00 为绿色。
@@ -109,7 +104,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Label.prototype._setStrokeColor = function (value) {
+            __egretProto__._setStrokeColor = function (value) {
                 if (this._strokeColor == value) {
                     return;
                 }
@@ -117,7 +112,7 @@ var egret;
                 this.strokeColorChanged = true;
                 this.invalidateProperties();
             };
-            Object.defineProperty(Label.prototype, "stroke", {
+            Object.defineProperty(__egretProto__, "stroke", {
                 get: function () {
                     return this._stroke;
                 },
@@ -132,7 +127,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(Label.prototype, "padding", {
+            Object.defineProperty(__egretProto__, "padding", {
                 /**
                  * 四个边缘的共同内边距。若单独设置了任一边缘的内边距，则该边缘的内边距以单独设置的值为准。
                  * 此属性主要用于快速设置多个边缘的相同内边距。默认值：0。
@@ -151,7 +146,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(Label.prototype, "paddingLeft", {
+            Object.defineProperty(__egretProto__, "paddingLeft", {
                 /**
                  * 文字距离左边缘的空白像素,若为NaN将使用padding的值，默认值：NaN。
                  * @member egret.gui.Label#paddingLeft
@@ -169,7 +164,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(Label.prototype, "paddingRight", {
+            Object.defineProperty(__egretProto__, "paddingRight", {
                 /**
                  * 文字距离右边缘的空白像素,若为NaN将使用padding的值，默认值：NaN。
                  * @member egret.gui.Label#paddingRight
@@ -187,7 +182,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(Label.prototype, "paddingTop", {
+            Object.defineProperty(__egretProto__, "paddingTop", {
                 /**
                  * 文字距离顶部边缘的空白像素,若为NaN将使用padding的值，默认值：NaN。
                  * @member egret.gui.Label#paddingTop
@@ -205,7 +200,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(Label.prototype, "paddingBottom", {
+            Object.defineProperty(__egretProto__, "paddingBottom", {
                 /**
                  * 文字距离底部边缘的空白像素,若为NaN将使用padding的值，默认值：NaN。
                  * @member egret.gui.Label#paddingBottom
@@ -227,7 +222,7 @@ var egret;
              * 处理对组件设置的属性
              * @method egret.gui.TextBase#commitProperties
              */
-            Label.prototype.commitProperties = function () {
+            __egretProto__.commitProperties = function () {
                 _super.prototype.commitProperties.call(this);
                 if (this.strokeColorChanged) {
                     this._textField.strokeColor = this._strokeColor;
@@ -242,7 +237,7 @@ var egret;
              * 计算组件的默认大小和（可选）默认最小大小
              * @method egret.gui.Label#measure
              */
-            Label.prototype.measure = function () {
+            __egretProto__.measure = function () {
                 //先提交属性，防止样式发生改变导致的测量不准确问题。
                 if (this._invalidatePropertiesFlag)
                     this.validateProperties();
@@ -266,13 +261,13 @@ var egret;
             /**
              * 特殊情况，组件尺寸由父级决定，要等到父级UpdateDisplayList的阶段才能测量
              */
-            Label.prototype.isSpecialCase = function () {
+            __egretProto__.isSpecialCase = function () {
                 return this._maxDisplayedLines != 1 && (!isNaN(this.percentWidth) || (!isNaN(this.left) && !isNaN(this.right))) && isNaN(this.explicitHeight) && isNaN(this.percentHeight);
             };
             /**
              * 使用指定的宽度进行测量
              */
-            Label.prototype.measureUsingWidth = function (w) {
+            __egretProto__.measureUsingWidth = function (w) {
                 if (this._textChanged) {
                     this._textField.text = this._text;
                 }
@@ -309,7 +304,7 @@ var egret;
              * @param unscaledWidth {number}
              * @param unscaledHeight {number}
              */
-            Label.prototype.updateDisplayList = function (unscaledWidth, unscaledHeight) {
+            __egretProto__.updateDisplayList = function (unscaledWidth, unscaledHeight) {
                 this.$updateDisplayList(unscaledWidth, unscaledHeight);
                 var padding = isNaN(this._padding) ? 0 : this._padding;
                 var paddingL = isNaN(this._paddingLeft) ? padding : this._paddingLeft;

@@ -24,12 +24,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var egret;
 (function (egret) {
     var gui;
@@ -49,13 +43,14 @@ var egret;
             function VSlider() {
                 _super.call(this);
             }
+            var __egretProto__ = VSlider.prototype;
             /**
              * 将相对于轨道的 x,y 像素位置转换为介于最小值和最大值（包括两者）之间的一个值
              * @param x {number}
              * @param y {number}
              * @returns {number}
              */
-            VSlider.prototype.pointToValue = function (x, y) {
+            __egretProto__.pointToValue = function (x, y) {
                 if (!this.thumb || !this.track)
                     return 0;
                 var range = this.maximum - this.minimum;
@@ -65,7 +60,7 @@ var egret;
             /**
              * 设置外观部件（通常为滑块）的边界，这些外观部件的几何图形不是完全由外观的布局指定的
              */
-            VSlider.prototype.updateSkinDisplayList = function () {
+            __egretProto__.updateSkinDisplayList = function () {
                 if (!this.thumb || !this.track)
                     return;
                 var thumbHeight = this.thumb.layoutBoundsHeight;

@@ -24,12 +24,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var egret;
 (function (egret) {
     var gui;
@@ -50,7 +44,8 @@ var egret;
                 _super.call(this);
                 this._target = null;
             }
-            Object.defineProperty(SkinBasicLayout.prototype, "target", {
+            var __egretProto__ = SkinBasicLayout.prototype;
+            Object.defineProperty(__egretProto__, "target", {
                 /**
                  * 目标布局对象
                  * @member egret.gui.SkinBasicLayout#target
@@ -68,7 +63,7 @@ var egret;
              * 测量组件尺寸大小
              * @method egret.gui.SkinBasicLayout#measure
              */
-            SkinBasicLayout.prototype.measure = function () {
+            __egretProto__.measure = function () {
                 if (this.target == null)
                     return;
                 var measureW = 0;
@@ -127,7 +122,7 @@ var egret;
              * @param unscaledWidth {number}
              * @param unscaledHeight {number}
              */
-            SkinBasicLayout.prototype.updateDisplayList = function (unscaledWidth, unscaledHeight) {
+            __egretProto__.updateDisplayList = function (unscaledWidth, unscaledHeight) {
                 if (this.target == null)
                     return;
                 var count = this.target.numElements;

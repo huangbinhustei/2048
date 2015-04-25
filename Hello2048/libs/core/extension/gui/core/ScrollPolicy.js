@@ -36,6 +36,7 @@ var egret;
         var ScrollPolicy = (function () {
             function ScrollPolicy() {
             }
+            var __egretProto__ = ScrollPolicy.prototype;
             /**
              * 如果子项超出父级的尺寸，则允许滚动，反之不允许滚动。
              * @constant egret.gui.ScrollPolicy.AUTO

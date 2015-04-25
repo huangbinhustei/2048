@@ -24,12 +24,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var egret;
 (function (egret) {
     var gui;
@@ -100,7 +94,8 @@ var egret;
                  */
                 this.renderersBeingUpdated = false;
             }
-            Object.defineProperty(DataGroup.prototype, "layout", {
+            var __egretProto__ = DataGroup.prototype;
+            Object.defineProperty(__egretProto__, "layout", {
                 /**
                  * @member egret.gui.DataGroup#layout
                  */
@@ -131,7 +126,7 @@ var egret;
             /**
              * 是否使用虚拟布局标记改变
              */
-            DataGroup.prototype.layout_useVirtualLayoutChangedHandler = function (event) {
+            __egretProto__.layout_useVirtualLayoutChangedHandler = function (event) {
                 this.changeUseVirtualLayout();
             };
             /**
@@ -139,7 +134,7 @@ var egret;
              * @param startIndex {number}
              * @param endIndex {number}
              */
-            DataGroup.prototype.setVirtualElementIndicesInView = function (startIndex, endIndex) {
+            __egretProto__.setVirtualElementIndicesInView = function (startIndex, endIndex) {
                 if (!this.layout || !this.layout.useVirtualLayout)
                     return;
                 this.virtualRendererIndices = [];
@@ -158,7 +153,7 @@ var egret;
              * @param index {number}
              * @returns {IVisualElement}
              */
-            DataGroup.prototype.getVirtualElementAt = function (index) {
+            __egretProto__.getVirtualElementAt = function (index) {
                 if (index < 0 || index >= this.dataProvider.length)
                     return null;
                 var element = this.indexToRenderer[index];
@@ -180,7 +175,7 @@ var egret;
             /**
              * 释放指定索引处的项呈示器
              */
-            DataGroup.prototype.freeRendererByIndex = function (index) {
+            __egretProto__.freeRendererByIndex = function (index) {
                 if (!this.indexToRenderer[index])
                     return;
                 var renderer = (this.indexToRenderer[index]);
@@ -192,7 +187,7 @@ var egret;
             /**
              * 释放指定的项呈示器
              */
-            DataGroup.prototype.doFreeRenderer = function (renderer) {
+            __egretProto__.doFreeRenderer = function (renderer) {
                 var rendererFactory = this.rendererToClassMap[renderer.hashCode];
                 var hashCode = rendererFactory.hashCode;
                 if (!this.freeRenderers[hashCode]) {
@@ -205,14 +200,14 @@ var egret;
              * 标记组件，以便在稍后屏幕更新期间调用该组件的 measure() 方法
              * @method egret.gui.DataGroup#invalidateSize
              */
-            DataGroup.prototype.invalidateSize = function () {
+            __egretProto__.invalidateSize = function () {
                 if (!this.createNewRendererFlag)
                     _super.prototype.invalidateSize.call(this);
             };
             /**
              * 为指定索引创建虚拟的项呈示器
              */
-            DataGroup.prototype.createVirtualRenderer = function (index) {
+            __egretProto__.createVirtualRenderer = function (index) {
                 var item = this.dataProvider.getItemAt(index);
                 var renderer;
                 var rendererFactory = this.itemToRendererClass(item);
@@ -229,7 +224,7 @@ var egret;
             /**
              * 根据rendererClass创建一个Renderer,并添加到显示列表
              */
-            DataGroup.prototype.createOneRenderer = function (rendererFactory) {
+            __egretProto__.createOneRenderer = function (rendererFactory) {
                 var renderer;
                 var hashCode = rendererFactory.hashCode;
                 var recycler = this.recyclerDic[hashCode];
@@ -254,7 +249,7 @@ var egret;
             /**
              * 设置项呈示器的默认皮肤
              */
-            DataGroup.prototype.setItemRenderSkinName = function (renderer) {
+            __egretProto__.setItemRenderSkinName = function (renderer) {
                 if (!renderer)
                     return;
                 var comp = renderer;
@@ -271,7 +266,7 @@ var egret;
             /**
              * 虚拟布局结束清理不可见的项呈示器
              */
-            DataGroup.prototype.finishVirtualLayout = function () {
+            __egretProto__.finishVirtualLayout = function () {
                 if (!this.virtualLayoutUnderway)
                     return;
                 this.virtualLayoutUnderway = false;
@@ -295,7 +290,7 @@ var egret;
             /**
              * 延迟清理多余的在显示列表中的ItemRenderer。
              */
-            DataGroup.prototype.cleanAllFreeRenderer = function (event) {
+            __egretProto__.cleanAllFreeRenderer = function (event) {
                 if (event === void 0) { event = null; }
                 var renderer;
                 var freeRenderers = this.freeRenderers;
@@ -315,7 +310,7 @@ var egret;
              * @method egret.gui.DataGroup#getElementIndicesInView
              * @returns {number}
              */
-            DataGroup.prototype.getElementIndicesInView = function () {
+            __egretProto__.getElementIndicesInView = function () {
                 if (this.layout && this.layout.useVirtualLayout)
                     return this.virtualRendererIndices ? this.virtualRendererIndices : [];
                 return _super.prototype.getElementIndicesInView.call(this);
@@ -323,13 +318,13 @@ var egret;
             /**
              * 更改是否使用虚拟布局
              */
-            DataGroup.prototype.changeUseVirtualLayout = function () {
+            __egretProto__.changeUseVirtualLayout = function () {
                 this.useVirtualLayoutChanged = true;
                 this.cleanFreeRenderer = true;
                 this.removeDataProviderListener();
                 this.invalidateProperties();
             };
-            Object.defineProperty(DataGroup.prototype, "dataProvider", {
+            Object.defineProperty(__egretProto__, "dataProvider", {
                 /**
                  * 列表数据源，请使用实现了ICollection接口的数据类型，例如ArrayCollection
                  * @member egret.gui.DataGroup#dataProvider
@@ -354,14 +349,14 @@ var egret;
             /**
              * 移除数据源监听
              */
-            DataGroup.prototype.removeDataProviderListener = function () {
+            __egretProto__.removeDataProviderListener = function () {
                 if (this._dataProvider)
                     this._dataProvider.removeEventListener(gui.CollectionEvent.COLLECTION_CHANGE, this.onCollectionChange, this);
             };
             /**
              * 数据源改变事件处理
              */
-            DataGroup.prototype.onCollectionChange = function (event) {
+            __egretProto__.onCollectionChange = function (event) {
                 switch (event.kind) {
                     case gui.CollectionEventKind.ADD:
                         this.itemAddedHandler(event.items, event.location);
@@ -397,7 +392,7 @@ var egret;
             /**
              * 数据源添加项目事件处理
              */
-            DataGroup.prototype.itemAddedHandler = function (items, index) {
+            __egretProto__.itemAddedHandler = function (items, index) {
                 var length = items.length;
                 for (var i = 0; i < length; i++) {
                     this.itemAdded(items[i], index + i);
@@ -407,7 +402,7 @@ var egret;
             /**
              * 数据源移动项目事件处理
              */
-            DataGroup.prototype.itemMovedHandler = function (item, location, oldLocation) {
+            __egretProto__.itemMovedHandler = function (item, location, oldLocation) {
                 this.itemRemoved(item, oldLocation);
                 this.itemAdded(item, location);
                 this.resetRenderersIndices();
@@ -415,7 +410,7 @@ var egret;
             /**
              * 数据源移除项目事件处理
              */
-            DataGroup.prototype.itemRemovedHandler = function (items, location) {
+            __egretProto__.itemRemovedHandler = function (items, location) {
                 var length = items.length;
                 for (var i = length - 1; i >= 0; i--) {
                     this.itemRemoved(items[i], location + i);
@@ -425,7 +420,7 @@ var egret;
             /**
              * 添加一项
              */
-            DataGroup.prototype.itemAdded = function (item, index) {
+            __egretProto__.itemAdded = function (item, index) {
                 if (this.layout)
                     this.layout.elementAdded(index);
                 if (this.layout && this.layout.useVirtualLayout) {
@@ -452,7 +447,7 @@ var egret;
             /**
              * 移除一项
              */
-            DataGroup.prototype.itemRemoved = function (item, index) {
+            __egretProto__.itemRemoved = function (item, index) {
                 if (this.layout)
                     this.layout.elementRemoved(index);
                 var virtualRendererIndices = this.virtualRendererIndices;
@@ -480,7 +475,7 @@ var egret;
             /**
              * 回收一个ItemRenderer实例
              */
-            DataGroup.prototype.recycle = function (renderer) {
+            __egretProto__.recycle = function (renderer) {
                 this._removeFromDisplayList(renderer);
                 if ("ownerChanged" in renderer) {
                     renderer.ownerChanged(null);
@@ -495,7 +490,7 @@ var egret;
             /**
              * 更新当前所有项的索引
              */
-            DataGroup.prototype.resetRenderersIndices = function () {
+            __egretProto__.resetRenderersIndices = function () {
                 if (this.indexToRenderer.length == 0)
                     return;
                 if (this.layout && this.layout.useVirtualLayout) {
@@ -515,7 +510,7 @@ var egret;
             /**
              * 数据源更新或替换项目事件处理
              */
-            DataGroup.prototype.itemUpdatedHandler = function (item, location) {
+            __egretProto__.itemUpdatedHandler = function (item, location) {
                 if (this.renderersBeingUpdated)
                     return; //防止无限循环
                 var renderer = this.indexToRenderer[location];
@@ -525,12 +520,12 @@ var egret;
             /**
              * 调整指定项呈示器的索引值
              */
-            DataGroup.prototype.resetRendererItemIndex = function (index) {
+            __egretProto__.resetRendererItemIndex = function (index) {
                 var renderer = (this.indexToRenderer[index]);
                 if (renderer)
                     renderer.itemIndex = index;
             };
-            Object.defineProperty(DataGroup.prototype, "itemRenderer", {
+            Object.defineProperty(__egretProto__, "itemRenderer", {
                 /**
                  * 用于数据项目的项呈示器。该类必须实现 IItemRenderer 接口。<br/>
                  * rendererClass获取顺序：itemRendererFunction > itemRenderer > 默认ItemRenerer。
@@ -552,7 +547,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(DataGroup.prototype, "itemRendererSkinName", {
+            Object.defineProperty(__egretProto__, "itemRendererSkinName", {
                 /**
                  * 条目渲染器的可选皮肤标识符。在实例化itemRenderer时，若其内部没有设置过skinName,则将此属性的值赋值给它的skinName。
                  * 注意:若itemRenderer不是ISkinnableClient，则此属性无效。
@@ -573,7 +568,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(DataGroup.prototype, "itemRendererFunction", {
+            Object.defineProperty(__egretProto__, "itemRendererFunction", {
                 /**
                  * 为某个特定项目返回一个项呈示器Class的函数。<br/>
                  * rendererClass获取顺序：itemRendererFunction > itemRenderer > 默认ItemRenerer。<br/>
@@ -599,7 +594,7 @@ var egret;
             /**
              * 为特定的数据项返回项呈示器的工厂实例
              */
-            DataGroup.prototype.itemToRendererClass = function (item) {
+            __egretProto__.itemToRendererClass = function (item) {
                 var rendererFactory;
                 if (this._itemRendererFunction != null) {
                     rendererFactory = this._itemRendererFunction(item);
@@ -617,7 +612,7 @@ var egret;
              * @private
              *
              */
-            DataGroup.prototype.createChildren = function () {
+            __egretProto__.createChildren = function () {
                 if (!this.layout) {
                     var _layout = new gui.VerticalLayout();
                     _layout.gap = 0;
@@ -630,7 +625,7 @@ var egret;
              * 处理对组件设置的属性
              * @method egret.gui.DataGroup#commitProperties
              */
-            DataGroup.prototype.commitProperties = function () {
+            __egretProto__.commitProperties = function () {
                 if (this.itemRendererChanged || this.dataProviderChanged || this.useVirtualLayoutChanged) {
                     this.removeAllRenderers();
                     if (this.layout)
@@ -682,7 +677,7 @@ var egret;
              * 计算组件的默认大小和（可选）默认最小大小
              * @method egret.gui.DataGroup#measure
              */
-            DataGroup.prototype.measure = function () {
+            __egretProto__.measure = function () {
                 if (this.layout && this.layout.useVirtualLayout) {
                     this.ensureTypicalLayoutElement();
                 }
@@ -694,7 +689,7 @@ var egret;
              * @param unscaledWidth {number}
              * @param unscaledHeight {number}
              */
-            DataGroup.prototype.updateDisplayList = function (unscaledWidth, unscaledHeight) {
+            __egretProto__.updateDisplayList = function (unscaledWidth, unscaledHeight) {
                 if (this._layoutInvalidateDisplayListFlag && this.layout && this.layout.useVirtualLayout) {
                     this.virtualLayoutUnderway = true;
                     this.ensureTypicalLayoutElement();
@@ -706,7 +701,7 @@ var egret;
             /**
              * 确保测量过默认条目大小。
              */
-            DataGroup.prototype.ensureTypicalLayoutElement = function () {
+            __egretProto__.ensureTypicalLayoutElement = function () {
                 if (this.layout.typicalLayoutRect)
                     return;
                 if (this._dataProvider && this._dataProvider.length > 0) {
@@ -717,7 +712,7 @@ var egret;
             /**
              * 测量项呈示器默认尺寸
              */
-            DataGroup.prototype.measureRendererSize = function () {
+            __egretProto__.measureRendererSize = function () {
                 if (!this.typicalItem) {
                     this.setTypicalLayoutRect(null);
                     return;
@@ -740,7 +735,7 @@ var egret;
             /**
              * 设置项目默认大小
              */
-            DataGroup.prototype.setTypicalLayoutRect = function (rect) {
+            __egretProto__.setTypicalLayoutRect = function (rect) {
                 this.typicalLayoutRect = rect;
                 if (this.layout)
                     this.layout.typicalLayoutRect = rect;
@@ -748,7 +743,7 @@ var egret;
             /**
              * 移除所有项呈示器
              */
-            DataGroup.prototype.removeAllRenderers = function () {
+            __egretProto__.removeAllRenderers = function () {
                 var length = this.indexToRenderer.length;
                 var renderer;
                 for (var i = 0; i < length; i++) {
@@ -767,7 +762,7 @@ var egret;
             /**
              * 为数据项创建项呈示器
              */
-            DataGroup.prototype.createRenderers = function () {
+            __egretProto__.createRenderers = function () {
                 if (!this._dataProvider)
                     return;
                 var index = 0;
@@ -792,7 +787,7 @@ var egret;
              * @param data {any}
              * @returns {IItemRenderer}
              */
-            DataGroup.prototype.updateRenderer = function (renderer, itemIndex, data) {
+            __egretProto__.updateRenderer = function (renderer, itemIndex, data) {
                 this.renderersBeingUpdated = true;
                 if (this._rendererOwner) {
                     renderer = this._rendererOwner.updateRenderer(renderer, itemIndex, data);
@@ -815,7 +810,7 @@ var egret;
              * @param item {any}
              * @returns {string}
              */
-            DataGroup.prototype.itemToLabel = function (item) {
+            __egretProto__.itemToLabel = function (item) {
                 if (item)
                     return item.toString();
                 else
@@ -827,7 +822,7 @@ var egret;
              * @param index {number}
              * @returns {IVisualElement}
              */
-            DataGroup.prototype.getElementAt = function (index) {
+            __egretProto__.getElementAt = function (index) {
                 return this.indexToRenderer[index];
             };
             /**
@@ -836,12 +831,12 @@ var egret;
              * @param element {IVisualElement}
              * @returns {number}
              */
-            DataGroup.prototype.getElementIndex = function (element) {
+            __egretProto__.getElementIndex = function (element) {
                 if (!element)
                     return -1;
                 return this.indexToRenderer.indexOf(element);
             };
-            Object.defineProperty(DataGroup.prototype, "numElements", {
+            Object.defineProperty(__egretProto__, "numElements", {
                 /**
                  * 获得对象容器的子对象总数
                  * @member egret.gui.DataGroup#numElements
@@ -861,7 +856,7 @@ var egret;
              * @param child {DisplayObject}
              * @returns {DisplayObject}
              */
-            DataGroup.prototype.addChild = function (child) {
+            __egretProto__.addChild = function (child) {
                 throw (new Error(egret.getString(3004, egret.getString(3003))));
             };
             /**
@@ -872,7 +867,7 @@ var egret;
              * @param index {number}
              * @returns {DisplayObject}
              */
-            DataGroup.prototype.addChildAt = function (child, index) {
+            __egretProto__.addChildAt = function (child, index) {
                 throw (new Error(egret.getString(3005, egret.getString(3003))));
             };
             /**
@@ -882,7 +877,7 @@ var egret;
              * @param child {DisplayObject}
              * @returns {DisplayObject}
              */
-            DataGroup.prototype.removeChild = function (child) {
+            __egretProto__.removeChild = function (child) {
                 throw (new Error(egret.getString(3006, egret.getString(3003))));
             };
             /**
@@ -892,7 +887,7 @@ var egret;
              * @param index {number}
              * @returns {DisplayObject}
              */
-            DataGroup.prototype.removeChildAt = function (index) {
+            __egretProto__.removeChildAt = function (index) {
                 throw (new Error(egret.getString(3007, egret.getString(3003))));
             };
             /**
@@ -902,7 +897,7 @@ var egret;
              * @param child {DisplayObject}
              * @param index {number}
              */
-            DataGroup.prototype.setChildIndex = function (child, index) {
+            __egretProto__.setChildIndex = function (child, index) {
                 throw (new Error(egret.getString(3008, egret.getString(3003))));
             };
             /**
@@ -912,7 +907,7 @@ var egret;
              * @param child1 {DisplayObject}
              * @param child2 {DisplayObject}
              */
-            DataGroup.prototype.swapChildren = function (child1, child2) {
+            __egretProto__.swapChildren = function (child1, child2) {
                 throw (new Error(egret.getString(3009, egret.getString(3003))));
             };
             /**
@@ -922,7 +917,7 @@ var egret;
              * @param index1 {number}
              * @param index2 {number}
              */
-            DataGroup.prototype.swapChildrenAt = function (index1, index2) {
+            __egretProto__.swapChildrenAt = function (index1, index2) {
                 throw (new Error(egret.getString(3010, egret.getString(3003))));
             };
             /**

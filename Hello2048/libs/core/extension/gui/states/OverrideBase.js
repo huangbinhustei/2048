@@ -24,12 +24,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var egret;
 (function (egret) {
     var gui;
@@ -46,11 +40,12 @@ var egret;
             function OverrideBase() {
                 _super.call(this);
             }
-            OverrideBase.prototype.initialize = function (parent) {
+            var __egretProto__ = OverrideBase.prototype;
+            __egretProto__.initialize = function (parent) {
             };
-            OverrideBase.prototype.apply = function (parent) {
+            __egretProto__.apply = function (parent) {
             };
-            OverrideBase.prototype.remove = function (parent) {
+            __egretProto__.remove = function (parent) {
                 if (parent === null) {
                 }
             };
@@ -60,7 +55,7 @@ var egret;
              * @param properties {any}
              * @returns {any}
              */
-            OverrideBase.prototype.initializeFromObject = function (properties) {
+            __egretProto__.initializeFromObject = function (properties) {
                 for (var p in properties) {
                     this[p] = properties[p];
                 }

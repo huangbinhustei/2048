@@ -24,12 +24,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var egret;
 (function (egret) {
     var gui;
@@ -76,7 +70,8 @@ var egret;
                 this.animationValue = 0;
                 this.trackResizedOrMoved = false;
             }
-            Object.defineProperty(ProgressBar.prototype, "labelFunction", {
+            var __egretProto__ = ProgressBar.prototype;
+            Object.defineProperty(__egretProto__, "labelFunction", {
                 /**
                  * 进度条文本格式化回调函数。示例：labelFunction(value:Number,maximum:Number):String;
                  * @member egret.gui.ProgressBar#labelFunction
@@ -100,13 +95,13 @@ var egret;
              * @param maximum {number}
              * @returns {string}
              */
-            ProgressBar.prototype.valueToLabel = function (value, maximum) {
+            __egretProto__.valueToLabel = function (value, maximum) {
                 if (this.labelFunction != null) {
                     return this._labelFunction(value, maximum);
                 }
                 return value + " / " + maximum;
             };
-            Object.defineProperty(ProgressBar.prototype, "slideDuration", {
+            Object.defineProperty(__egretProto__, "slideDuration", {
                 /**
                  * value改变时调整thumb长度的缓动动画时间，单位毫秒。设置为0则不执行缓动。默认值500。
                  * @member egret.gui.ProgressBar#slideDuration
@@ -126,7 +121,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(ProgressBar.prototype, "direction", {
+            Object.defineProperty(__egretProto__, "direction", {
                 /**
                  * 进度条增长方向。请使用ProgressBarDirection定义的常量。默认值：ProgressBarDirection.LEFT_TO_RIGHT。
                  * @member egret.gui.ProgressBar#direction
@@ -143,7 +138,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(ProgressBar.prototype, "value", {
+            Object.defineProperty(__egretProto__, "value", {
                 /**
                  * 进度条的当前值。
                  * 注意：当组件添加到显示列表后，若slideDuration不为0。设置此属性，并不会立即应用。而是作为目标值，开启缓动动画缓慢接近。
@@ -173,7 +168,7 @@ var egret;
                         var duration = this._slideDuration * (Math.abs(this.animationValue - this.slideToValue) / (this.maximum - this.minimum));
                         this.animator.duration = duration === Infinity ? 0 : duration;
                         this.animator.motionPaths = [
-                            { prop: "value", from: this.animationValue, to: this.slideToValue }
+                            new gui.SimpleMotionPath("value", this.animationValue, this.slideToValue)
                         ];
                         this.animator.play();
                     }
@@ -187,7 +182,7 @@ var egret;
             /**
              * 动画播放更新数值
              */
-            ProgressBar.prototype.animationUpdateHandler = function (animation) {
+            __egretProto__.animationUpdateHandler = function (animation) {
                 var value = this.nearestValidValue(animation.currentValue["value"], this.snapInterval);
                 this.animationValue = Math.min(this.maximum, Math.max(this.minimum, value));
                 this.invalidateDisplayList();
@@ -196,7 +191,7 @@ var egret;
              * @method egret.gui.ProgressBar#setValue
              * @param value {number}
              */
-            ProgressBar.prototype.setValue = function (value) {
+            __egretProto__.setValue = function (value) {
                 _super.prototype.setValue.call(this, value);
                 this.invalidateDisplayList();
             };
@@ -206,7 +201,7 @@ var egret;
              * @param unscaledWidth {number}
              * @param unscaledHeight {number}
              */
-            ProgressBar.prototype.updateDisplayList = function (unscaledWidth, unscaledHeight) {
+            __egretProto__.updateDisplayList = function (unscaledWidth, unscaledHeight) {
                 _super.prototype.updateDisplayList.call(this, unscaledWidth, unscaledHeight);
                 this.updateSkinDisplayList();
             };
@@ -215,7 +210,7 @@ var egret;
              * @param partName
              * @param instance
              */
-            ProgressBar.prototype.partAdded = function (partName, instance) {
+            __egretProto__.partAdded = function (partName, instance) {
                 if (instance == this.track) {
                     if (this.track instanceof gui.UIComponent) {
                         this.track.addEventListener(gui.ResizeEvent.RESIZE, this.onTrackResizeOrMove, this);
@@ -228,7 +223,7 @@ var egret;
              * @param partName
              * @param instance
              */
-            ProgressBar.prototype.partRemoved = function (partName, instance) {
+            __egretProto__.partRemoved = function (partName, instance) {
                 if (instance == this.track) {
                     if (this.track instanceof gui.UIComponent) {
                         this.track.removeEventListener(gui.ResizeEvent.RESIZE, this.onTrackResizeOrMove, this);
@@ -239,14 +234,14 @@ var egret;
             /**
              * track的位置或尺寸发生改变
              */
-            ProgressBar.prototype.onTrackResizeOrMove = function (event) {
+            __egretProto__.onTrackResizeOrMove = function (event) {
                 this.trackResizedOrMoved = true;
                 this.invalidateProperties();
             };
             /**
              * 处理对组件设置的属性
              */
-            ProgressBar.prototype.commitProperties = function () {
+            __egretProto__.commitProperties = function () {
                 _super.prototype.commitProperties.call(this);
                 if (this.trackResizedOrMoved) {
                     this.trackResizedOrMoved = false;
@@ -257,7 +252,7 @@ var egret;
              * 更新皮肤部件大小和可见性。
              * @method egret.gui.ProgressBar#updateSkinDisplayList
              */
-            ProgressBar.prototype.updateSkinDisplayList = function () {
+            __egretProto__.updateSkinDisplayList = function () {
                 this.trackResizedOrMoved = false;
                 var currentValue = this.value;
                 if (this.animator && this.animator.isPlaying) {

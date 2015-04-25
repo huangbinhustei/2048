@@ -24,12 +24,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var egret;
 (function (egret) {
     var gui;
@@ -73,7 +67,8 @@ var egret;
                 this.isValidating = false;
                 this.selectable = true;
             }
-            Object.defineProperty(EditableText.prototype, "selectable", {
+            var __egretProto__ = EditableText.prototype;
+            Object.defineProperty(__egretProto__, "selectable", {
                 get: function () {
                     return this._selectable;
                 },
@@ -83,7 +78,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(EditableText.prototype, "displayAsPassword", {
+            Object.defineProperty(__egretProto__, "displayAsPassword", {
                 /**
                  * @inheritDoc
                  */
@@ -102,7 +97,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(EditableText.prototype, "editable", {
+            Object.defineProperty(__egretProto__, "editable", {
                 /**
                  * @inheritDoc
                  */
@@ -126,7 +121,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(EditableText.prototype, "enabled", {
+            Object.defineProperty(__egretProto__, "enabled", {
                 get: function () {
                     return this._editable;
                 },
@@ -153,7 +148,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(EditableText.prototype, "maxChars", {
+            Object.defineProperty(__egretProto__, "maxChars", {
                 /**
                  * @inheritDoc
                  */
@@ -172,7 +167,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(EditableText.prototype, "multiline", {
+            Object.defineProperty(__egretProto__, "multiline", {
                 /**
                  * @inheritDoc
                  */
@@ -189,7 +184,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(EditableText.prototype, "restrict", {
+            Object.defineProperty(__egretProto__, "restrict", {
                 /**
                  * @deprecated
                  * TextFiled里还没实现这个接口，等实现之后再去掉废弃标志。目前暂时不要使用它。
@@ -207,20 +202,20 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            EditableText.prototype.styleChanged = function (styleProp) {
+            __egretProto__.styleChanged = function (styleProp) {
                 _super.prototype.styleChanged.call(this, styleProp);
                 if (!styleProp || styleProp == "size") {
                     this.heightInLinesChanged = true;
                     this.widthInCharsChanged = true;
                 }
             };
-            EditableText.prototype._setLineSpacing = function (value) {
+            __egretProto__._setLineSpacing = function (value) {
                 if (this._lineSpacing == value)
                     return;
                 _super.prototype._setLineSpacing.call(this, value);
                 this.heightInLinesChanged = true;
             };
-            Object.defineProperty(EditableText.prototype, "heightInLines", {
+            Object.defineProperty(__egretProto__, "heightInLines", {
                 /**
                  * 控件的默认高度（以行为单位测量）。 若设置了multiline属性为false，则忽略此属性。
                  */
@@ -237,7 +232,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(EditableText.prototype, "widthInChars", {
+            Object.defineProperty(__egretProto__, "widthInChars", {
                 /**
                  * 控件的默认宽度（使用字号：size为单位测量）。 若同时设置了maxChars属性，将会根据两者测量结果的最小值作为测量宽度。
                  */
@@ -254,35 +249,35 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(EditableText.prototype, "contentWidth", {
+            Object.defineProperty(__egretProto__, "contentWidth", {
                 get: function () {
                     return this._contentWidth;
                 },
                 enumerable: true,
                 configurable: true
             });
-            EditableText.prototype.setContentWidth = function (value) {
+            __egretProto__.setContentWidth = function (value) {
                 if (value == this._contentWidth)
                     return;
                 var oldValue = this._contentWidth;
                 this._contentWidth = value;
                 this.dispatchPropertyChangeEvent("contentWidth", oldValue, value);
             };
-            Object.defineProperty(EditableText.prototype, "contentHeight", {
+            Object.defineProperty(__egretProto__, "contentHeight", {
                 get: function () {
                     return this._contentHeight;
                 },
                 enumerable: true,
                 configurable: true
             });
-            EditableText.prototype.setContentHeight = function (value) {
+            __egretProto__.setContentHeight = function (value) {
                 if (value == this._contentHeight)
                     return;
                 var oldValue = this._contentHeight;
                 this._contentHeight = value;
                 this.dispatchPropertyChangeEvent("contentHeight", oldValue, value);
             };
-            Object.defineProperty(EditableText.prototype, "horizontalScrollPosition", {
+            Object.defineProperty(__egretProto__, "horizontalScrollPosition", {
                 /**
                  * @inheritDoc
                  */
@@ -297,7 +292,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(EditableText.prototype, "verticalScrollPosition", {
+            Object.defineProperty(__egretProto__, "verticalScrollPosition", {
                 /**
                  * @inheritDoc
                  */
@@ -316,7 +311,7 @@ var egret;
             /**
              * 根据垂直像素位置获取对应的垂直滚动位置
              */
-            EditableText.prototype.getScrollVByVertitcalPos = function (value) {
+            __egretProto__.getScrollVByVertitcalPos = function (value) {
                 if (this._textField.numLines == 0)
                     return 1;
                 var lineHeight = this._textField._getLineHeight();
@@ -329,7 +324,7 @@ var egret;
             /**
              * 根据垂直滚动位置获取对应的垂直像位置
              */
-            EditableText.prototype.getVerticalPosByScrollV = function (scrollV) {
+            __egretProto__.getVerticalPosByScrollV = function (scrollV) {
                 if (scrollV === void 0) { scrollV = 0; }
                 if (scrollV == 1 || this._textField.numLines == 0)
                     return 0;
@@ -343,7 +338,7 @@ var egret;
             /**
              * @inheritDoc
              */
-            EditableText.prototype.getHorizontalScrollPositionDelta = function (navigationUnit) {
+            __egretProto__.getHorizontalScrollPositionDelta = function (navigationUnit) {
                 if (navigationUnit === void 0) { navigationUnit = 0; }
                 var delta = 0;
                 var maxDelta = this._contentWidth - this._horizontalScrollPosition - this.width;
@@ -373,7 +368,7 @@ var egret;
             /**
              * @inheritDoc
              */
-            EditableText.prototype.getVerticalScrollPositionDelta = function (navigationUnit) {
+            __egretProto__.getVerticalScrollPositionDelta = function (navigationUnit) {
                 if (navigationUnit === void 0) { navigationUnit = 0; }
                 var delta = 0;
                 var maxDelta = this._contentHeight - this._verticalScrollPosition - this.height;
@@ -403,7 +398,7 @@ var egret;
             /**
              * 返回指定偏移行数的滚动条偏移量
              */
-            EditableText.prototype.getVScrollDelta = function (offsetLine) {
+            __egretProto__.getVScrollDelta = function (offsetLine) {
                 if (offsetLine === void 0) { offsetLine = 0; }
                 if (!this._textField)
                     return 0;
@@ -414,7 +409,7 @@ var egret;
                 var delta = startPos - this._verticalScrollPosition;
                 return delta;
             };
-            Object.defineProperty(EditableText.prototype, "clipAndEnableScrolling", {
+            Object.defineProperty(__egretProto__, "clipAndEnableScrolling", {
                 /**
                  * @inheritDoc
                  */
@@ -433,7 +428,7 @@ var egret;
              * 处理对组件设置的属性
              * @inheritDoc
              */
-            EditableText.prototype.commitProperties = function () {
+            __egretProto__.commitProperties = function () {
                 if (!this._textField) {
                     this.editableChanged = true;
                     this.displayAsPasswordChanged = true;
@@ -472,13 +467,14 @@ var egret;
                         //todo:没有文字时的测量
                         var hInLine = parseInt(this.heightInLines);
                         var lineHeight = 22;
-                        if (this._textField._text.length > 0) {
+                        var properties = this._textField._properties;
+                        if (properties._text.length > 0) {
                             lineHeight = this._textField._getLineHeight();
                         }
                         else {
-                            this._textField._text = "M";
+                            properties._text = "M";
                             lineHeight = this._textField._getLineHeight();
-                            this._textField._text = "";
+                            properties._text = "";
                         }
                         this.defaultHeight = hInLine * lineHeight + 4;
                     }
@@ -498,7 +494,7 @@ var egret;
              * 通过设置此容器子项的位置和大小来响应大小更改
              * @inheritDoc
              */
-            EditableText.prototype.updateDisplayList = function (unscaledWidth, unscaledHeight) {
+            __egretProto__.updateDisplayList = function (unscaledWidth, unscaledHeight) {
                 this.isValidating = true;
                 _super.prototype.updateDisplayList.call(this, unscaledWidth, unscaledHeight);
                 this.updateContentSize();
@@ -507,7 +503,7 @@ var egret;
             /**
              * 更新内容尺寸大小
              */
-            EditableText.prototype.updateContentSize = function () {
+            __egretProto__.updateContentSize = function () {
                 if (!this.clipAndEnableScrolling)
                     return;
                 this.setContentWidth(this._textField.width);
@@ -523,7 +519,7 @@ var egret;
                 }
                 this.setContentHeight(contentHeight);
             };
-            Object.defineProperty(EditableText.prototype, "selectionBeginIndex", {
+            Object.defineProperty(__egretProto__, "selectionBeginIndex", {
                 /**
                  * @inheritDoc
                  */
@@ -536,7 +532,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(EditableText.prototype, "selectionEndIndex", {
+            Object.defineProperty(__egretProto__, "selectionEndIndex", {
                 /**
                  * @inheritDoc
                  */
@@ -549,7 +545,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(EditableText.prototype, "caretIndex", {
+            Object.defineProperty(__egretProto__, "caretIndex", {
                 /**
                  * @inheritDoc
                  */
@@ -565,7 +561,7 @@ var egret;
             /**
              * @inheritDoc
              */
-            EditableText.prototype.setSelection = function (beginIndex, endIndex) {
+            __egretProto__.setSelection = function (beginIndex, endIndex) {
                 if (endIndex === void 0) { endIndex = 0; }
                 this.validateProperties();
                 if (this._textField) {
@@ -575,7 +571,7 @@ var egret;
             /**
              * @inheritDoc
              */
-            EditableText.prototype.selectAll = function () {
+            __egretProto__.selectAll = function () {
                 this.validateProperties();
                 if (this._textField) {
                     this._textField._setSelection(0, this._textField.text.length);
@@ -585,7 +581,7 @@ var egret;
              * 计算  容器默认大小的最小值和最大值
              * @inheritDoc
              */
-            EditableText.prototype.measure = function () {
+            __egretProto__.measure = function () {
                 this.measuredWidth = isNaN(this.defaultWidth) ? gui.TextBase.DEFAULT_MEASURED_WIDTH : this.defaultWidth;
                 if (this._maxChars != 0) {
                     this.measuredWidth = Math.min(this.measuredWidth, this._textField.width);
@@ -600,7 +596,7 @@ var egret;
             /**
              * 创建文本显示对象
              */
-            EditableText.prototype._createTextField = function () {
+            __egretProto__._createTextField = function () {
                 _super.prototype._createTextField.call(this);
                 this._textField.type = this._editable ? egret.TextFieldType.INPUT : egret.TextFieldType.DYNAMIC;
                 this._textField.multiline = this._multiline;
@@ -609,7 +605,7 @@ var egret;
                 this._textField.addEventListener("scroll", this.textField_scrollHandler, this); //todo:Scroll event
                 this._textField.addEventListener("input", this.textField_textInputHandler, this);
             };
-            EditableText.prototype.textField_changeHandler = function (event) {
+            __egretProto__.textField_changeHandler = function (event) {
                 this._textFieldChanged();
                 event.stopImmediatePropagation();
                 this.dispatchEvent(new egret.Event(egret.Event.CHANGE));
@@ -620,12 +616,12 @@ var egret;
             /**
              *  @private
              */
-            EditableText.prototype.textField_scrollHandler = function (event) {
+            __egretProto__.textField_scrollHandler = function (event) {
             };
             /**
              * 即将输入文字
              */
-            EditableText.prototype.textField_textInputHandler = function (event) {
+            __egretProto__.textField_textInputHandler = function (event) {
                 event.stopImmediatePropagation();
                 var newEvent = new egret.Event(event.type, false, true);
                 newEvent.data = event.data;

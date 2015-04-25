@@ -1,9 +1,3 @@
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var skins;
 (function (skins) {
     var simple;
@@ -22,19 +16,20 @@ var skins;
                     ])
                 ];
             }
-            Object.defineProperty(TextInputSkin.prototype, "skinParts", {
+            var __egretProto__ = TextInputSkin.prototype;
+            Object.defineProperty(__egretProto__, "skinParts", {
                 get: function () {
                     return TextInputSkin._skinParts;
                 },
                 enumerable: true,
                 configurable: true
             });
-            TextInputSkin.prototype.__3_i = function () {
+            __egretProto__.__3_i = function () {
                 var t = new egret.gui.UIAsset();
                 this.__s(t, ["percentHeight", "source", "percentWidth"], [100, "textbox_png", 100]);
                 return t;
             };
-            TextInputSkin.prototype.textDisplay_i = function () {
+            __egretProto__.textDisplay_i = function () {
                 var t = new egret.gui.EditableText();
                 this.textDisplay = t;
                 this.__s(t, ["bottom", "percentHeight", "left", "right", "size", "textColor", "top", "percentWidth"], [8, 100, 10, 10, 20, 0x000000, 8, 100]);

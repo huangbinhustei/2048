@@ -24,12 +24,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var egret;
 (function (egret) {
     var gui;
@@ -55,7 +49,8 @@ var egret;
                 this._itemIndex = -1;
                 this.touchChildren = true;
             }
-            Object.defineProperty(ItemRenderer.prototype, "data", {
+            var __egretProto__ = ItemRenderer.prototype;
+            Object.defineProperty(__egretProto__, "data", {
                 /**
                  * @member egret.gui.ItemRenderer#data
                  */
@@ -82,9 +77,9 @@ var egret;
              * 与直接复写_data的setter方法不同，它会确保在皮肤已经附加完成后再被调用。
              * @method egret.gui.ItemRenderer#dataChanged
              */
-            ItemRenderer.prototype.dataChanged = function () {
+            __egretProto__.dataChanged = function () {
             };
-            Object.defineProperty(ItemRenderer.prototype, "selected", {
+            Object.defineProperty(__egretProto__, "selected", {
                 /**
                  * @member egret.gui.ItemRenderer#selected
                  */
@@ -100,7 +95,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(ItemRenderer.prototype, "itemIndex", {
+            Object.defineProperty(__egretProto__, "itemIndex", {
                 /**
                  * @member egret.gui.ItemRenderer#itemIndex
                  */
@@ -117,7 +112,7 @@ var egret;
              * 处理对组件设置的属性
              * @method egret.gui.ItemRenderer#commitProperties
              */
-            ItemRenderer.prototype.commitProperties = function () {
+            __egretProto__.commitProperties = function () {
                 _super.prototype.commitProperties.call(this);
                 if (this.dataChangedFlag) {
                     this.dataChangedFlag = false;
@@ -129,7 +124,7 @@ var egret;
              * @method egret.gui.ItemRenderer#getCurrentSkinState
              * @returns {string}
              */
-            ItemRenderer.prototype.getCurrentSkinState = function () {
+            __egretProto__.getCurrentSkinState = function () {
                 if (this._selected)
                     return "down";
                 return _super.prototype.getCurrentSkinState.call(this);

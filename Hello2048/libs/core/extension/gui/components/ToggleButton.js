@@ -24,12 +24,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var egret;
 (function (egret) {
     var gui;
@@ -55,7 +49,8 @@ var egret;
                 this.iconDisplay = null;
                 this._icon = null;
             }
-            Object.defineProperty(ToggleButton.prototype, "icon", {
+            var __egretProto__ = ToggleButton.prototype;
+            Object.defineProperty(__egretProto__, "icon", {
                 /**
                  * 要在按钮上显示的图标
                  * @member egret.gui.ButtonBase#icon
@@ -69,7 +64,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            ToggleButton.prototype._getIcon = function () {
+            __egretProto__._getIcon = function () {
                 if (this.iconDisplay) {
                     return this.iconDisplay.source;
                 }
@@ -77,7 +72,7 @@ var egret;
                     return this._icon;
                 }
             };
-            ToggleButton.prototype._setIcon = function (value) {
+            __egretProto__._setIcon = function (value) {
                 this._icon = value;
                 if (this.iconDisplay) {
                     this.iconDisplay.source = value;
@@ -88,7 +83,7 @@ var egret;
              * @param partName {string}
              * @param instance {any}
              */
-            ToggleButton.prototype.partAdded = function (partName, instance) {
+            __egretProto__.partAdded = function (partName, instance) {
                 _super.prototype.partAdded.call(this, partName, instance);
                 if (instance == this.iconDisplay) {
                     this.iconDisplay.source = this._icon;

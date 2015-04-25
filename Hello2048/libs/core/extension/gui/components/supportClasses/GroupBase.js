@@ -24,12 +24,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var egret;
 (function (egret) {
     var gui;
@@ -65,17 +59,18 @@ var egret;
                 this._layoutInvalidateSizeFlag = false;
                 this.touchEnabled = false;
             }
+            var __egretProto__ = GroupBase.prototype;
             /**
              * 如果尚未设置布局对象，则 createChildren() 会为该容器指定默认布局对象 BasicLayout
              * @method egret.gui.GroupBase#createChildren
              */
-            GroupBase.prototype.createChildren = function () {
+            __egretProto__.createChildren = function () {
                 _super.prototype.createChildren.call(this);
                 if (!this._layout) {
                     this.layout = new gui.BasicLayout;
                 }
             };
-            Object.defineProperty(GroupBase.prototype, "contentWidth", {
+            Object.defineProperty(__egretProto__, "contentWidth", {
                 /**
                  * 视域的内容的宽度
                  * @member egret.gui.GroupBase#contentWidth
@@ -90,7 +85,7 @@ var egret;
              * 设置setContentWidth
              * @param value
              */
-            GroupBase.prototype.setContentWidth = function (value) {
+            __egretProto__.setContentWidth = function (value) {
                 if (value == this._contentWidth)
                     return;
                 var oldValue = this._contentWidth;
@@ -98,7 +93,7 @@ var egret;
                 if (this.hasEventListener("propertyChange"))
                     gui.PropertyChangeEvent.dispatchPropertyChangeEvent(this, gui.PropertyChangeEventKind.UPDATE, "contentWidth", oldValue, value, this);
             };
-            Object.defineProperty(GroupBase.prototype, "contentHeight", {
+            Object.defineProperty(__egretProto__, "contentHeight", {
                 /**
                  * 视域的内容的高度
                  * @member egret.gui.GroupBase#contentHeight
@@ -113,7 +108,7 @@ var egret;
              * 设置ContentHeight
              * @param value
              */
-            GroupBase.prototype.setContentHeight = function (value) {
+            __egretProto__.setContentHeight = function (value) {
                 if (value == this._contentHeight)
                     return;
                 var oldValue = this._contentHeight;
@@ -129,13 +124,13 @@ var egret;
              * @param width {number}
              * @param height {number}
              */
-            GroupBase.prototype.setContentSize = function (width, height) {
+            __egretProto__.setContentSize = function (width, height) {
                 if ((width == this._contentWidth) && (height == this._contentHeight))
                     return;
                 this.setContentWidth(width);
                 this.setContentHeight(height);
             };
-            Object.defineProperty(GroupBase.prototype, "layout", {
+            Object.defineProperty(__egretProto__, "layout", {
                 /**
                  * 此容器的布局对象
                  * @member egret.gui.GroupBase#layout
@@ -149,7 +144,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            GroupBase.prototype._setLayout = function (value) {
+            __egretProto__._setLayout = function (value) {
                 if (this._layout == value)
                     return;
                 if (this._layout) {
@@ -163,7 +158,7 @@ var egret;
                 this.invalidateDisplayList();
                 this.dispatchEventWith("layoutChanged");
             };
-            Object.defineProperty(GroupBase.prototype, "clipAndEnableScrolling", {
+            Object.defineProperty(__egretProto__, "clipAndEnableScrolling", {
                 /**
                  * 如果为 true，指定将子代剪切到视区的边界。如果为 false，则容器子代会从容器边界扩展过去，而不管组件的大小规范。默认false
                  * @member egret.gui.GroupBase#clipAndEnableScrolling
@@ -185,7 +180,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(GroupBase.prototype, "horizontalScrollPosition", {
+            Object.defineProperty(__egretProto__, "horizontalScrollPosition", {
                 /**
                  * 可视区域水平方向起始点
                  * @member egret.gui.GroupBase#horizontalScrollPosition
@@ -204,7 +199,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(GroupBase.prototype, "verticalScrollPosition", {
+            Object.defineProperty(__egretProto__, "verticalScrollPosition", {
                 /**
                  * 可视区域竖直方向起始点
                  * @member egret.gui.GroupBase#verticalScrollPosition
@@ -226,7 +221,7 @@ var egret;
             /**
              * 滚动条位置改变
              */
-            GroupBase.prototype.scrollPositionChanged = function () {
+            __egretProto__.scrollPositionChanged = function () {
                 if (!this._clipAndEnableScrolling) {
                     return;
                 }
@@ -241,7 +236,7 @@ var egret;
              * @param w {number}
              * @param h {number}
              */
-            GroupBase.prototype.updateScrollRect = function (w, h) {
+            __egretProto__.updateScrollRect = function (w, h) {
                 var rect = this._scrollRect;
                 if (this._clipAndEnableScrolling) {
                     if (rect) {
@@ -262,7 +257,7 @@ var egret;
              * 计算组件的默认大小和（可选）默认最小大小
              * @method egret.gui.GroupBase#measure
              */
-            GroupBase.prototype.measure = function () {
+            __egretProto__.measure = function () {
                 if (!this._layout || !this._layoutInvalidateSizeFlag)
                     return;
                 _super.prototype.measure.call(this);
@@ -271,32 +266,32 @@ var egret;
             /**
              * 标记需要更新显示列表但不需要更新布局
              */
-            GroupBase.prototype._invalidateDisplayListExceptLayout = function () {
+            __egretProto__._invalidateDisplayListExceptLayout = function () {
                 _super.prototype.invalidateDisplayList.call(this);
             };
             /**
              * 标记组件，以便在稍后屏幕更新期间调用该组件的 updateDisplayList() 方法
              * @method egret.gui.GroupBase#invalidateDisplayList
              */
-            GroupBase.prototype.invalidateDisplayList = function () {
+            __egretProto__.invalidateDisplayList = function () {
                 _super.prototype.invalidateDisplayList.call(this);
                 this._layoutInvalidateDisplayListFlag = true;
             };
-            GroupBase.prototype._childXYChanged = function () {
+            __egretProto__._childXYChanged = function () {
                 this.invalidateSize();
                 this.invalidateDisplayList();
             };
             /**
              * 标记需要更新显示列表但不需要更新布局
              */
-            GroupBase.prototype._invalidateSizeExceptLayout = function () {
+            __egretProto__._invalidateSizeExceptLayout = function () {
                 _super.prototype.invalidateSize.call(this);
             };
             /**
              * 标记组件，以便在稍后屏幕更新期间调用该组件的 measure() 方法
              * @method egret.gui.GroupBase#invalidateSize
              */
-            GroupBase.prototype.invalidateSize = function () {
+            __egretProto__.invalidateSize = function () {
                 _super.prototype.invalidateSize.call(this);
                 this._layoutInvalidateSizeFlag = true;
             };
@@ -305,7 +300,7 @@ var egret;
              * @param unscaledWidth
              * @param unscaledHeight
              */
-            GroupBase.prototype.updateDisplayList = function (unscaledWidth, unscaledHeight) {
+            __egretProto__.updateDisplayList = function (unscaledWidth, unscaledHeight) {
                 _super.prototype.updateDisplayList.call(this, unscaledWidth, unscaledHeight);
                 if (this._layoutInvalidateDisplayListFlag && this._layout) {
                     this._layoutInvalidateDisplayListFlag = false;
@@ -313,7 +308,7 @@ var egret;
                     this.updateScrollRect(unscaledWidth, unscaledHeight);
                 }
             };
-            Object.defineProperty(GroupBase.prototype, "numElements", {
+            Object.defineProperty(__egretProto__, "numElements", {
                 /**
                  * 此容器中的可视元素的数量。
                  * @member egret.gui.GroupBase#numElements
@@ -331,7 +326,7 @@ var egret;
              * @throws RangeError 如果在子列表中不存在该索引位置。
              * @returns {IVisualElement}
              */
-            GroupBase.prototype.getElementAt = function (index) {
+            __egretProto__.getElementAt = function (index) {
                 return null;
             };
             /**
@@ -340,7 +335,7 @@ var egret;
              * @param element {IVisualElement} 可视元素。
              * @returns {number}
              */
-            GroupBase.prototype.getElementIndex = function (element) {
+            __egretProto__.getElementIndex = function (element) {
                 return -1;
             };
             /**
@@ -348,7 +343,7 @@ var egret;
              * @method egret.gui.GroupBase#getElementIndicesInView
              * @returns {number}
              */
-            GroupBase.prototype.getElementIndicesInView = function () {
+            __egretProto__.getElementIndicesInView = function () {
                 var visibleIndices = [];
                 var index;
                 if (!this.scrollRect) {
@@ -379,7 +374,7 @@ var egret;
              * @param startIndex {number} 可视元素起始索引
              * @param endIndex {number} 可视元素结束索引
              */
-            GroupBase.prototype.setVirtualElementIndicesInView = function (startIndex, endIndex) {
+            __egretProto__.setVirtualElementIndicesInView = function (startIndex, endIndex) {
             };
             /**
              * 支持useVirtualLayout属性的布局类在updateDisplayList()中使用此方法来获取“处于视图中”的布局元素
@@ -387,7 +382,7 @@ var egret;
              * @param index {number} 要检索的元素的索引。
              * @returns {IVisualElement}
              */
-            GroupBase.prototype.getVirtualElementAt = function (index) {
+            __egretProto__.getVirtualElementAt = function (index) {
                 return this.getElementAt(index);
             };
             return GroupBase;

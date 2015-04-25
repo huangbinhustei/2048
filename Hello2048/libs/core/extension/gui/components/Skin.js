@@ -24,12 +24,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var egret;
 (function (egret) {
     var gui;
@@ -92,6 +86,10 @@ var egret;
                 //========================state相关函数===============start=========================
                 this._states = [];
                 /**
+                 * 播放过渡效果的标志
+                 */
+                this.playStateTransition = true;
+                /**
                  * 当前视图状态发生改变的标志
                  */
                 this.currentStateChanged = false;
@@ -104,7 +102,8 @@ var egret;
                 this.skinLayout = new gui.SkinBasicLayout();
                 this.skinLayout.target = this;
             }
-            Object.defineProperty(Skin.prototype, "width", {
+            var __egretProto__ = Skin.prototype;
+            Object.defineProperty(__egretProto__, "width", {
                 /**
                  * 组件宽度,默认值为NaN,设置为NaN将使用组件的measure()方法自动计算尺寸
                  * @member egret.gui.Skin#width
@@ -121,7 +120,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(Skin.prototype, "height", {
+            Object.defineProperty(__egretProto__, "height", {
                 /**
                  * 组件高度,默认值为NaN,设置为NaN将使用组件的measure()方法自动计算尺寸
                  * @member egret.gui.Skin#height
@@ -138,14 +137,14 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(Skin.prototype, "preferredWidth", {
+            Object.defineProperty(__egretProto__, "preferredWidth", {
                 get: function () {
                     return this._hasWidthSet ? this._width : this.measuredWidth;
                 },
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(Skin.prototype, "preferredHeight", {
+            Object.defineProperty(__egretProto__, "preferredHeight", {
                 get: function () {
                     return this._hasHeightSet ? this._height : this.measuredHeight;
                 },
@@ -157,9 +156,9 @@ var egret;
              * 请务必调用super.createChildren()以完成父类组件的初始化
              * @method egret.gui.Skin#createChildren
              */
-            Skin.prototype.createChildren = function () {
+            __egretProto__.createChildren = function () {
             };
-            Object.defineProperty(Skin.prototype, "hostComponent", {
+            Object.defineProperty(__egretProto__, "hostComponent", {
                 /**
                  * @member egret.gui.Skin#hostComponent
                  */
@@ -180,7 +179,7 @@ var egret;
              * @param value
              * @private
              */
-            Skin.prototype._setHostComponent = function (value) {
+            __egretProto__._setHostComponent = function (value) {
                 if (this._hostComponent == value)
                     return;
                 var i;
@@ -208,10 +207,10 @@ var egret;
             /**
              * 返回子元素列表
              */
-            Skin.prototype._getElementsContent = function () {
+            __egretProto__._getElementsContent = function () {
                 return this._elementsContent;
             };
-            Object.defineProperty(Skin.prototype, "elementsContent", {
+            Object.defineProperty(__egretProto__, "elementsContent", {
                 /**
                  * 设置容器子对象数组 。数组包含要添加到容器的子项列表，之前的已存在于容器中的子项列表被全部移除后添加列表里的每一项到容器。
                  * 设置该属性时会对您输入的数组进行一次浅复制操作，所以您之后对该数组的操作不会影响到添加到容器的子项列表数量。
@@ -244,7 +243,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(Skin.prototype, "numElements", {
+            Object.defineProperty(__egretProto__, "numElements", {
                 /**
                  * @member egret.gui.Skin#numElements
                  */
@@ -260,11 +259,11 @@ var egret;
              * @param index {number}
              * @returns {IVisualElement}
              */
-            Skin.prototype.getElementAt = function (index) {
+            __egretProto__.getElementAt = function (index) {
                 this.checkForRangeError(index);
                 return this._elementsContent[index];
             };
-            Skin.prototype.checkForRangeError = function (index, addingElement) {
+            __egretProto__.checkForRangeError = function (index, addingElement) {
                 if (addingElement === void 0) { addingElement = false; }
                 var maxIndex = this._elementsContent.length - 1;
                 if (addingElement)
@@ -278,7 +277,7 @@ var egret;
              * @param element {IVisualElement}
              * @returns {IVisualElement}
              */
-            Skin.prototype.addElement = function (element) {
+            __egretProto__.addElement = function (element) {
                 var index = this.numElements;
                 if (element.owner == this)
                     index = this.numElements - 1;
@@ -291,7 +290,7 @@ var egret;
              * @param index {number}
              * @returns {IVisualElement}
              */
-            Skin.prototype.addElementAt = function (element, index) {
+            __egretProto__.addElementAt = function (element, index) {
                 this.checkForRangeError(index, true);
                 var host = element.owner;
                 if (host == this) {
@@ -314,7 +313,7 @@ var egret;
              * @param element {IVisualElement}
              * @returns {IVisualElement}
              */
-            Skin.prototype.removeElement = function (element) {
+            __egretProto__.removeElement = function (element) {
                 return this.removeElementAt(this.getElementIndex(element));
             };
             /**
@@ -323,7 +322,7 @@ var egret;
              * @param index {number}
              * @returns {IVisualElement}
              */
-            Skin.prototype.removeElementAt = function (index) {
+            __egretProto__.removeElementAt = function (index) {
                 this.checkForRangeError(index);
                 var element = this._elementsContent[index];
                 if (this._hostComponent)
@@ -339,7 +338,7 @@ var egret;
              * @param element {IVisualElement}
              * @returns {number}
              */
-            Skin.prototype.getElementIndex = function (element) {
+            __egretProto__.getElementIndex = function (element) {
                 return this._elementsContent.indexOf(element);
             };
             /**
@@ -348,7 +347,7 @@ var egret;
              * @param element {IVisualElement}
              * @param index {number}
              */
-            Skin.prototype.setElementIndex = function (element, index) {
+            __egretProto__.setElementIndex = function (element, index) {
                 this.checkForRangeError(index);
                 var oldIndex = this.getElementIndex(element);
                 if (oldIndex == -1 || oldIndex == index)
@@ -366,7 +365,7 @@ var egret;
              * @param index {number}
              * @param notifyListeners {boolean}
              */
-            Skin.prototype._elementAdded = function (element, index, notifyListeners) {
+            __egretProto__._elementAdded = function (element, index, notifyListeners) {
                 if (notifyListeners === void 0) { notifyListeners = true; }
                 element.ownerChanged(this);
                 if (element instanceof egret.DisplayObject) {
@@ -386,7 +385,7 @@ var egret;
              * @param index {number}
              * @param notifyListeners {boolean}
              */
-            Skin.prototype._elementRemoved = function (element, index, notifyListeners) {
+            __egretProto__._elementRemoved = function (element, index, notifyListeners) {
                 if (notifyListeners === void 0) { notifyListeners = true; }
                 if (notifyListeners) {
                     if (this.hasEventListener(gui.ElementExistenceEvent.ELEMENT_REMOVE))
@@ -404,7 +403,7 @@ var egret;
              * 测量组件尺寸
              * @method egret.gui.Skin#measure
              */
-            Skin.prototype.measure = function () {
+            __egretProto__.measure = function () {
                 this.skinLayout.measure();
                 if (this.measuredWidth < this.minWidth) {
                     this.measuredWidth = this.minWidth;
@@ -425,10 +424,10 @@ var egret;
              * @param unscaledWidth {number}
              * @param unscaledHeight {number}
              */
-            Skin.prototype.updateDisplayList = function (unscaledWidth, unscaledHeight) {
+            __egretProto__.updateDisplayList = function (unscaledWidth, unscaledHeight) {
                 this.skinLayout.updateDisplayList(unscaledWidth, unscaledHeight);
             };
-            Object.defineProperty(Skin.prototype, "states", {
+            Object.defineProperty(__egretProto__, "states", {
                 /**
                  * 为此组件定义的视图状态。
                  * @member egret.StateClientHelper#states
@@ -442,7 +441,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Skin.prototype._setStates = function (value) {
+            __egretProto__._setStates = function (value) {
                 if (!value)
                     value = [];
                 if (typeof (value[0]) == "string") {
@@ -459,7 +458,21 @@ var egret;
                     this.requestedCurrentState = this.getDefaultState();
                 }
             };
-            Object.defineProperty(Skin.prototype, "currentState", {
+            Object.defineProperty(__egretProto__, "transitions", {
+                /**
+                 *  一个 Transition 对象 Array，其中的每个 Transition 对象都定义一组效果，
+                 * 用于在视图状态发生更改时播放。
+                 */
+                get: function () {
+                    return this._transitions;
+                },
+                set: function (value) {
+                    this._transitions = value;
+                },
+                enumerable: true,
+                configurable: true
+            });
+            Object.defineProperty(__egretProto__, "currentState", {
                 /**
                  * 组件的当前视图状态。将其设置为 "" 或 null 可将组件重置回其基本状态。
                  * @member egret.StateClientHelper#currentState
@@ -489,13 +502,13 @@ var egret;
              * @param stateName {string}
              * @returns {boolean}
              */
-            Skin.prototype.hasState = function (stateName) {
+            __egretProto__.hasState = function (stateName) {
                 return (this.getState(stateName) != null);
             };
             /**
              * 返回默认状态
              */
-            Skin.prototype.getDefaultState = function () {
+            __egretProto__.getDefaultState = function () {
                 if (this._states.length > 0) {
                     return this._states[0].name;
                 }
@@ -505,13 +518,36 @@ var egret;
              * 应用当前的视图状态。子类覆盖此方法在视图状态发生改变时执行相应更新操作。
              * @method egret.gui.Skin#commitCurrentState
              */
-            Skin.prototype.commitCurrentState = function () {
+            __egretProto__.commitCurrentState = function () {
                 if (!this.currentStateChanged)
                     return;
                 this.currentStateChanged = false;
                 var destination = this.getState(this.requestedCurrentState);
                 if (!destination) {
                     this.requestedCurrentState = this.getDefaultState();
+                }
+                var nextTransition;
+                if (this.playStateTransition) {
+                    nextTransition = this.getTransition(this._currentState, this.requestedCurrentState);
+                }
+                var prevTransitionFraction;
+                var prevTransitionEffect;
+                if (this._currentTransition) {
+                    this._currentTransition.effect.removeEventListener(gui.EffectEvent.EFFECT_END, this.transition_effectEndHandler, this);
+                    if (nextTransition && this._currentTransition.interruptionBehavior == gui.InterruptionBehavior.STOP) {
+                        prevTransitionEffect = this._currentTransition.effect;
+                        prevTransitionEffect.stop();
+                    }
+                    else {
+                        if (this._currentTransition.autoReverse && this.transitionFromState == this.requestedCurrentState && this.transitionToState == this._currentState) {
+                            if (this._currentTransition.effect.duration == 0)
+                                prevTransitionFraction = 0;
+                            else
+                                prevTransitionFraction = this._currentTransition.effect.playheadTime / this.getTotalDuration(this._currentTransition.effect);
+                        }
+                        this._currentTransition.effect.end();
+                    }
+                    this._currentTransition = null;
                 }
                 var oldState = this._currentState ? this._currentState : "";
                 if (this.hasEventListener(gui.StateChangeEvent.CURRENT_STATE_CHANGING)) {
@@ -525,11 +561,34 @@ var egret;
                 if (this.hasEventListener(gui.StateChangeEvent.CURRENT_STATE_CHANGE)) {
                     gui.StateChangeEvent.dispatchStateChangeEvent(this, gui.StateChangeEvent.CURRENT_STATE_CHANGE, oldState, this._currentState ? this._currentState : "");
                 }
+                if (nextTransition) {
+                    var reverseTransition = nextTransition && nextTransition.autoReverse && (nextTransition.toState == oldState || nextTransition.fromState == this._currentState);
+                    gui.UIGlobals._layoutManager.validateNow();
+                    this._currentTransition = nextTransition;
+                    this.transitionFromState = oldState;
+                    this.transitionToState = this._currentState;
+                    nextTransition.effect.addEventListener(gui.EffectEvent.EFFECT_END, this.transition_effectEndHandler, this);
+                    nextTransition.effect.play(null, reverseTransition);
+                    if (!isNaN(prevTransitionFraction) && nextTransition.effect.duration != 0) {
+                        nextTransition.effect.playheadTime = (1 - prevTransitionFraction) * this.getTotalDuration(nextTransition.effect);
+                    }
+                }
+                else {
+                    if (this.hasEventListener(gui.StateChangeEvent.STATE_CHANGE_COMPLETE)) {
+                        gui.StateChangeEvent.dispatchStateChangeEvent(this, gui.StateChangeEvent.CURRENT_STATE_CHANGE);
+                    }
+                }
+            };
+            __egretProto__.transition_effectEndHandler = function (event) {
+                this._currentTransition = null;
+                if (this.hasEventListener(gui.StateChangeEvent.STATE_CHANGE_COMPLETE)) {
+                    gui.StateChangeEvent.dispatchStateChangeEvent(this, gui.StateChangeEvent.CURRENT_STATE_CHANGE);
+                }
             };
             /**
              * 通过名称返回视图状态
              */
-            Skin.prototype.getState = function (stateName) {
+            __egretProto__.getState = function (stateName) {
                 if (!stateName)
                     return null;
                 var states = this._states;
@@ -544,7 +603,7 @@ var egret;
             /**
              * 移除指定的视图状态以及所依赖的所有父级状态，除了与新状态的共同状态外
              */
-            Skin.prototype.removeState = function (stateName) {
+            __egretProto__.removeState = function (stateName) {
                 var state = this.getState(stateName);
                 if (state) {
                     var overrides = state.overrides;
@@ -555,7 +614,7 @@ var egret;
             /**
              * 应用新状态
              */
-            Skin.prototype.applyState = function (stateName) {
+            __egretProto__.applyState = function (stateName) {
                 var state = this.getState(stateName);
                 if (state) {
                     var overrides = state.overrides;
@@ -568,7 +627,7 @@ var egret;
              * 初始化所有视图状态
              * @method egret.StateClientHelper#initializeStates
              */
-            Skin.prototype.initializeStates = function () {
+            __egretProto__.initializeStates = function () {
                 if (this.initialized)
                     return;
                 this.initialized = true;
@@ -578,6 +637,72 @@ var egret;
                     var state = (states[i]);
                     state.initialize(this);
                 }
+            };
+            /**
+             *  获取两个状态之间的过渡
+             */
+            __egretProto__.getTransition = function (oldState, newState) {
+                var result = null;
+                var priority = 0;
+                if (!this.transitions)
+                    return null;
+                if (!oldState)
+                    oldState = "";
+                if (!newState)
+                    newState = "";
+                for (var i = 0; i < this.transitions.length; i++) {
+                    var t = this.transitions[i];
+                    if (t.fromState == "*" && t.toState == "*" && priority < 1) {
+                        result = t;
+                        priority = 1;
+                    }
+                    else if (t.toState == oldState && t.fromState == "*" && t.autoReverse && priority < 2) {
+                        result = t;
+                        priority = 2;
+                    }
+                    else if (t.toState == "*" && t.fromState == newState && t.autoReverse && priority < 3) {
+                        result = t;
+                        priority = 3;
+                    }
+                    else if (t.toState == oldState && t.fromState == newState && t.autoReverse && priority < 4) {
+                        result = t;
+                        priority = 4;
+                    }
+                    else if (t.fromState == oldState && t.toState == "*" && priority < 5) {
+                        result = t;
+                        priority = 5;
+                    }
+                    else if (t.fromState == "*" && t.toState == newState && priority < 6) {
+                        result = t;
+                        priority = 6;
+                    }
+                    else if (t.fromState == oldState && t.toState == newState && priority < 7) {
+                        result = t;
+                        priority = 7;
+                        break;
+                    }
+                }
+                if (result && !result.effect)
+                    result = null;
+                return result;
+            };
+            /**
+             * 效果的总持续时间
+             */
+            __egretProto__.getTotalDuration = function (effect) {
+                var duration = 0;
+                var effectObj = effect;
+                if (effect instanceof gui.CompositeEffect) {
+                    duration = effectObj.compositeDuration;
+                }
+                else {
+                    duration = effect.duration;
+                }
+                var repeatDelay = ("repeatDelay" in effect) ? effectObj.repeatDelay : 0;
+                var repeatCount = ("repeatCount" in effect) ? effectObj.repeatCount : 0;
+                var startDelay = ("startDelay" in effect) ? effectObj.startDelay : 0;
+                duration = duration * repeatCount + (repeatDelay * (repeatCount - 1)) + startDelay;
+                return duration;
             };
             return Skin;
         })(egret.EventDispatcher);

@@ -24,12 +24,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var egret;
 (function (egret) {
     var gui;
@@ -90,7 +84,8 @@ var egret;
                 this.addEventListener(egret.Event.ADDED_TO_STAGE, this.addedToStageHandler, this);
                 this.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.mouseDownHandler, this);
             }
-            Object.defineProperty(TrackBase.prototype, "slideDuration", {
+            var __egretProto__ = TrackBase.prototype;
+            Object.defineProperty(__egretProto__, "slideDuration", {
                 /**
                  * 在轨道上单击以移动滑块时，滑动动画持续的时间（以毫秒为单位）。<br/>
                  * 此属性用于 Slider 和 ScrollBar。对于 Slider，在轨道上的任何单击将导致生成使用此样式的一个动画，同时滑块将移到单击的位置。<br/>
@@ -109,7 +104,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(TrackBase.prototype, "maximum", {
+            Object.defineProperty(__egretProto__, "maximum", {
                 /**
                  * 最大有效值
                  * @member egret.gui.TrackBase#maximum
@@ -129,7 +124,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(TrackBase.prototype, "minimum", {
+            Object.defineProperty(__egretProto__, "minimum", {
                 /**
                  * 最小有效值
                  * @member egret.gui.TrackBase#minimum
@@ -149,7 +144,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(TrackBase.prototype, "value", {
+            Object.defineProperty(__egretProto__, "value", {
                 /**
                  * 此范围的当前值。
                  * @member egret.gui.TrackBase#value
@@ -173,7 +168,7 @@ var egret;
              * @method egret.gui.TrackBase#setValue
              * @param value {number}
              */
-            TrackBase.prototype.setValue = function (value) {
+            __egretProto__.setValue = function (value) {
                 _super.prototype.setValue.call(this, value);
                 this.invalidateDisplayList();
             };
@@ -184,7 +179,7 @@ var egret;
              * @param y {number} 相对于轨道原点的位置的y坐标。
              * @returns {number}
              */
-            TrackBase.prototype.pointToValue = function (x, y) {
+            __egretProto__.pointToValue = function (x, y) {
                 return this.minimum;
             };
             /**
@@ -192,7 +187,7 @@ var egret;
              * @method egret.gui.TrackBase#changeValueByStep
              * @param increase {boolean}
              */
-            TrackBase.prototype.changeValueByStep = function (increase) {
+            __egretProto__.changeValueByStep = function (increase) {
                 if (increase === void 0) { increase = true; }
                 var prevValue = this.value;
                 _super.prototype.changeValueByStep.call(this, increase);
@@ -205,7 +200,7 @@ var egret;
              * @param partName {string}
              * @param instance {any}
              */
-            TrackBase.prototype.partAdded = function (partName, instance) {
+            __egretProto__.partAdded = function (partName, instance) {
                 _super.prototype.partAdded.call(this, partName, instance);
                 if (instance == this.thumb) {
                     this.thumb.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.thumb_mouseDownHandler, this);
@@ -224,7 +219,7 @@ var egret;
              * @param partName {string}
              * @param instance {any}
              */
-            TrackBase.prototype.partRemoved = function (partName, instance) {
+            __egretProto__.partRemoved = function (partName, instance) {
                 _super.prototype.partRemoved.call(this, partName, instance);
                 if (instance == this.thumb) {
                     this.thumb.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.thumb_mouseDownHandler, this);
@@ -242,7 +237,7 @@ var egret;
              * @param w {number}
              * @param h {number}
              */
-            TrackBase.prototype.updateDisplayList = function (w, h) {
+            __egretProto__.updateDisplayList = function (w, h) {
                 _super.prototype.updateDisplayList.call(this, w, h);
                 this.updateSkinDisplayList();
             };
@@ -251,30 +246,30 @@ var egret;
              * 子类覆盖此方法以基于 minimum、maximum 和 value 属性更新滑块的大小、位置和可见性。
              * @method egret.gui.TrackBase#updateSkinDisplayList
              */
-            TrackBase.prototype.updateSkinDisplayList = function () {
+            __egretProto__.updateSkinDisplayList = function () {
             };
             /**
              * 添加到舞台时
              */
-            TrackBase.prototype.addedToStageHandler = function (event) {
+            __egretProto__.addedToStageHandler = function (event) {
                 this.updateSkinDisplayList();
             };
             /**
              * 轨道尺寸改变事件
              */
-            TrackBase.prototype.track_resizeHandler = function (event) {
+            __egretProto__.track_resizeHandler = function (event) {
                 this.updateSkinDisplayList();
             };
             /**
              * 滑块尺寸改变事件
              */
-            TrackBase.prototype.thumb_resizeHandler = function (event) {
+            __egretProto__.thumb_resizeHandler = function (event) {
                 this.updateSkinDisplayList();
             };
             /**
              * 滑块三个阶段的延迟布局更新完毕事件
              */
-            TrackBase.prototype.thumb_updateCompleteHandler = function (event) {
+            __egretProto__.thumb_updateCompleteHandler = function (event) {
                 this.updateSkinDisplayList();
                 this.thumb.removeEventListener(gui.UIEvent.UPDATE_COMPLETE, this.thumb_updateCompleteHandler, this);
             };
@@ -283,7 +278,7 @@ var egret;
              * @method egret.gui.TrackBase#thumb_mouseDownHandler
              * @param event {TouchEvent}
              */
-            TrackBase.prototype.thumb_mouseDownHandler = function (event) {
+            __egretProto__.thumb_mouseDownHandler = function (event) {
                 gui.UIGlobals.stage.addEventListener(egret.TouchEvent.TOUCH_MOVE, this.stage_mouseMoveHandler, this);
                 gui.UIGlobals.stage.addEventListener(egret.TouchEvent.TOUCH_END, this.stage_mouseUpHandler, this);
                 gui.UIGlobals.stage.addEventListener(egret.Event.LEAVE_STAGE, this.stage_mouseUpHandler, this);
@@ -297,7 +292,7 @@ var egret;
             /**
              * 拖动thumb过程中触发的EnterFrame事件
              */
-            TrackBase.prototype.onEnterFrame = function (event) {
+            __egretProto__.onEnterFrame = function (event) {
                 if (!this.needUpdateValue || !this.track)
                     return;
                 this.updateWhenMouseMove();
@@ -307,7 +302,7 @@ var egret;
              * 当thumb被拖动时更新值，此方法每帧只被调用一次，比直接在鼠标移动事件里更新性能更高。
              * @method egret.gui.TrackBase#updateWhenMouseMove
              */
-            TrackBase.prototype.updateWhenMouseMove = function () {
+            __egretProto__.updateWhenMouseMove = function () {
                 if (!this.track)
                     return;
                 var p = this.track.globalToLocal(this._moveStageX, this._moveStageY, egret.Point.identity);
@@ -325,7 +320,7 @@ var egret;
              * @method egret.gui.TrackBase#stage_mouseMoveHandler
              * @param event {TouchEvent}
              */
-            TrackBase.prototype.stage_mouseMoveHandler = function (event) {
+            __egretProto__.stage_mouseMoveHandler = function (event) {
                 this._moveStageX = event.stageX;
                 this._moveStageY = event.stageY;
                 if (this.needUpdateValue)
@@ -337,7 +332,7 @@ var egret;
              * @method egret.gui.TrackBase#stage_mouseUpHandler
              * @param event {Event}
              */
-            TrackBase.prototype.stage_mouseUpHandler = function (event) {
+            __egretProto__.stage_mouseUpHandler = function (event) {
                 gui.UIGlobals.stage.removeEventListener(egret.TouchEvent.TOUCH_MOVE, this.stage_mouseMoveHandler, this);
                 gui.UIGlobals.stage.removeEventListener(egret.TouchEvent.TOUCH_END, this.stage_mouseUpHandler, this);
                 gui.UIGlobals.stage.removeEventListener(egret.Event.LEAVE_STAGE, this.stage_mouseUpHandler, this);
@@ -354,12 +349,12 @@ var egret;
              * @method egret.gui.TrackBase#track_mouseDownHandler
              * @param event {TouchEvent}
              */
-            TrackBase.prototype.track_mouseDownHandler = function (event) {
+            __egretProto__.track_mouseDownHandler = function (event) {
             };
             /**
              * 当在组件上按下鼠标时记录被按下的子显示对象
              */
-            TrackBase.prototype.mouseDownHandler = function (event) {
+            __egretProto__.mouseDownHandler = function (event) {
                 gui.UIGlobals.stage.addEventListener(egret.TouchEvent.TOUCH_END, this.stage_mouseUpSomewhereHandler, this);
                 gui.UIGlobals.stage.addEventListener(egret.Event.LEAVE_STAGE, this.stage_mouseUpSomewhereHandler, this);
                 this.mouseDownTarget = (event.target);
@@ -367,7 +362,7 @@ var egret;
             /**
              * 当鼠标弹起时，若不是在mouseDownTarget上弹起，而是另外的子显示对象上弹起时，额外抛出一个鼠标单击事件。
              */
-            TrackBase.prototype.stage_mouseUpSomewhereHandler = function (event) {
+            __egretProto__.stage_mouseUpSomewhereHandler = function (event) {
                 gui.UIGlobals.stage.removeEventListener(egret.TouchEvent.TOUCH_END, this.stage_mouseUpSomewhereHandler, this);
                 gui.UIGlobals.stage.removeEventListener(egret.Event.LEAVE_STAGE, this.stage_mouseUpSomewhereHandler, this);
                 if (this.mouseDownTarget != event.target && event instanceof egret.TouchEvent && this.contains((event.target))) {

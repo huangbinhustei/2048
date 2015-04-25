@@ -3,7 +3,6 @@
  */
 
 class Grid extends egret.Sprite {
-
     public valueOld :number;
     public valueNew :number;
     public pic : egret.Bitmap = new egret.Bitmap();
@@ -12,7 +11,6 @@ class Grid extends egret.Sprite {
         this.width = this.height =len;
         this.pic.height = this.pic.width = len-2*gap;
         this.pic.y =  this.pic.x = gap;
-
         this.valueOld = 0;
         this.pic.texture = RES.getRes(this.valueOld.toString());
         this.pic.texture = RES.getRes(this.valueOld.toString());
@@ -21,7 +19,7 @@ class Grid extends egret.Sprite {
 
     public drawSelf() {
         if (this.valueNew != this.valueOld) {
-            this.pic.texture = RES.getRes(this.valueNew.toString());
+            this.pic.texture = RES.getRes("2048."+this.valueNew.toString());
             this.valueOld = this.valueNew;
         }
     }
@@ -38,5 +36,5 @@ class Grid extends egret.Sprite {
             {alpha:1},
             1000
         )
-    }//没有实现渐入渐出。
+    }//没有实现渐入渐出。
 }

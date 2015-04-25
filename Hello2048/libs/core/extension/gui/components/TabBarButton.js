@@ -24,12 +24,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var egret;
 (function (egret) {
     var gui;
@@ -49,7 +43,8 @@ var egret;
                 this._data = null;
                 this._itemIndex = NaN;
             }
-            Object.defineProperty(TabBarButton.prototype, "allowDeselection", {
+            var __egretProto__ = TabBarButton.prototype;
+            Object.defineProperty(__egretProto__, "allowDeselection", {
                 /**
                  * 如果为 true，用户单击当前选定的按钮时即会将其取消选择。
                  * 如果为 false，用户必须选择不同的按钮才可取消选择当前选定的按钮。
@@ -64,7 +59,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(TabBarButton.prototype, "data", {
+            Object.defineProperty(__egretProto__, "data", {
                 /**
                  * @member egret.gui.TabBarButton#data
                  */
@@ -78,7 +73,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(TabBarButton.prototype, "itemIndex", {
+            Object.defineProperty(__egretProto__, "itemIndex", {
                 /**
                  * @member egret.gui.TabBarButton#itemIndex
                  */
@@ -94,14 +89,14 @@ var egret;
             /**
              * @inheritDoc
              */
-            TabBarButton.prototype._setLabel = function (value) {
+            __egretProto__._setLabel = function (value) {
                 if (value != this._getLabel()) {
                     _super.prototype._setLabel.call(this, value);
                     if (this.labelDisplay)
                         this.labelDisplay.text = this._getLabel();
                 }
             };
-            TabBarButton.prototype.buttonReleased = function () {
+            __egretProto__.buttonReleased = function () {
                 if (this.selected && !this.allowDeselection)
                     return;
                 _super.prototype.buttonReleased.call(this);

@@ -24,12 +24,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var egret;
 (function (egret) {
     var gui;
@@ -44,19 +38,20 @@ var egret;
                 _super.call(this);
                 this._thumbLengthRatio = 1;
             }
+            var __egretProto__ = VScrollBar.prototype;
             /**
              *
              * @param height
              * @param contentHeight
              * @private
              */
-            VScrollBar.prototype._setViewportMetric = function (height, contentHeight) {
+            __egretProto__._setViewportMetric = function (height, contentHeight) {
                 var max = Math.max(0, contentHeight - height);
                 this._thumbLengthRatio = contentHeight <= height ? 1 : height / contentHeight;
                 this._setMaximun(max);
                 this._setMinimun(0);
             };
-            Object.defineProperty(VScrollBar.prototype, "trackAlpha", {
+            Object.defineProperty(__egretProto__, "trackAlpha", {
                 get: function () {
                     return 1;
                 },
@@ -66,7 +61,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(VScrollBar.prototype, "thumbAlpha", {
+            Object.defineProperty(__egretProto__, "thumbAlpha", {
                 get: function () {
                     return 1;
                 },
@@ -76,20 +71,20 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            VScrollBar.prototype.setPosition = function (value) {
+            __egretProto__.setPosition = function (value) {
                 this._setValue(value);
             };
-            VScrollBar.prototype.getPosition = function () {
+            __egretProto__.getPosition = function () {
                 return this._getValue();
             };
-            VScrollBar.prototype._setValue = function (value) {
+            __egretProto__._setValue = function (value) {
                 value = Math.max(0, value);
                 _super.prototype._setValue.call(this, value);
             };
-            VScrollBar.prototype.setValue = function (value) {
+            __egretProto__.setValue = function (value) {
                 _super.prototype.setValue.call(this, value);
             };
-            VScrollBar.prototype._animationUpdateHandler = function (animation) {
+            __egretProto__._animationUpdateHandler = function (animation) {
                 this.pendingValue = animation.currentValue["value"];
                 this.value = animation.currentValue["value"];
                 this.dispatchEventWith(egret.Event.CHANGE);
@@ -100,7 +95,7 @@ var egret;
              * @param y {number}
              * @returns {number}
              */
-            VScrollBar.prototype.pointToValue = function (x, y) {
+            __egretProto__.pointToValue = function (x, y) {
                 if (!this.thumb || !this.track)
                     return 0;
                 var range = this.maximum - this.minimum;
@@ -110,7 +105,7 @@ var egret;
             /**
              * 设置外观部件（通常为滑块）的边界，这些外观部件的几何图形不是完全由外观的布局指定的
              */
-            VScrollBar.prototype.updateSkinDisplayList = function () {
+            __egretProto__.updateSkinDisplayList = function () {
                 if (!this.thumb || !this.track)
                     return;
                 var thumbHeight = this.track.layoutBoundsHeight * this._thumbLengthRatio;

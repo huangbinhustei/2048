@@ -24,12 +24,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var egret;
 (function (egret) {
     var gui;
@@ -96,12 +90,13 @@ var egret;
                 this._isOpen = false;
                 this.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onItemMouseDown, this, false, 1000);
             }
-            TreeItemRenderer.prototype.onItemMouseDown = function (event) {
+            var __egretProto__ = TreeItemRenderer.prototype;
+            __egretProto__.onItemMouseDown = function (event) {
                 if (event.target == this.disclosureButton) {
                     event.stopImmediatePropagation();
                 }
             };
-            Object.defineProperty(TreeItemRenderer.prototype, "indentation", {
+            Object.defineProperty(__egretProto__, "indentation", {
                 /**
                  * 子节点相对父节点的缩进值，以像素为单位。默认17。
                  * @member egret.gui.TreeItemRenderer#indentation
@@ -115,7 +110,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(TreeItemRenderer.prototype, "iconSkinName", {
+            Object.defineProperty(__egretProto__, "iconSkinName", {
                 /**
                  * @member egret.gui.TreeItemRenderer#iconSkinName
                  */
@@ -133,7 +128,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(TreeItemRenderer.prototype, "depth", {
+            Object.defineProperty(__egretProto__, "depth", {
                 /**
                  * @member egret.gui.TreeItemRenderer#depth
                  */
@@ -151,7 +146,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(TreeItemRenderer.prototype, "hasChildren", {
+            Object.defineProperty(__egretProto__, "hasChildren", {
                 /**
                  * @member egret.gui.TreeItemRenderer#hasChildren
                  */
@@ -169,7 +164,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(TreeItemRenderer.prototype, "opened", {
+            Object.defineProperty(__egretProto__, "opened", {
                 /**
                  * @member egret.gui.TreeItemRenderer#opened
                  */
@@ -193,7 +188,7 @@ var egret;
              * @param partName {string}
              * @param instance {any}
              */
-            TreeItemRenderer.prototype.partAdded = function (partName, instance) {
+            __egretProto__.partAdded = function (partName, instance) {
                 _super.prototype.partAdded.call(this, partName, instance);
                 if (instance == this.iconDisplay) {
                     this.iconDisplay.source = this._iconSkinName;
@@ -214,7 +209,7 @@ var egret;
              * @param partName {string}
              * @param instance {any}
              */
-            TreeItemRenderer.prototype.partRemoved = function (partName, instance) {
+            __egretProto__.partRemoved = function (partName, instance) {
                 _super.prototype.partRemoved.call(this, partName, instance);
                 if (instance == this.iconDisplay) {
                     this.iconDisplay.source = null;
@@ -230,7 +225,7 @@ var egret;
              * @method egret.gui.TreeItemRenderer#disclosureButton_mouseDownHandler
              * @param event {TouchEvent}
              */
-            TreeItemRenderer.prototype.disclosureButton_mouseDownHandler = function (event) {
+            __egretProto__.disclosureButton_mouseDownHandler = function (event) {
                 gui.TreeEvent.dispatchTreeEvent(this, gui.TreeEvent.ITEM_OPENING, this.itemIndex, this.data, this, !this._isOpen);
             };
             return TreeItemRenderer;

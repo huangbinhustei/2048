@@ -24,12 +24,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var egret;
 (function (egret) {
     var gui;
@@ -67,10 +61,11 @@ var egret;
                 this._captureItemRenderer = false;
                 this.dropDownController = new gui.DropDownController();
             }
+            var __egretProto__ = DropDownListBase.prototype;
             /**
              * @inheritDoc
              */
-            DropDownListBase.prototype._setDataProvider = function (value) {
+            __egretProto__._setDataProvider = function (value) {
                 if (this.dataProvider === value)
                     return;
                 _super.prototype._setDataProvider.call(this, value);
@@ -80,7 +75,7 @@ var egret;
             /**
              * @inheritDoc
              */
-            DropDownListBase.prototype._setLabelField = function (value) {
+            __egretProto__._setLabelField = function (value) {
                 if (this.labelField == value)
                     return;
                 _super.prototype._setLabelField.call(this, value);
@@ -90,14 +85,14 @@ var egret;
             /**
              * @inheritDoc
              */
-            DropDownListBase.prototype._setLabelFunction = function (value) {
+            __egretProto__._setLabelFunction = function (value) {
                 if (this.labelFunction == value)
                     return;
                 _super.prototype._setLabelFunction.call(this, value);
                 this._labelChanged = true;
                 this.invalidateProperties();
             };
-            Object.defineProperty(DropDownListBase.prototype, "dropDownController", {
+            Object.defineProperty(__egretProto__, "dropDownController", {
                 /**
                  * 下拉控制器
                  * @member egret.gui.DropDownListBase#dropDownController
@@ -119,7 +114,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(DropDownListBase.prototype, "isDropDownOpen", {
+            Object.defineProperty(__egretProto__, "isDropDownOpen", {
                 /**
                  * 下拉列表是否已经已打开
                  * @member egret.gui.DropDownListBase#isDropDownOpen
@@ -137,7 +132,7 @@ var egret;
              * 处理对组件设置的属性
              * @method egret.gui.DropDownListBase#commitProperties
              */
-            DropDownListBase.prototype.commitProperties = function () {
+            __egretProto__.commitProperties = function () {
                 _super.prototype.commitProperties.call(this);
                 if (this._labelChanged) {
                     this._labelChanged = false;
@@ -150,7 +145,7 @@ var egret;
              * @param partName {string}
              * @param instance {any}
              */
-            DropDownListBase.prototype.partAdded = function (partName, instance) {
+            __egretProto__.partAdded = function (partName, instance) {
                 _super.prototype.partAdded.call(this, partName, instance);
                 if (instance == this.openButton) {
                     if (this.dropDownController)
@@ -166,7 +161,7 @@ var egret;
              * @param partName {string}
              * @param instance {any}
              */
-            DropDownListBase.prototype.partRemoved = function (partName, instance) {
+            __egretProto__.partRemoved = function (partName, instance) {
                 if (this.dropDownController) {
                     if (instance == this.openButton)
                         this.dropDownController.openButton = null;
@@ -180,7 +175,7 @@ var egret;
              * @method egret.gui.DropDownListBase#getCurrentSkinState
              * @returns {string}
              */
-            DropDownListBase.prototype.getCurrentSkinState = function () {
+            __egretProto__.getCurrentSkinState = function () {
                 return !this.enabled ? "disabled" : this.isDropDownOpen ? "open" : "normal";
             };
             /**
@@ -188,7 +183,7 @@ var egret;
              * @param dispatchChangedEvents {boolean}
              * @returns {boolean}
              */
-            DropDownListBase.prototype.commitSelection = function (dispatchChangedEvents) {
+            __egretProto__.commitSelection = function (dispatchChangedEvents) {
                 if (dispatchChangedEvents === void 0) { dispatchChangedEvents = true; }
                 var retVal = _super.prototype.commitSelection.call(this, dispatchChangedEvents);
                 this.updateLabelDisplay();
@@ -199,14 +194,14 @@ var egret;
              * @param index {number}
              * @returns {boolean}
              */
-            DropDownListBase.prototype._isItemIndexSelected = function (index) {
+            __egretProto__._isItemIndexSelected = function (index) {
                 return this._userProposedSelectedIndex == index;
             };
             /**
              * 打开下拉列表并抛出UIEvent.OPEN事件。
              * @method egret.gui.DropDownListBase#openDropDown
              */
-            DropDownListBase.prototype.openDropDown = function () {
+            __egretProto__.openDropDown = function () {
                 this.dropDownController.openDropDown();
             };
             /**
@@ -214,7 +209,7 @@ var egret;
              * @method egret.gui.DropDownListBase#closeDropDown
              * @param commit {boolean}
              */
-            DropDownListBase.prototype.closeDropDown = function (commit) {
+            __egretProto__.closeDropDown = function (commit) {
                 this.dropDownController.closeDropDown(commit);
             };
             /**
@@ -222,7 +217,7 @@ var egret;
              * @method egret.gui.DropDownListBase#updateLabelDisplay
              * @param displayItem {any}
              */
-            DropDownListBase.prototype.updateLabelDisplay = function (displayItem) {
+            __egretProto__.updateLabelDisplay = function (displayItem) {
                 if (displayItem === void 0) { displayItem = undefined; }
             };
             /**
@@ -230,13 +225,13 @@ var egret;
              * @param newIndex {number}
              * @param scrollToTop {boolean}
              */
-            DropDownListBase.prototype._changeHighlightedSelection = function (newIndex, scrollToTop) {
+            __egretProto__._changeHighlightedSelection = function (newIndex, scrollToTop) {
                 if (scrollToTop === void 0) { scrollToTop = false; }
                 this.itemSelected(this._userProposedSelectedIndex, false);
                 this._userProposedSelectedIndex = newIndex;
                 this.itemSelected(this._userProposedSelectedIndex, true);
             };
-            DropDownListBase.prototype.dataProvider_collectionChangeHandler = function (event) {
+            __egretProto__.dataProvider_collectionChangeHandler = function (event) {
                 _super.prototype.dataProvider_collectionChangeHandler.call(this, event);
                 this._labelChanged = true;
                 this.invalidateProperties();
@@ -245,7 +240,7 @@ var egret;
              * @method egret.gui.DropDownListBase#item_mouseDownHandler
              * @param event {TouchEvent}
              */
-            DropDownListBase.prototype._item_touchEndHandler = function (event) {
+            __egretProto__._item_touchEndHandler = function (event) {
                 _super.prototype._item_touchEndHandler.call(this, event);
                 var itemRenderer = (event.currentTarget);
                 if (itemRenderer != this._mouseDownItemRenderer)
@@ -257,7 +252,7 @@ var egret;
             /**
              * 控制器抛出打开列表事件
              */
-            DropDownListBase.prototype._dropDownController_openHandler = function (event) {
+            __egretProto__._dropDownController_openHandler = function (event) {
                 this.addEventListener(gui.UIEvent.UPDATE_COMPLETE, this._open_updateCompleteHandler, this);
                 this._userProposedSelectedIndex = this.selectedIndex;
                 this.invalidateSkinState();
@@ -265,7 +260,7 @@ var egret;
             /**
              * 打开列表后组件一次失效验证全部完成
              */
-            DropDownListBase.prototype._open_updateCompleteHandler = function (event) {
+            __egretProto__._open_updateCompleteHandler = function (event) {
                 this.removeEventListener(gui.UIEvent.UPDATE_COMPLETE, this._open_updateCompleteHandler, this);
                 gui.UIEvent.dispatchUIEvent(this, gui.UIEvent.OPEN);
             };
@@ -274,7 +269,7 @@ var egret;
              * @method egret.gui.DropDownListBase#dropDownController_closeHandler
              * @param event {UIEvent}
              */
-            DropDownListBase.prototype.dropDownController_closeHandler = function (event) {
+            __egretProto__.dropDownController_closeHandler = function (event) {
                 this.addEventListener(gui.UIEvent.UPDATE_COMPLETE, this.close_updateCompleteHandler, this);
                 this.invalidateSkinState();
                 if (!event.isDefaultPrevented()) {
@@ -287,7 +282,7 @@ var egret;
             /**
              * 关闭列表后组件一次失效验证全部完成
              */
-            DropDownListBase.prototype.close_updateCompleteHandler = function (event) {
+            __egretProto__.close_updateCompleteHandler = function (event) {
                 this.removeEventListener(gui.UIEvent.UPDATE_COMPLETE, this.close_updateCompleteHandler, this);
                 gui.UIEvent.dispatchUIEvent(this, gui.UIEvent.CLOSE);
             };

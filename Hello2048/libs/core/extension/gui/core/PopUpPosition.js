@@ -37,6 +37,7 @@ var egret;
         var PopUpPosition = (function () {
             function PopUpPosition() {
             }
+            var __egretProto__ = PopUpPosition.prototype;
             /**
              * 在组件上方弹出
              * @constant egret.gui.PopUpPosition.ABOVE

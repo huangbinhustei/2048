@@ -36,6 +36,7 @@ var egret;
         var PropertyChangeEventKind = (function () {
             function PropertyChangeEventKind() {
             }
+            var __egretProto__ = PropertyChangeEventKind.prototype;
             /**
              * 指示该属性的值已更改。
              * @constant egret.gui.PropertyChangeEventKind.UPDATE

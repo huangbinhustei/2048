@@ -24,12 +24,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var egret;
 (function (egret) {
     var gui;
@@ -59,6 +53,7 @@ var egret;
                  */
                 this._dataGroupProperties = {};
             }
+            var __egretProto__ = SkinnableDataContainer.prototype;
             /**
              * 更新项呈示器，以备使用或重用
              * @method egret.gui.SkinnableDataContainer#updateRenderer
@@ -67,7 +62,7 @@ var egret;
              * @param data {any}
              * @returns {IItemRenderer}
              */
-            SkinnableDataContainer.prototype.updateRenderer = function (renderer, itemIndex, data) {
+            __egretProto__.updateRenderer = function (renderer, itemIndex, data) {
                 if ("ownerChanged" in renderer) {
                     renderer.ownerChanged(this);
                 }
@@ -82,13 +77,13 @@ var egret;
              * @param item {any}
              * @returns {string}
              */
-            SkinnableDataContainer.prototype.itemToLabel = function (item) {
+            __egretProto__.itemToLabel = function (item) {
                 if (item !== null)
                     return item.toString();
                 else
                     return " ";
             };
-            Object.defineProperty(SkinnableDataContainer.prototype, "dataProvider", {
+            Object.defineProperty(__egretProto__, "dataProvider", {
                 /**
                  * 列表数据源，请使用实现了ICollection接口的数据类型，例如ArrayCollection
                  * @member egret.gui.SkinnableDataContainer#dataProvider
@@ -102,10 +97,10 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            SkinnableDataContainer.prototype._getDataProvider = function () {
+            __egretProto__._getDataProvider = function () {
                 return this.dataGroup != null ? this.dataGroup.dataProvider : this._dataGroupProperties.dataProvider;
             };
-            SkinnableDataContainer.prototype._setDataProvider = function (value) {
+            __egretProto__._setDataProvider = function (value) {
                 if (this.dataGroup == null) {
                     this._dataGroupProperties.dataProvider = value;
                 }
@@ -114,7 +109,7 @@ var egret;
                     this._dataGroupProperties.dataProvider = true;
                 }
             };
-            Object.defineProperty(SkinnableDataContainer.prototype, "itemRenderer", {
+            Object.defineProperty(__egretProto__, "itemRenderer", {
                 /**
                  * 用于数据项目的项呈示器。该类必须实现 IItemRenderer 接口。 <br/>
                  * rendererClass获取顺序：itemRendererFunction > itemRenderer > 默认ItemRenerer。
@@ -135,7 +130,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(SkinnableDataContainer.prototype, "itemRendererSkinName", {
+            Object.defineProperty(__egretProto__, "itemRendererSkinName", {
                 /**
                  * 条目渲染器的可选皮肤标识符。在实例化itemRenderer时，若其内部没有设置过skinName,则将此属性的值赋值给它的skinName。
                  * 注意:若itemRenderer不是ISkinnableClient，则此属性无效。
@@ -156,7 +151,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(SkinnableDataContainer.prototype, "itemRendererFunction", {
+            Object.defineProperty(__egretProto__, "itemRendererFunction", {
                 /**
                  * 为某个特定项目返回一个项呈示器Class的函数。 <br/>
                  * rendererClass获取顺序：itemRendererFunction > itemRenderer > 默认ItemRenerer。 <br/>
@@ -179,7 +174,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(SkinnableDataContainer.prototype, "layout", {
+            Object.defineProperty(__egretProto__, "layout", {
                 /**
                  * 布局对象
                  * @member egret.gui.SkinnableDataContainer#layout
@@ -193,7 +188,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            SkinnableDataContainer.prototype._setLayout = function (value) {
+            __egretProto__._setLayout = function (value) {
                 if (this.dataGroup == null) {
                     this._dataGroupProperties.layout = value;
                 }
@@ -208,7 +203,7 @@ var egret;
              * @param partName {string}
              * @param instance {any}
              */
-            SkinnableDataContainer.prototype.partAdded = function (partName, instance) {
+            __egretProto__.partAdded = function (partName, instance) {
                 _super.prototype.partAdded.call(this, partName, instance);
                 if (instance == this.dataGroup) {
                     var newDataGroupProperties = {};
@@ -248,7 +243,7 @@ var egret;
              * @param partName {string}
              * @param instance {any}
              */
-            SkinnableDataContainer.prototype.partRemoved = function (partName, instance) {
+            __egretProto__.partRemoved = function (partName, instance) {
                 _super.prototype.partRemoved.call(this, partName, instance);
                 if (instance == this.dataGroup) {
                     this.dataGroup.removeEventListener(gui.RendererExistenceEvent.RENDERER_ADD, this.dispatchEvent, this);
@@ -279,7 +274,7 @@ var egret;
              * @param useCapture {boolean}
              * @param priority {number}
              */
-            SkinnableDataContainer.prototype.addEventListener = function (type, listener, thisObject, useCapture, priority) {
+            __egretProto__.addEventListener = function (type, listener, thisObject, useCapture, priority) {
                 if (useCapture === void 0) { useCapture = false; }
                 if (priority === void 0) { priority = 0; }
                 _super.prototype.addEventListener.call(this, type, listener, thisObject, useCapture, priority);
@@ -298,7 +293,7 @@ var egret;
              * @param thisObject {any}
              * @param useCapture {boolean}
              */
-            SkinnableDataContainer.prototype.removeEventListener = function (type, listener, thisObject, useCapture) {
+            __egretProto__.removeEventListener = function (type, listener, thisObject, useCapture) {
                 if (useCapture === void 0) { useCapture = false; }
                 _super.prototype.removeEventListener.call(this, type, listener, thisObject, useCapture);
                 if (type == gui.RendererExistenceEvent.RENDERER_ADD && this.dataGroup) {

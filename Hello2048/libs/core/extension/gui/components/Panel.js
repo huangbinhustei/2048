@@ -24,12 +24,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var egret;
 (function (egret) {
     var gui;
@@ -60,7 +54,8 @@ var egret;
                 this.titleChanged = false;
                 this.touchEnabled = false;
             }
-            Object.defineProperty(Panel.prototype, "title", {
+            var __egretProto__ = Panel.prototype;
+            Object.defineProperty(__egretProto__, "title", {
                 /**
                  * 标题文本内容
                  * @member egret.gui.Panel#title
@@ -81,7 +76,7 @@ var egret;
              * @param partName
              * @param instance
              */
-            Panel.prototype.partAdded = function (partName, instance) {
+            __egretProto__.partAdded = function (partName, instance) {
                 _super.prototype.partAdded.call(this, partName, instance);
                 if (instance == this.titleDisplay) {
                     this.titleDisplay.text = this.title;

@@ -24,12 +24,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var egret;
 (function (egret) {
     var gui;
@@ -62,10 +56,11 @@ var egret;
                  */
                 this.contentGroupProperties = {};
             }
+            var __egretProto__ = SkinnableContainer.prototype;
             /**
              * 获取当前的实体容器
              */
-            SkinnableContainer.prototype._getCurrentContentGroup = function () {
+            __egretProto__._getCurrentContentGroup = function () {
                 if (this.contentGroup == null) {
                     if (this._placeHolderGroup == null) {
                         this._placeHolderGroup = new gui.Group();
@@ -80,7 +75,7 @@ var egret;
                     return this.contentGroup;
                 }
             };
-            Object.defineProperty(SkinnableContainer.prototype, "elementsContent", {
+            Object.defineProperty(__egretProto__, "elementsContent", {
                 /**
                  * 设置容器子对象数组 。数组包含要添加到容器的子项列表，之前的已存在于容器中的子项列表被全部移除后添加列表里的每一项到容器。
                  * 设置该属性时会对您输入的数组进行一次浅复制操作，所以您之后对该数组的操作不会影响到添加到容器的子项列表数量。
@@ -91,7 +86,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(SkinnableContainer.prototype, "numElements", {
+            Object.defineProperty(__egretProto__, "numElements", {
                 /**
                  */
                 get: function () {
@@ -105,7 +100,7 @@ var egret;
              * @param index {number}
              * @returns {IVisualElement}
              */
-            SkinnableContainer.prototype.getElementAt = function (index) {
+            __egretProto__.getElementAt = function (index) {
                 return this._getCurrentContentGroup().getElementAt(index);
             };
             /**
@@ -113,7 +108,7 @@ var egret;
              * @param element {IVisualElement}
              * @returns {IVisualElement}
              */
-            SkinnableContainer.prototype.addElement = function (element) {
+            __egretProto__.addElement = function (element) {
                 return this._getCurrentContentGroup().addElement(element);
             };
             /**
@@ -122,7 +117,7 @@ var egret;
              * @param index {number}
              * @returns {IVisualElement}
              */
-            SkinnableContainer.prototype.addElementAt = function (element, index) {
+            __egretProto__.addElementAt = function (element, index) {
                 return this._getCurrentContentGroup().addElementAt(element, index);
             };
             /**
@@ -130,7 +125,7 @@ var egret;
              * @param element {IVisualElement}
              * @returns {IVisualElement}
              */
-            SkinnableContainer.prototype.removeElement = function (element) {
+            __egretProto__.removeElement = function (element) {
                 return this._getCurrentContentGroup().removeElement(element);
             };
             /**
@@ -138,13 +133,13 @@ var egret;
              * @param index {number}
              * @returns {IVisualElement}
              */
-            SkinnableContainer.prototype.removeElementAt = function (index) {
+            __egretProto__.removeElementAt = function (index) {
                 return this._getCurrentContentGroup().removeElementAt(index);
             };
             /**
              * 删除容器中的所有子元素
              */
-            SkinnableContainer.prototype.removeAllElements = function () {
+            __egretProto__.removeAllElements = function () {
                 this._getCurrentContentGroup().removeAllElements();
             };
             /**
@@ -152,7 +147,7 @@ var egret;
              * @param element {IVisualElement}
              * @returns {number}
              */
-            SkinnableContainer.prototype.getElementIndex = function (element) {
+            __egretProto__.getElementIndex = function (element) {
                 return this._getCurrentContentGroup().getElementIndex(element);
             };
             /**
@@ -160,7 +155,7 @@ var egret;
              * @param element {IVisualElement}
              * @param index {number}
              */
-            SkinnableContainer.prototype.setElementIndex = function (element, index) {
+            __egretProto__.setElementIndex = function (element, index) {
                 this._getCurrentContentGroup().setElementIndex(element, index);
             };
             /**
@@ -168,7 +163,7 @@ var egret;
              * @param element1 {IVisualElement}
              * @param element2 {IVisualElement}
              */
-            SkinnableContainer.prototype.swapElements = function (element1, element2) {
+            __egretProto__.swapElements = function (element1, element2) {
                 this._getCurrentContentGroup().swapElements(element1, element2);
             };
             /**
@@ -176,10 +171,10 @@ var egret;
              * @param index1 {number}
              * @param index2 {number}
              */
-            SkinnableContainer.prototype.swapElementsAt = function (index1, index2) {
+            __egretProto__.swapElementsAt = function (index1, index2) {
                 this._getCurrentContentGroup().swapElementsAt(index1, index2);
             };
-            Object.defineProperty(SkinnableContainer.prototype, "layout", {
+            Object.defineProperty(__egretProto__, "layout", {
                 /**
                  * 此容器的布局对象
                  * @member egret.gui.SkinnableContainer#layout
@@ -203,7 +198,7 @@ var egret;
              * @param partName {string}
              * @param instance {any}
              */
-            SkinnableContainer.prototype.partAdded = function (partName, instance) {
+            __egretProto__.partAdded = function (partName, instance) {
                 _super.prototype.partAdded.call(this, partName, instance);
                 if (instance == this.contentGroup) {
                     if (this.contentGroupProperties.layout !== undefined) {
@@ -235,7 +230,7 @@ var egret;
              * @param partName {string}
              * @param instance {any}
              */
-            SkinnableContainer.prototype.partRemoved = function (partName, instance) {
+            __egretProto__.partRemoved = function (partName, instance) {
                 _super.prototype.partRemoved.call(this, partName, instance);
                 if (instance == this.contentGroup) {
                     this.contentGroup.removeEventListener(gui.ElementExistenceEvent.ELEMENT_ADD, this._contentGroup_elementAddedHandler, this);
@@ -255,14 +250,14 @@ var egret;
             /**
              * 容器添加元素事件
              */
-            SkinnableContainer.prototype._contentGroup_elementAddedHandler = function (event) {
+            __egretProto__._contentGroup_elementAddedHandler = function (event) {
                 event.element.ownerChanged(this);
                 this.dispatchEvent(event);
             };
             /**
              * 容器移除元素事件
              */
-            SkinnableContainer.prototype._contentGroup_elementRemovedHandler = function (event) {
+            __egretProto__._contentGroup_elementRemovedHandler = function (event) {
                 event.element.ownerChanged(null);
                 this.dispatchEvent(event);
             };

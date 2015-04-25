@@ -35,6 +35,7 @@ var egret;
         var UIGlobals = (function () {
             function UIGlobals() {
             }
+            var __egretProto__ = UIGlobals.prototype;
             Object.defineProperty(UIGlobals, "stage", {
                 /**
                  * 舞台引用，当第一个UIComponent添加到舞台时此属性被自动赋值

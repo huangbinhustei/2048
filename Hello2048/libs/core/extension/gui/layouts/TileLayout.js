@@ -24,12 +24,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var egret;
 (function (egret) {
     var gui;
@@ -103,7 +97,8 @@ var egret;
                  */
                 this.indexInViewCalculated = false;
             }
-            Object.defineProperty(TileLayout.prototype, "horizontalGap", {
+            var __egretProto__ = TileLayout.prototype;
+            Object.defineProperty(__egretProto__, "horizontalGap", {
                 /**
                  * 列之间的水平空间（以像素为单位）。
                  * @member egret.gui.TileLayout#horizontalGap
@@ -123,7 +118,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(TileLayout.prototype, "verticalGap", {
+            Object.defineProperty(__egretProto__, "verticalGap", {
                 /**
                  * 行之间的垂直空间（以像素为单位）。
                  * @member egret.gui.TileLayout#verticalGap
@@ -143,7 +138,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(TileLayout.prototype, "columnCount", {
+            Object.defineProperty(__egretProto__, "columnCount", {
                 /**
                  * 实际列计数。
                  * @member egret.gui.TileLayout#columnCount
@@ -154,7 +149,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(TileLayout.prototype, "requestedColumnCount", {
+            Object.defineProperty(__egretProto__, "requestedColumnCount", {
                 /**
                  * 要显示的列数。设置为0表示自动确定列计数,默认值0。<br/>
                  * 注意:当orientation为TileOrientation.COLUMNS(逐列排列元素)且taget被显式设置宽度时，此属性无效。
@@ -173,7 +168,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(TileLayout.prototype, "rowCount", {
+            Object.defineProperty(__egretProto__, "rowCount", {
                 /**
                  * 实际行计数。
                  * @member egret.gui.TileLayout#rowCount
@@ -184,7 +179,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(TileLayout.prototype, "requestedRowCount", {
+            Object.defineProperty(__egretProto__, "requestedRowCount", {
                 /**
                  * 要显示的行数。设置为0表示自动确定行计数,默认值0。<br/>
                  * 注意:当orientation为TileOrientation.ROWS(即逐行排列元素,此为默认值)且target被显式设置高度时，此属性无效。
@@ -203,7 +198,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(TileLayout.prototype, "columnWidth", {
+            Object.defineProperty(__egretProto__, "columnWidth", {
                 /**
                  * 实际列宽（以像素为单位）。 若未显式设置，则从根据最宽的元素的宽度确定列宽度。
                  * @member egret.gui.TileLayout#columnWidth
@@ -224,7 +219,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(TileLayout.prototype, "rowHeight", {
+            Object.defineProperty(__egretProto__, "rowHeight", {
                 /**
                  * 行高（以像素为单位）。 如果未显式设置，则从元素的高度的最大值确定行高度。
                  * @member egret.gui.TileLayout#rowHeight
@@ -245,7 +240,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(TileLayout.prototype, "padding", {
+            Object.defineProperty(__egretProto__, "padding", {
                 /**
                  * 四个边缘的共同内边距。若单独设置了任一边缘的内边距，则该边缘的内边距以单独设置的值为准。
                  * 此属性主要用于快速设置多个边缘的相同内边距。默认值：0。
@@ -263,7 +258,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(TileLayout.prototype, "paddingLeft", {
+            Object.defineProperty(__egretProto__, "paddingLeft", {
                 /**
                  * 容器的左边缘与布局元素的左边缘之间的最少像素数,若为NaN将使用padding的值，默认值：NaN。
                  * @member egret.gui.TileLayout#paddingLeft
@@ -280,7 +275,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(TileLayout.prototype, "paddingRight", {
+            Object.defineProperty(__egretProto__, "paddingRight", {
                 /**
                  * 容器的右边缘与布局元素的右边缘之间的最少像素数,若为NaN将使用padding的值，默认值：NaN。
                  * @member egret.gui.TileLayout#paddingRight
@@ -297,7 +292,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(TileLayout.prototype, "paddingTop", {
+            Object.defineProperty(__egretProto__, "paddingTop", {
                 /**
                  * 容器的顶边缘与第一个布局元素的顶边缘之间的像素数,若为NaN将使用padding的值，默认值：NaN。
                  * @member egret.gui.TileLayout#paddingTop
@@ -314,7 +309,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(TileLayout.prototype, "paddingBottom", {
+            Object.defineProperty(__egretProto__, "paddingBottom", {
                 /**
                  * 容器的底边缘与最后一个布局元素的底边缘之间的像素数,若为NaN将使用padding的值，默认值：NaN。
                  * @member egret.gui.TileLayout#paddingBottom
@@ -331,7 +326,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(TileLayout.prototype, "horizontalAlign", {
+            Object.defineProperty(__egretProto__, "horizontalAlign", {
                 /**
                  * 指定如何在水平方向上对齐单元格内的元素。
                  * 支持的值有 HorizontalAlign.LEFT、HorizontalAlign.CENTER、
@@ -351,7 +346,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(TileLayout.prototype, "verticalAlign", {
+            Object.defineProperty(__egretProto__, "verticalAlign", {
                 /**
                  * 指定如何在垂直方向上对齐单元格内的元素。
                  * 支持的值有 VerticalAlign.TOP、VerticalAlign.MIDDLE、
@@ -371,7 +366,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(TileLayout.prototype, "columnAlign", {
+            Object.defineProperty(__egretProto__, "columnAlign", {
                 /**
                  * 指定如何将完全可见列与容器宽度对齐。
                  * 设置为 ColumnAlign.LEFT 时，它会关闭列两端对齐。在容器的最后一列和右边缘之间可能存在部分可见的列或空白。这是默认值。
@@ -396,7 +391,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(TileLayout.prototype, "rowAlign", {
+            Object.defineProperty(__egretProto__, "rowAlign", {
                 /**
                  * @member egret.gui.TileLayout#rowAlign
                  */
@@ -425,7 +420,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(TileLayout.prototype, "orientation", {
+            Object.defineProperty(__egretProto__, "orientation", {
                 /**
                  * 指定是逐行还是逐列排列元素。
                  * @member egret.gui.TileLayout#orientation
@@ -447,7 +442,7 @@ var egret;
             /**
              * 标记目标容器的尺寸和显示列表失效
              */
-            TileLayout.prototype.invalidateTargetSizeAndDisplayList = function () {
+            __egretProto__.invalidateTargetSizeAndDisplayList = function () {
                 if (this.target) {
                     this.target.invalidateSize();
                     this.target.invalidateDisplayList();
@@ -456,7 +451,7 @@ var egret;
             /**
              * 基于目标的内容测量其默认大小，并（可选）测量目标的默认最小大小
              */
-            TileLayout.prototype.measure = function () {
+            __egretProto__.measure = function () {
                 if (!this.target)
                     return;
                 var savedColumnCount = this._columnCount;
@@ -493,7 +488,7 @@ var egret;
             /**
              * 计算行和列的尺寸及数量
              */
-            TileLayout.prototype.calculateRowAndColumn = function (explicitWidth, explicitHeight) {
+            __egretProto__.calculateRowAndColumn = function (explicitWidth, explicitHeight) {
                 var horizontalGap = isNaN(this._horizontalGap) ? 0 : this._horizontalGap;
                 var verticalGap = isNaN(this._verticalGap) ? 0 : this._verticalGap;
                 this._rowCount = this._columnCount = -1;
@@ -577,7 +572,7 @@ var egret;
             /**
              * 更新最大子对象尺寸
              */
-            TileLayout.prototype.updateMaxElementSize = function () {
+            __egretProto__.updateMaxElementSize = function () {
                 if (!this.target)
                     return;
                 if (this.useVirtualLayout)
@@ -588,7 +583,7 @@ var egret;
             /**
              * 更新虚拟布局的最大子对象尺寸
              */
-            TileLayout.prototype.updateMaxElementSizeVirtual = function () {
+            __egretProto__.updateMaxElementSizeVirtual = function () {
                 var typicalHeight = this.typicalLayoutRect ? this.typicalLayoutRect.height : 22;
                 var typicalWidth = this.typicalLayoutRect ? this.typicalLayoutRect.width : 22;
                 this.maxElementWidth = Math.max(this.maxElementWidth, typicalWidth);
@@ -606,7 +601,7 @@ var egret;
             /**
              * 更新真实布局的最大子对象尺寸
              */
-            TileLayout.prototype.updateMaxElementSizeReal = function () {
+            __egretProto__.updateMaxElementSizeReal = function () {
                 var numElements = this.target.numElements;
                 for (var index = 0; index < numElements; index++) {
                     var elt = (this.target.getElementAt(index));
@@ -620,7 +615,7 @@ var egret;
              * 如果 useVirtualLayout 为 true，则当布局目标改变时，布局目标可以使用此方法来清除已缓存布局信息
              * @method egret.gui.TileLayout#clearVirtualLayoutCache
              */
-            TileLayout.prototype.clearVirtualLayoutCache = function () {
+            __egretProto__.clearVirtualLayoutCache = function () {
                 _super.prototype.clearVirtualLayoutCache.call(this);
                 this.maxElementWidth = 0;
                 this.maxElementHeight = 0;
@@ -628,7 +623,7 @@ var egret;
             /**
              * verticalScrollPosition 或 horizontalScrollPosition 属性更改时调用
              */
-            TileLayout.prototype.scrollPositionChanged = function () {
+            __egretProto__.scrollPositionChanged = function () {
                 _super.prototype.scrollPositionChanged.call(this);
                 if (this.useVirtualLayout) {
                     var changed = this.getIndexInView();
@@ -641,7 +636,7 @@ var egret;
             /**
              * 获取视图中第一个和最后一个元素的索引,返回是否发生改变
              */
-            TileLayout.prototype.getIndexInView = function () {
+            __egretProto__.getIndexInView = function () {
                 if (!this.target || this.target.numElements == 0) {
                     this.startIndex = this.endIndex = -1;
                     return false;
@@ -706,7 +701,7 @@ var egret;
              * @param width {number}
              * @param height {number}
              */
-            TileLayout.prototype.updateDisplayList = function (width, height) {
+            __egretProto__.updateDisplayList = function (width, height) {
                 _super.prototype.updateDisplayList.call(this, width, height);
                 if (!this.target)
                     return;
@@ -778,7 +773,7 @@ var egret;
             /**
              * 为单个元素布局
              */
-            TileLayout.prototype.sizeAndPositionElement = function (element, cellX, cellY, cellWidth, cellHeight) {
+            __egretProto__.sizeAndPositionElement = function (element, cellX, cellY, cellWidth, cellHeight) {
                 var elementWidth = NaN;
                 var elementHeight = NaN;
                 if (this.horizontalAlign == egret.HorizontalAlign.JUSTIFY)
@@ -813,7 +808,7 @@ var egret;
             /**
              * 为两端对齐调整间隔或格子尺寸
              */
-            TileLayout.prototype.adjustForJustify = function (width, height) {
+            __egretProto__.adjustForJustify = function (width, height) {
                 var padding = isNaN(this._padding) ? 0 : this._padding;
                 var paddingL = isNaN(this._paddingLeft) ? padding : this._paddingLeft;
                 var paddingR = isNaN(this._paddingRight) ? padding : this._paddingRight;

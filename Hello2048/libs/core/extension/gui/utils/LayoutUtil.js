@@ -36,6 +36,7 @@ var egret;
         var LayoutUtil = (function () {
             function LayoutUtil() {
             }
+            var __egretProto__ = LayoutUtil.prototype;
             /**
              * 根据对象当前的xy坐标调整其相对位置属性，使其在下一次的父级布局中过程中保持当前位置不变。
              * @method egret.gui.LayoutUtil.adjustRelativeByXY

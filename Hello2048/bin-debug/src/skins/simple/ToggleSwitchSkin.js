@@ -1,9 +1,3 @@
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var skins;
 (function (skins) {
     var simple;
@@ -47,37 +41,38 @@ var skins;
                     ])
                 ];
             }
-            ToggleSwitchSkin.prototype.__10_i = function () {
+            var __egretProto__ = ToggleSwitchSkin.prototype;
+            __egretProto__.__10_i = function () {
                 var t = new egret.gui.UIAsset();
                 this.__10 = t;
                 this.__s(t, ["source", "visible"], ["onoffbutton_on_track_png", false]);
                 return t;
             };
-            ToggleSwitchSkin.prototype.__11_i = function () {
+            __egretProto__.__11_i = function () {
                 var t = new egret.gui.UIAsset();
                 this.__11 = t;
                 this.__s(t, ["right", "source", "verticalCenter", "visible"], [1, "onoffbutton_on_thumb_png", 0, false]);
                 return t;
             };
-            ToggleSwitchSkin.prototype.__12_i = function () {
+            __egretProto__.__12_i = function () {
                 var t = new egret.gui.UIAsset();
                 this.__12 = t;
                 this.__s(t, ["left", "source", "verticalCenter", "visible"], [15, "onoffbutton_on_label_png", 0, false]);
                 return t;
             };
-            ToggleSwitchSkin.prototype.__7_i = function () {
+            __egretProto__.__7_i = function () {
                 var t = new egret.gui.UIAsset();
                 this.__7 = t;
                 this.__s(t, ["source", "visible"], ["onoffbutton_off_track_png", false]);
                 return t;
             };
-            ToggleSwitchSkin.prototype.__8_i = function () {
+            __egretProto__.__8_i = function () {
                 var t = new egret.gui.UIAsset();
                 this.__8 = t;
                 this.__s(t, ["left", "source", "verticalCenter", "visible"], [1, "onoffbutton_off_thumb_png", 0, false]);
                 return t;
             };
-            ToggleSwitchSkin.prototype.__9_i = function () {
+            __egretProto__.__9_i = function () {
                 var t = new egret.gui.UIAsset();
                 this.__9 = t;
                 this.__s(t, ["right", "source", "verticalCenter", "visible"], [15, "onoffbutton_off_label_png", 0, false]);

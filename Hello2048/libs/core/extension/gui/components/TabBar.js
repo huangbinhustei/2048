@@ -24,12 +24,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var egret;
 (function (egret) {
     var gui;
@@ -54,13 +48,14 @@ var egret;
                 this.requireSelectionChanged_tabBar = false;
                 this.requireSelection = true;
             }
+            var __egretProto__ = TabBar.prototype;
             /**
              * 创建容器的子元素
              */
-            TabBar.prototype.createChildren = function () {
+            __egretProto__.createChildren = function () {
                 gui.ListBase.prototype.createChildren.call(this);
             };
-            Object.defineProperty(TabBar.prototype, "requireSelection", {
+            Object.defineProperty(__egretProto__, "requireSelection", {
                 get: function () {
                     return this._requireSelection;
                 },
@@ -81,7 +76,7 @@ var egret;
             /**
              * @inheritDoc
              */
-            TabBar.prototype._setDataProvider = function (value) {
+            __egretProto__._setDataProvider = function (value) {
                 if (this.dataProvider instanceof gui.ViewStack) {
                     this.dataProvider.removeEventListener("IndexChanged", this.onViewStackIndexChange, this);
                     this.removeEventListener(gui.IndexChangeEvent.CHANGE, this.onIndexChanged, this);
@@ -95,19 +90,19 @@ var egret;
             /**
              * 鼠标点击的选中项改变
              */
-            TabBar.prototype.onIndexChanged = function (event) {
+            __egretProto__.onIndexChanged = function (event) {
                 (this.dataProvider)._setSelectedIndex(event.newIndex, false);
             };
             /**
              * ViewStack选中项发生改变
              */
-            TabBar.prototype.onViewStackIndexChange = function (event) {
+            __egretProto__.onViewStackIndexChange = function (event) {
                 this._setSelectedIndex((this.dataProvider).selectedIndex, false);
             };
             /**
              * 处理对组件设置的属性
              */
-            TabBar.prototype.commitProperties = function () {
+            __egretProto__.commitProperties = function () {
                 _super.prototype.commitProperties.call(this);
                 if (this.requireSelectionChanged_tabBar && this.dataGroup) {
                     this.requireSelectionChanged_tabBar = false;
@@ -119,7 +114,7 @@ var egret;
                     }
                 }
             };
-            TabBar.prototype.dataGroup_rendererAddHandler = function (event) {
+            __egretProto__.dataGroup_rendererAddHandler = function (event) {
                 _super.prototype.dataGroup_rendererAddHandler.call(this, event);
                 if (event.renderer == null)
                     return;
@@ -129,7 +124,7 @@ var egret;
             /**
              * 鼠标在项呈示器上弹起，抛出ItemClick事件。
              */
-            TabBar.prototype._item_touchEndHandler = function (event) {
+            __egretProto__._item_touchEndHandler = function (event) {
                 var itemRenderer = (event.currentTarget);
                 if (itemRenderer != this._mouseDownItemRenderer)
                     return;

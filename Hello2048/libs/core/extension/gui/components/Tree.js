@@ -24,12 +24,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var egret;
 (function (egret) {
     var gui;
@@ -55,11 +49,12 @@ var egret;
                 this._iconField = null;
                 this._iconFunction = null;
             }
+            var __egretProto__ = Tree.prototype;
             /**
              * 创建该容器的子元素对象
              * @method egret.gui.Tree#createChildren
              */
-            Tree.prototype.createChildren = function () {
+            __egretProto__.createChildren = function () {
                 if (!this.itemRenderer)
                     this.itemRenderer = Tree.defaultTreeRendererFactory;
                 _super.prototype.createChildren.call(this);
@@ -72,7 +67,7 @@ var egret;
              * @param data {any}
              * @returns {IItemRenderer}
              */
-            Tree.prototype.updateRenderer = function (renderer, itemIndex, data) {
+            __egretProto__.updateRenderer = function (renderer, itemIndex, data) {
                 if ("hasChildren" in renderer && "hasChildren" in this.dataProvider) {
                     var treeCollection = (this.dataProvider);
                     var treeRenderer = renderer;
@@ -89,7 +84,7 @@ var egret;
              * @param data {any}
              * @returns {any}
              */
-            Tree.prototype.itemToIcon = function (data) {
+            __egretProto__.itemToIcon = function (data) {
                 if (!data)
                     return null;
                 if (this._iconFunction != null)
@@ -110,7 +105,7 @@ var egret;
              * @method egret.gui.Tree#dataGroup_rendererAddHandler
              * @param event {RendererExistenceEvent}
              */
-            Tree.prototype.dataGroup_rendererAddHandler = function (event) {
+            __egretProto__.dataGroup_rendererAddHandler = function (event) {
                 _super.prototype.dataGroup_rendererAddHandler.call(this, event);
                 if (event.renderer && "hasChildren" in event.renderer)
                     event.renderer.addEventListener(gui.TreeEvent.ITEM_OPENING, this.onItemOpening, this);
@@ -118,7 +113,7 @@ var egret;
             /**
              * 节点即将打开
              */
-            Tree.prototype.onItemOpening = function (event) {
+            __egretProto__.onItemOpening = function (event) {
                 var renderer = event.itemRenderer;
                 var item = event.item;
                 var dp = this._getDataProvider();
@@ -135,12 +130,12 @@ var egret;
              * @method egret.gui.Tree#dataGroup_rendererRemoveHandler
              * @param event {RendererExistenceEvent}
              */
-            Tree.prototype.dataGroup_rendererRemoveHandler = function (event) {
+            __egretProto__.dataGroup_rendererRemoveHandler = function (event) {
                 _super.prototype.dataGroup_rendererRemoveHandler.call(this, event);
                 if (event.renderer && "hasChildren" in event.renderer)
                     event.renderer.removeEventListener(gui.TreeEvent.ITEM_OPENING, this.onItemOpening, this);
             };
-            Object.defineProperty(Tree.prototype, "iconField", {
+            Object.defineProperty(__egretProto__, "iconField", {
                 /**
                  * 数据项中用来确定图标skinName属性值的字段名称。另请参考UIAsset.skinName。
                  * 若设置了iconFunction，则设置此属性无效。
@@ -159,7 +154,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(Tree.prototype, "iconFunction", {
+            Object.defineProperty(__egretProto__, "iconFunction", {
                 /**
                  * 用户提供的函数，在每个数据项目上运行以确定其图标的skinName值。另请参考UIAsset.skinName。
                  * 示例：iconFunction(item:Object):Object
@@ -184,7 +179,7 @@ var egret;
              * @param item {any} 要打开或关闭的节点
              * @param open {boolean} true表示打开节点，反之关闭。
              */
-            Tree.prototype.expandItem = function (item, open) {
+            __egretProto__.expandItem = function (item, open) {
                 if (open === void 0) { open = true; }
                 var dp = this._getDataProvider();
                 if (!dp || !("hasChildren" in dp))
@@ -197,7 +192,7 @@ var egret;
              * @param item {any}
              * @returns {boolean}
              */
-            Tree.prototype.isItemOpen = function (item) {
+            __egretProto__.isItemOpen = function (item) {
                 var dp = this._getDataProvider();
                 if (!dp || !("hasChildren" in dp))
                     return false;
@@ -207,7 +202,7 @@ var egret;
              * @method egret.gui.Tree#dataProvider_collectionChangeHandler
              * @param event {CollectionEvent}
              */
-            Tree.prototype.dataProvider_collectionChangeHandler = function (event) {
+            __egretProto__.dataProvider_collectionChangeHandler = function (event) {
                 _super.prototype.dataProvider_collectionChangeHandler.call(this, event);
                 if (event.kind == gui.CollectionEventKind.OPEN || event.kind == gui.CollectionEventKind.CLOSE) {
                     var renderer = this.dataGroup ? (this.dataGroup.getElementAt(event.location)) : null;
@@ -224,7 +219,7 @@ var egret;
              * 处理对组件设置的属性
              * @method egret.gui.Tree#commitProperties
              */
-            Tree.prototype.commitProperties = function () {
+            __egretProto__.commitProperties = function () {
                 _super.prototype.commitProperties.call(this);
                 if (this.iconFieldOrFunctionChanged) {
                     if (this.dataGroup != null) {
@@ -250,7 +245,7 @@ var egret;
             /**
              * 更新指定索引项的图标
              */
-            Tree.prototype.updateRendererIconProperty = function (itemIndex) {
+            __egretProto__.updateRendererIconProperty = function (itemIndex) {
                 var renderer = (this.dataGroup.getElementAt(itemIndex));
                 if (renderer)
                     renderer.iconSkinName = this.itemToIcon(renderer.data);

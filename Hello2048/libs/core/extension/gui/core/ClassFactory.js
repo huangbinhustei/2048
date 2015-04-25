@@ -24,12 +24,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var egret;
 (function (egret) {
     var gui;
@@ -55,12 +49,13 @@ var egret;
                 this.generator = null;
                 this.generator = generator;
             }
+            var __egretProto__ = ClassFactory.prototype;
             /**
              * 生产一个新的实例
              * @method egret.egret#newInstance
              * @returns {any}
              */
-            ClassFactory.prototype.newInstance = function () {
+            __egretProto__.newInstance = function () {
                 var instance = new this.generator();
                 return instance;
             };

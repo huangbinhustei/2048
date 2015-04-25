@@ -38,6 +38,7 @@ var egret;
                 this.delyList = [];
                 this.loadConfig(configURL);
             }
+            var __egretProto__ = Theme.prototype;
             Theme.load = function (configURL) {
                 if (this.initialized) {
                     return;
@@ -45,14 +46,14 @@ var egret;
                 this.initialized = true;
                 gui.SkinnableComponent._defaultTheme = new Theme(configURL);
             };
-            Theme.prototype.loadConfig = function (configURL) {
+            __egretProto__.loadConfig = function (configURL) {
                 var loader = new egret.URLLoader();
                 loader.addEventListener(egret.Event.COMPLETE, this.onLoadComplete, this);
                 loader.addEventListener(egret.IOErrorEvent.IO_ERROR, this.onLoadError, this);
                 loader.dataFormat = egret.URLLoaderDataFormat.TEXT;
                 loader.load(new egret.URLRequest(configURL));
             };
-            Theme.prototype.onLoadComplete = function (event) {
+            __egretProto__.onLoadComplete = function (event) {
                 var loader = (event.target);
                 try {
                     var str = loader.data;
@@ -64,12 +65,12 @@ var egret;
                 }
                 this.handleDelyList();
             };
-            Theme.prototype.onLoadError = function (event) {
+            __egretProto__.onLoadError = function (event) {
                 var loader = (event.target);
                 egret.Logger.warningWithErrorId(3000, loader._request.url);
                 this.handleDelyList();
             };
-            Theme.prototype.handleDelyList = function () {
+            __egretProto__.handleDelyList = function () {
                 if (!this.skinMap) {
                     this.skinMap = {};
                     this.delyList = [];
@@ -86,7 +87,7 @@ var egret;
                     }
                 }
             };
-            Theme.prototype.getDefaultSkin = function (client) {
+            __egretProto__.getDefaultSkin = function (client) {
                 var skinMap = this.skinMap;
                 if (!skinMap) {
                     if (this.delyList.indexOf(client) == -1) {

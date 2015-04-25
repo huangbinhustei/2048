@@ -1,9 +1,3 @@
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var skins;
 (function (skins) {
     var simple;
@@ -33,36 +27,37 @@ var skins;
                     ])
                 ];
             }
-            Object.defineProperty(RadioButtonSkin.prototype, "skinParts", {
+            var __egretProto__ = RadioButtonSkin.prototype;
+            Object.defineProperty(__egretProto__, "skinParts", {
                 get: function () {
                     return RadioButtonSkin._skinParts;
                 },
                 enumerable: true,
                 configurable: true
             });
-            RadioButtonSkin.prototype.__7_i = function () {
+            __egretProto__.__7_i = function () {
                 var t = new egret.gui.HorizontalLayout();
                 this.__s(t, ["gap", "verticalAlign"], [5, "middle"]);
                 return t;
             };
-            RadioButtonSkin.prototype.__8_i = function () {
+            __egretProto__.__8_i = function () {
                 var t = new egret.gui.UIAsset();
                 this.__8 = t;
                 this.__s(t, ["fillMode", "height", "source", "verticalCenter", "width"], ["scale", 24, "radiobutton_unselect_normal_png", 1, 24]);
                 return t;
             };
-            RadioButtonSkin.prototype.__9_i = function () {
+            __egretProto__.__9_i = function () {
                 var t = new egret.gui.Group();
                 t.elementsContent = [this.__8_i()];
                 return t;
             };
-            RadioButtonSkin.prototype.labelDisplay_i = function () {
+            __egretProto__.labelDisplay_i = function () {
                 var t = new egret.gui.Label();
                 this.labelDisplay = t;
                 this.__s(t, ["fontFamily", "maxDisplayedLines", "size", "textAlign", "textColor", "verticalAlign"], ["Tahoma", 1, 20, "center", 0x707070, "middle"]);
                 return t;
             };
-            RadioButtonSkin.prototype.__10_i = function () {
+            __egretProto__.__10_i = function () {
                 var t = new egret.gui.Group();
                 t.layout = this.__7_i();
                 t.elementsContent = [this.__9_i(), this.labelDisplay_i()];

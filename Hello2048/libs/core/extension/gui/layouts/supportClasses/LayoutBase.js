@@ -24,12 +24,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var egret;
 (function (egret) {
     var gui;
@@ -51,7 +45,8 @@ var egret;
                 this._useVirtualLayout = false;
                 this._typicalLayoutRect = null;
             }
-            Object.defineProperty(LayoutBase.prototype, "target", {
+            var __egretProto__ = LayoutBase.prototype;
+            Object.defineProperty(__egretProto__, "target", {
                 /**
                  * 目标容器
                  * @member egret.gui.LayoutBase#target
@@ -68,7 +63,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(LayoutBase.prototype, "useVirtualLayout", {
+            Object.defineProperty(__egretProto__, "useVirtualLayout", {
                 /**
                  * 若要配置容器使用虚拟布局，请为与容器关联的布局的 useVirtualLayout 属性设置为 true。
                  * 只有布局设置为 VerticalLayout、HorizontalLayout
@@ -92,7 +87,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(LayoutBase.prototype, "typicalLayoutRect", {
+            Object.defineProperty(__egretProto__, "typicalLayoutRect", {
                 /**
                  * 由虚拟布局所使用，以估计尚未滚动到视图中的布局元素的大小。
                  * @member egret.gui.LayoutBase#typicalLayoutRect
@@ -114,13 +109,13 @@ var egret;
              * 滚动条位置改变
              * @method egret.gui.LayoutBase#scrollPositionChanged
              */
-            LayoutBase.prototype.scrollPositionChanged = function () {
+            __egretProto__.scrollPositionChanged = function () {
             };
             /**
              * 清理虚拟布局缓存的数据
              * @method egret.gui.LayoutBase#clearVirtualLayoutCache
              */
-            LayoutBase.prototype.clearVirtualLayoutCache = function () {
+            __egretProto__.clearVirtualLayoutCache = function () {
             };
             /**
              * 在已添加布局元素之后且在验证目标的大小和显示列表之前，由目标调用。
@@ -128,7 +123,7 @@ var egret;
              * @method egret.gui.LayoutBase#elementAdded
              * @param index {number}
              */
-            LayoutBase.prototype.elementAdded = function (index) {
+            __egretProto__.elementAdded = function (index) {
             };
             /**
              * 必须在已删除布局元素之后且在验证目标的大小和显示列表之前，由目标调用此方法。
@@ -136,13 +131,13 @@ var egret;
              * @method egret.gui.LayoutBase#elementRemoved
              * @param index {number}
              */
-            LayoutBase.prototype.elementRemoved = function (index) {
+            __egretProto__.elementRemoved = function (index) {
             };
             /**
              * 测量组件尺寸大小
              * @method egret.gui.LayoutBase#measure
              */
-            LayoutBase.prototype.measure = function () {
+            __egretProto__.measure = function () {
             };
             /**
              * 更新显示列表
@@ -150,7 +145,7 @@ var egret;
              * @param width {number}
              * @param height {number}
              */
-            LayoutBase.prototype.updateDisplayList = function (width, height) {
+            __egretProto__.updateDisplayList = function (width, height) {
             };
             return LayoutBase;
         })(egret.EventDispatcher);

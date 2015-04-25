@@ -24,12 +24,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var egret;
 (function (egret) {
     var gui;
@@ -60,7 +54,8 @@ var egret;
                     this._source = [];
                 }
             }
-            Object.defineProperty(ArrayCollection.prototype, "source", {
+            var __egretProto__ = ArrayCollection.prototype;
+            Object.defineProperty(__egretProto__, "source", {
                 /**
                  * 数据源
                  * 通常情况下请不要直接调用Array的方法操作数据源，否则对应的视图无法收到数据改变的通知。
@@ -83,7 +78,7 @@ var egret;
              * 在对数据源进行排序或过滤操作后可以手动调用此方法刷新所有数据,以更新视图。
              * @method egret.gui.ArrayCollection#refresh
              */
-            ArrayCollection.prototype.refresh = function () {
+            __egretProto__.refresh = function () {
                 this.dispatchCoEvent(gui.CollectionEventKind.REFRESH);
             };
             /**
@@ -92,18 +87,18 @@ var egret;
              * @param item {any}
              * @returns {boolean}
              */
-            ArrayCollection.prototype.contains = function (item) {
+            __egretProto__.contains = function (item) {
                 return this.getItemIndex(item) != -1;
             };
             /**
              * 检测索引是否超出范围
              */
-            ArrayCollection.prototype.checkIndex = function (index) {
+            __egretProto__.checkIndex = function (index) {
                 if (index < 0 || index >= this._source.length) {
                     throw new RangeError(egret.getString(3002, index));
                 }
             };
-            Object.defineProperty(ArrayCollection.prototype, "length", {
+            Object.defineProperty(__egretProto__, "length", {
                 //--------------------------------------------------------------------------
                 //
                 // ICollection接口实现方法
@@ -123,7 +118,7 @@ var egret;
              * @method egret.gui.ArrayCollection#addItem
              * @param item {any}
              */
-            ArrayCollection.prototype.addItem = function (item) {
+            __egretProto__.addItem = function (item) {
                 this._source.push(item);
                 this.dispatchCoEvent(gui.CollectionEventKind.ADD, this._source.length - 1, -1, [item]);
             };
@@ -135,7 +130,7 @@ var egret;
              * @param item {any}
              * @param index {number}
              */
-            ArrayCollection.prototype.addItemAt = function (item, index) {
+            __egretProto__.addItemAt = function (item, index) {
                 if (index < 0 || index > this._source.length) {
                     throw new RangeError(egret.getString(3002, index));
                 }
@@ -148,7 +143,7 @@ var egret;
              * @param index {number}
              * @returns {any}
              */
-            ArrayCollection.prototype.getItemAt = function (index) {
+            __egretProto__.getItemAt = function (index) {
                 return this._source[index];
             };
             /**
@@ -157,7 +152,7 @@ var egret;
              * @param item {any}
              * @returns {number}
              */
-            ArrayCollection.prototype.getItemIndex = function (item) {
+            __egretProto__.getItemIndex = function (item) {
                 var length = this._source.length;
                 for (var i = 0; i < length; i++) {
                     if (this._source[i] === item) {
@@ -171,7 +166,7 @@ var egret;
              * @method egret.gui.ArrayCollection#itemUpdated
              * @param item {any}
              */
-            ArrayCollection.prototype.itemUpdated = function (item) {
+            __egretProto__.itemUpdated = function (item) {
                 var index = this.getItemIndex(item);
                 if (index != -1) {
                     this.dispatchCoEvent(gui.CollectionEventKind.UPDATE, index, -1, [item]);
@@ -181,7 +176,7 @@ var egret;
              * 删除列表中的所有项目。
              * @method egret.gui.ArrayCollection#removeAll
              */
-            ArrayCollection.prototype.removeAll = function () {
+            __egretProto__.removeAll = function () {
                 var items = this._source.concat();
                 this._source.length = 0;
                 this.dispatchCoEvent(gui.CollectionEventKind.REMOVE, 0, -1, items);
@@ -193,7 +188,7 @@ var egret;
              * @param index {number}
              * @returns {any}
              */
-            ArrayCollection.prototype.removeItemAt = function (index) {
+            __egretProto__.removeItemAt = function (index) {
                 this.checkIndex(index);
                 var item = this._source.splice(index, 1)[0];
                 this.dispatchCoEvent(gui.CollectionEventKind.REMOVE, index, -1, [item]);
@@ -207,7 +202,7 @@ var egret;
              * @param index {number}
              * @returns {any}
              */
-            ArrayCollection.prototype.replaceItemAt = function (item, index) {
+            __egretProto__.replaceItemAt = function (item, index) {
                 this.checkIndex(index);
                 var oldItem = this._source.splice(index, 1, item)[0];
                 this.dispatchCoEvent(gui.CollectionEventKind.REPLACE, index, -1, [item], [oldItem]);
@@ -218,7 +213,7 @@ var egret;
              * @method egret.gui.ArrayCollection#replaceAll
              * @param newSource {Array<any>} 新的数据源
              */
-            ArrayCollection.prototype.replaceAll = function (newSource) {
+            __egretProto__.replaceAll = function (newSource) {
                 if (!newSource)
                     newSource = [];
                 var newLength = newSource.length;
@@ -245,7 +240,7 @@ var egret;
              * @returns {any}
              * @throws RangeError 如果索引小于 0 或大于长度。
              */
-            ArrayCollection.prototype.moveItemAt = function (oldIndex, newIndex) {
+            __egretProto__.moveItemAt = function (oldIndex, newIndex) {
                 this.checkIndex(oldIndex);
                 this.checkIndex(newIndex);
                 var item = this._source.splice(oldIndex, 1)[0];
@@ -256,7 +251,7 @@ var egret;
             /**
              * 抛出事件
              */
-            ArrayCollection.prototype.dispatchCoEvent = function (kind, location, oldLocation, items, oldItems) {
+            __egretProto__.dispatchCoEvent = function (kind, location, oldLocation, items, oldItems) {
                 if (kind === void 0) { kind = null; }
                 if (location === void 0) { location = -1; }
                 if (oldLocation === void 0) { oldLocation = -1; }

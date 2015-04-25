@@ -1,12 +1,6 @@
 /**
  * Created by 彬 on 2015/3/6.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var Hello2048 = (function (_super) {
     __extends(Hello2048, _super);
     function Hello2048() {
@@ -19,13 +13,14 @@ var Hello2048 = (function (_super) {
         this._titleBarHeight = 60;
         this.addEventListener(egret.Event.ADDED_TO_STAGE, this.startGame, this);
     }
-    Hello2048.prototype.startGame = function () {
-        egret.Profiler.getInstance().run(); //看帧率的？
+    var __egretProto__ = Hello2048.prototype;
+    __egretProto__.startGame = function () {
+        //egret.Profiler.getInstance().run();//看帧率的？
         RES.addEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
         RES.loadConfig("resource/resource.json", "resource/");
         RES.loadGroup("preload");
     }; //以上都是固定代码
-    Hello2048.prototype.onResourceLoadComplete = function (event) {
+    __egretProto__.onResourceLoadComplete = function (event) {
         this.uiStage = new egret.gui.UIStage(); //UI的容器
         this.addChild(this.uiStage);
         this.titleBarDraw();
@@ -34,7 +29,7 @@ var Hello2048 = (function (_super) {
         this.init();
         this.inputListener();
     };
-    Hello2048.prototype.init = function () {
+    __egretProto__.init = function () {
         this.hasGameOver = false;
         var i, j;
         for (i = 0; i < 4; i++) {
@@ -47,31 +42,122 @@ var Hello2048 = (function (_super) {
         this.newGrid();
         this.refresh();
     }; //初始化
-    Hello2048.prototype.setTopScore = function () {
+    __egretProto__.setTopScore = function () {
         var topScoreString = "null"; //本地存储只能存字符串，这个是总分的字符串形式
         if (egret.localStorage.getItem(this.key)) {
             topScoreString = egret.localStorage.getItem(this.key);
             this.topScore = +topScoreString;
         }
-        this.topScore = this.topScore > this.score ? this.topScore : this.score;
+        //this.score是即时计算出来的总分，我们不需要这个，直接看当前的最大数字（总分仍然在计算，但是被最大数字替换了）。
+        var i, j;
+        this.score = this.cell[0][0].valueNew;
+        for (i = 0; i < 4; i++) {
+            for (j = 0; j < 4; j++) {
+                this.score = this.cell[i][j].valueNew > this.score ? this.cell[i][j].valueNew : this.score;
+            }
+        }
+        this.topScore = Math.max(this.topScore, this.score);
         topScoreString = this.topScore.toString();
         egret.localStorage.setItem("best", topScoreString);
     }; //判断是否创纪录
-    Hello2048.prototype.refresh = function () {
+    __egretProto__.refresh = function () {
         var i, j;
         this.setTopScore();
-        this.label.text = "总  分：" + this.score + "\n最高分：" + this.topScore; //显示总分
+        var nowLever, bestLevel;
+        switch (this.score) {
+            case 0:
+                nowLever = "";
+                break;
+            case 2:
+                nowLever = "学渣";
+                break;
+            case 4:
+                nowLever = "学沫";
+                break;
+            case 8:
+                nowLever = "学残";
+                break;
+            case 16:
+                nowLever = "学水";
+                break;
+            case 32:
+                nowLever = "学弱";
+                break;
+            case 64:
+                nowLever = "学民";
+                break;
+            case 128:
+                nowLever = "学优";
+                break;
+            case 256:
+                nowLever = "学帝";
+                break;
+            case 512:
+                nowLever = "学霸";
+                break;
+            case 1024:
+                nowLever = "学圣";
+                break;
+            case 2048:
+                nowLever = "学神";
+                break;
+            case 4096:
+                nowLever = "";
+                break;
+        }
+        switch (this.topScore) {
+            case 0:
+                bestLevel = "";
+                break;
+            case 2:
+                bestLevel = "学渣";
+                break;
+            case 4:
+                bestLevel = "学沫";
+                break;
+            case 8:
+                bestLevel = "学残";
+                break;
+            case 16:
+                bestLevel = "学水";
+                break;
+            case 32:
+                bestLevel = "学弱";
+                break;
+            case 64:
+                bestLevel = "学民";
+                break;
+            case 128:
+                bestLevel = "学优";
+                break;
+            case 256:
+                bestLevel = "学帝";
+                break;
+            case 512:
+                bestLevel = "学霸";
+                break;
+            case 1024:
+                bestLevel = "学圣";
+                break;
+            case 2048:
+                bestLevel = "学神";
+                break;
+            case 4096:
+                bestLevel = "";
+                break;
+        }
+        this.label.text = "当前成绩：" + nowLever + "\n最高成绩：" + bestLevel; //显示总分
         for (i = 0; i < 4; i++) {
             for (j = 0; j < 4; j++) {
                 this.cell[i][j].drawSelf();
             }
         }
     }; //刷新ui
-    Hello2048.prototype.newGrid = function () {
+    __egretProto__.newGrid = function () {
         var newbieLocation, nullCount, newbieNumber;
         var nullGroup;
         nullCount = 0;
-        nullGroup = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        nullGroup = new Array(16);
         for (var i = 0; i < 4; i++) {
             for (var j = 0; j < 4; j++) {
                 if (this.cell[i][j].valueOld == 0) {
@@ -83,11 +169,11 @@ var Hello2048 = (function (_super) {
         newbieLocation = Math.random() * nullCount ^ 0; //挑一个=0的格子出来
         newbieNumber = ((Math.random() + 1.5) ^ 0) * 2; //随机一个2~4的数字
         var newRow = (nullGroup[newbieLocation] / 4) ^ 0; //row
-        var newcol = nullGroup[newbieLocation] % 4; //col
-        this.cell[newRow][newcol].valueNew = newbieNumber;
+        var newCol = nullGroup[newbieLocation] % 4; //col
+        this.cell[newRow][newCol].valueNew = newbieNumber;
         var self = this;
         setTimeout(function () {
-            self.cell[newRow][newcol].drawSelfLatter();
+            self.cell[newRow][newCol].drawSelfLatter();
         }, 1); //延迟刷新新单元格
         if (nullCount == 1) {
             var self = this;
@@ -100,11 +186,11 @@ var Hello2048 = (function (_super) {
             }
         }
     }; //逻辑上出新单元格
-    Hello2048.prototype.lastAlert = function () {
+    __egretProto__.lastAlert = function () {
         alert("游戏结束");
         this.init();
     };
-    Hello2048.prototype.merge = function (dir, rule) {
+    __egretProto__.merge = function (dir, rule) {
         //dir = true ：向上or向左移动，dir=false：向下or向右移动
         //rule = true : 纵向，rule = false：横向
         var row, col, _row, _col, n, nStep;
@@ -159,7 +245,7 @@ var Hello2048 = (function (_super) {
         }
         return flag;
     }; //合并单元格
-    Hello2048.prototype.judement = function () {
+    __egretProto__.judement = function () {
         //游戏结束之后的弹层也在这里
         //可以合成 false,不能合成：ture
         var flag = true;
@@ -177,7 +263,7 @@ var Hello2048 = (function (_super) {
         }
         return flag;
     };
-    Hello2048.prototype.inputListener = function () {
+    __egretProto__.inputListener = function () {
         var tapListener = this.desktop;
         var src = this;
         if (egret.MainContext.deviceType == egret.MainContext.DEVICE_MOBILE) {
@@ -199,12 +285,12 @@ var Hello2048 = (function (_super) {
             });
         }
     };
-    Hello2048.prototype.onTouchBegin = function (event) {
+    __egretProto__.onTouchBegin = function (event) {
         this.tempX = event.localX;
         this.tempY = event.localY;
         this.touchInProcess = true;
     }; //处理触摸屏
-    Hello2048.prototype.onTouchMove = function (event) {
+    __egretProto__.onTouchMove = function (event) {
         var xChange, yChange;
         var rule;
         var dir;
@@ -221,7 +307,7 @@ var Hello2048 = (function (_super) {
             }
         }
     }; //处理触摸屏
-    Hello2048.prototype.onKeyDown = function (event) {
+    __egretProto__.onKeyDown = function (event) {
         if (this.hasGameOver)
             return;
         switch (event.keyCode) {
@@ -247,11 +333,11 @@ var Hello2048 = (function (_super) {
                 break;
         }
     }; //处理键盘
-    Hello2048.prototype.afterMerge = function () {
+    __egretProto__.afterMerge = function () {
         this.refresh();
         this.newGrid();
     };
-    Hello2048.prototype.titleBarDraw = function () {
+    __egretProto__.titleBarDraw = function () {
         var titleHeight = this._titleBarHeight;
         this.title = new egret.Sprite;
         var titleBg = new egret.Bitmap;
@@ -261,14 +347,14 @@ var Hello2048 = (function (_super) {
         titleBg.texture = RES.getRes("titleBg");
         this.title.addChild(titleBg);
         var gameName = new egret.gui.Label();
-        gameName.text = "2048";
+        gameName.text = "学霸成长记";
         gameName.size = 36;
         gameName.height = titleHeight;
         gameName.verticalAlign = egret.VerticalAlign.MIDDLE;
         gameName.paddingLeft = 25;
         this.title.addChild(gameName);
     };
-    Hello2048.prototype.desktopDraw = function () {
+    __egretProto__.desktopDraw = function () {
         var titleHeight = this._titleBarHeight;
         this.desktop = new egret.Sprite;
         var desktopBg = new egret.Bitmap;
@@ -287,7 +373,7 @@ var Hello2048 = (function (_super) {
         this.label.textColor = 0x3360B4;
         this.desktop.addChild(this.label);
     };
-    Hello2048.prototype.cellFormat = function () {
+    __egretProto__.cellFormat = function () {
         var i, j;
         for (i = 0; i < 4; i++) {
             this.cell[i] = new Array(4);

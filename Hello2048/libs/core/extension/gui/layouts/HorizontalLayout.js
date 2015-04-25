@@ -24,12 +24,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var egret;
 (function (egret) {
     var gui;
@@ -76,7 +70,8 @@ var egret;
                  */
                 this.maxElementHeight = 0;
             }
-            Object.defineProperty(HorizontalLayout.prototype, "horizontalAlign", {
+            var __egretProto__ = HorizontalLayout.prototype;
+            Object.defineProperty(__egretProto__, "horizontalAlign", {
                 /**
                  * 布局元素的水平对齐策略。参考HorizontalAlign定义的常量。
                  * 注意：此属性设置为CONTENT_JUSTIFY始终无效。当useVirtualLayout为true时，设置JUSTIFY也无效。
@@ -95,7 +90,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(HorizontalLayout.prototype, "verticalAlign", {
+            Object.defineProperty(__egretProto__, "verticalAlign", {
                 /**
                  * 布局元素的竖直对齐策略。参考VerticalAlign定义的常量。
                  * @member egret.gui.HorizontalLayout#verticalAlign
@@ -113,7 +108,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(HorizontalLayout.prototype, "gap", {
+            Object.defineProperty(__egretProto__, "gap", {
                 /**
                  * 布局元素之间的水平空间（以像素为单位）
                  * @member egret.gui.HorizontalLayout#gap
@@ -132,7 +127,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(HorizontalLayout.prototype, "padding", {
+            Object.defineProperty(__egretProto__, "padding", {
                 /**
                  * 四个边缘的共同内边距。若单独设置了任一边缘的内边距，则该边缘的内边距以单独设置的值为准。
                  * 此属性主要用于快速设置多个边缘的相同内边距。默认值：0。
@@ -150,7 +145,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(HorizontalLayout.prototype, "paddingLeft", {
+            Object.defineProperty(__egretProto__, "paddingLeft", {
                 /**
                  * 容器的左边缘与布局元素的左边缘之间的最少像素数,若为NaN将使用padding的值，默认值：NaN。
                  * @member egret.gui.HorizontalLayout#paddingLeft
@@ -167,7 +162,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(HorizontalLayout.prototype, "paddingRight", {
+            Object.defineProperty(__egretProto__, "paddingRight", {
                 /**
                  * 容器的右边缘与布局元素的右边缘之间的最少像素数,若为NaN将使用padding的值，默认值：NaN。
                  * @member egret.gui.HorizontalLayout#paddingRight
@@ -184,7 +179,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(HorizontalLayout.prototype, "paddingTop", {
+            Object.defineProperty(__egretProto__, "paddingTop", {
                 /**
                  * 容器的顶边缘与第一个布局元素的顶边缘之间的像素数,若为NaN将使用padding的值，默认值：NaN。
                  * @member egret.gui.HorizontalLayout#paddingTop
@@ -201,7 +196,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(HorizontalLayout.prototype, "paddingBottom", {
+            Object.defineProperty(__egretProto__, "paddingBottom", {
                 /**
                  * 容器的底边缘与最后一个布局元素的底边缘之间的像素数,若为NaN将使用padding的值，默认值：NaN。
                  * @member egret.gui.HorizontalLayout#paddingBottom
@@ -221,7 +216,7 @@ var egret;
             /**
              * 标记目标容器的尺寸和显示列表失效
              */
-            HorizontalLayout.prototype.invalidateTargetSizeAndDisplayList = function () {
+            __egretProto__.invalidateTargetSizeAndDisplayList = function () {
                 if (this.target) {
                     this.target.invalidateSize();
                     this.target.invalidateDisplayList();
@@ -231,7 +226,7 @@ var egret;
              * 基于目标的内容测量其默认大小，并（可选）测量目标的默认最小大小
              * @method egret.gui.HorizontalLayout#measure
              */
-            HorizontalLayout.prototype.measure = function () {
+            __egretProto__.measure = function () {
                 _super.prototype.measure.call(this);
                 if (!this.target)
                     return;
@@ -245,7 +240,7 @@ var egret;
             /**
              * 测量使用虚拟布局的尺寸
              */
-            HorizontalLayout.prototype.measureVirtual = function () {
+            __egretProto__.measureVirtual = function () {
                 var numElements = this.target.numElements;
                 var typicalHeight = this.typicalLayoutRect ? this.typicalLayoutRect.height : 22;
                 var typicalWidth = this.typicalLayoutRect ? this.typicalLayoutRect.width : 71;
@@ -277,7 +272,7 @@ var egret;
             /**
              * 测量使用真实布局的尺寸
              */
-            HorizontalLayout.prototype.measureReal = function () {
+            __egretProto__.measureReal = function () {
                 var count = this.target.numElements;
                 var numElements = count;
                 var measuredWidth = 0;
@@ -311,10 +306,19 @@ var egret;
              * @param width {number}
              * @param height {number}
              */
-            HorizontalLayout.prototype.updateDisplayList = function (width, height) {
+            __egretProto__.updateDisplayList = function (width, height) {
                 _super.prototype.updateDisplayList.call(this, width, height);
                 if (!this.target)
                     return;
+                if (this.target.numElements == 0) {
+                    var padding = isNaN(this._padding) ? 0 : this._padding;
+                    var paddingL = isNaN(this._paddingLeft) ? padding : this._paddingLeft;
+                    var paddingR = isNaN(this._paddingRight) ? padding : this._paddingRight;
+                    var paddingT = isNaN(this._paddingTop) ? padding : this._paddingTop;
+                    var paddingB = isNaN(this._paddingBottom) ? padding : this._paddingBottom;
+                    this.target.setContentSize(Math.ceil(paddingL + paddingR), Math.ceil(paddingT + paddingB));
+                    return;
+                }
                 if (this.useVirtualLayout) {
                     this.updateDisplayListVirtual(width, height);
                 }
@@ -325,7 +329,7 @@ var egret;
             /**
              * 获取指定索引的起始位置
              */
-            HorizontalLayout.prototype.getStartPosition = function (index) {
+            __egretProto__.getStartPosition = function (index) {
                 var padding = isNaN(this._padding) ? 0 : this._padding;
                 var paddingL = isNaN(this._paddingLeft) ? padding : this._paddingLeft;
                 var gap = isNaN(this._gap) ? 0 : this._gap;
@@ -350,7 +354,7 @@ var egret;
             /**
              * 获取指定索引的元素尺寸
              */
-            HorizontalLayout.prototype.getElementSize = function (index) {
+            __egretProto__.getElementSize = function (index) {
                 if (this.useVirtualLayout) {
                     var size = this.elementSizeTable[index];
                     if (isNaN(size)) {
@@ -366,7 +370,7 @@ var egret;
             /**
              * 获取缓存的子对象尺寸总和
              */
-            HorizontalLayout.prototype.getElementTotalSize = function () {
+            __egretProto__.getElementTotalSize = function () {
                 var typicalWidth = this.typicalLayoutRect ? this.typicalLayoutRect.width : 71;
                 var gap = isNaN(this._gap) ? 0 : this._gap;
                 var totalSize = 0;
@@ -381,14 +385,14 @@ var egret;
                 totalSize -= gap;
                 return totalSize;
             };
-            HorizontalLayout.prototype.elementAdded = function (index) {
+            __egretProto__.elementAdded = function (index) {
                 if (!this.useVirtualLayout)
                     return;
                 _super.prototype.elementAdded.call(this, index);
                 var typicalWidth = this.typicalLayoutRect ? this.typicalLayoutRect.width : 71;
                 this.elementSizeTable.splice(index, 0, typicalWidth);
             };
-            HorizontalLayout.prototype.elementRemoved = function (index) {
+            __egretProto__.elementRemoved = function (index) {
                 if (!this.useVirtualLayout)
                     return;
                 _super.prototype.elementRemoved.call(this, index);
@@ -397,7 +401,7 @@ var egret;
             /**
              * 如果 useVirtualLayout 为 true，则当布局目标改变时，布局目标可以使用此方法来清除已缓存布局信息
              */
-            HorizontalLayout.prototype.clearVirtualLayoutCache = function () {
+            __egretProto__.clearVirtualLayoutCache = function () {
                 if (!this.useVirtualLayout)
                     return;
                 _super.prototype.clearVirtualLayoutCache.call(this);
@@ -407,7 +411,7 @@ var egret;
             /**
              * 折半查找法寻找指定位置的显示对象索引
              */
-            HorizontalLayout.prototype.findIndexAt = function (x, i0, i1) {
+            __egretProto__.findIndexAt = function (x, i0, i1) {
                 var index = Math.floor((i0 + i1) * 0.5);
                 var elementX = this.getStartPosition(index);
                 var elementWidth = this.getElementSize(index);
@@ -425,7 +429,7 @@ var egret;
              * verticalScrollPosition 或 horizontalScrollPosition 属性更改时调用
              * @method egret.gui.HorizontalLayout#scrollPositionChanged
              */
-            HorizontalLayout.prototype.scrollPositionChanged = function () {
+            __egretProto__.scrollPositionChanged = function () {
                 _super.prototype.scrollPositionChanged.call(this);
                 if (this.useVirtualLayout) {
                     var changed = this.getIndexInView();
@@ -438,7 +442,7 @@ var egret;
             /**
              * 获取视图中第一个和最后一个元素的索引,返回是否发生改变
              */
-            HorizontalLayout.prototype.getIndexInView = function () {
+            __egretProto__.getIndexInView = function () {
                 if (!this.target || this.target.numElements == 0) {
                     this.startIndex = this.endIndex = -1;
                     return false;
@@ -479,7 +483,7 @@ var egret;
             /**
              * 更新使用虚拟布局的显示列表
              */
-            HorizontalLayout.prototype.updateDisplayListVirtual = function (width, height) {
+            __egretProto__.updateDisplayListVirtual = function (width, height) {
                 if (this.indexInViewCalculated)
                     this.indexInViewCalculated = false;
                 else
@@ -572,7 +576,7 @@ var egret;
             /**
              * 更新使用真实布局的显示列表
              */
-            HorizontalLayout.prototype.updateDisplayListReal = function (width, height) {
+            __egretProto__.updateDisplayListReal = function (width, height) {
                 var padding = isNaN(this._padding) ? 0 : this._padding;
                 var paddingL = isNaN(this._paddingLeft) ? padding : this._paddingLeft;
                 var paddingR = isNaN(this._paddingRight) ? padding : this._paddingRight;
@@ -814,6 +818,7 @@ var egret;
                  */
                 this.max = NaN;
             }
+            var __egretProto__ = ChildInfo.prototype;
             return ChildInfo;
         })();
         ChildInfo.prototype.__class__ = "egret.gui.ChildInfo";

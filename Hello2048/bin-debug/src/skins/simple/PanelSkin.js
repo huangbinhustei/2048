@@ -1,9 +1,3 @@
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var skins;
 (function (skins) {
     var simple;
@@ -20,37 +14,38 @@ var skins;
                     new egret.gui.State("disabled", [])
                 ];
             }
-            Object.defineProperty(PanelSkin.prototype, "skinParts", {
+            var __egretProto__ = PanelSkin.prototype;
+            Object.defineProperty(__egretProto__, "skinParts", {
                 get: function () {
                     return PanelSkin._skinParts;
                 },
                 enumerable: true,
                 configurable: true
             });
-            PanelSkin.prototype.__4_i = function () {
+            __egretProto__.__4_i = function () {
                 var t = new egret.gui.UIAsset();
                 this.__s(t, ["bottom", "left", "right", "source", "top"], [-4, -2, -2, "panel_headeback_png", -2]);
                 return t;
             };
-            PanelSkin.prototype.contentGroup_i = function () {
+            __egretProto__.contentGroup_i = function () {
                 var t = new egret.gui.Group();
                 this.contentGroup = t;
                 this.__s(t, ["bottom", "clipAndEnableScrolling", "top", "percentWidth"], [0, true, 50, 100]);
                 return t;
             };
-            PanelSkin.prototype.moveArea_i = function () {
+            __egretProto__.moveArea_i = function () {
                 var t = new egret.gui.Group();
                 this.moveArea = t;
                 this.__s(t, ["height", "left", "right"], [50, 0, 0]);
                 t.elementsContent = [this.__4_i(), this.titleDisplay_i()];
                 return t;
             };
-            PanelSkin.prototype.__3_i = function () {
+            __egretProto__.__3_i = function () {
                 var t = new egret.gui.UIAsset();
                 this.__s(t, ["bottom", "left", "right", "source", "top"], [-10, -4, -10, "panel_back_png", -4]);
                 return t;
             };
-            PanelSkin.prototype.titleDisplay_i = function () {
+            __egretProto__.titleDisplay_i = function () {
                 var t = new egret.gui.Label();
                 this.titleDisplay = t;
                 this.__s(t, ["fontFamily", "left", "maxDisplayedLines", "minHeight", "right", "size", "textAlign", "textColor", "verticalAlign", "verticalCenter"], ["Tahoma", 5, 1, 28, 5, 26, "center", 0x727070, "middle", 0]);

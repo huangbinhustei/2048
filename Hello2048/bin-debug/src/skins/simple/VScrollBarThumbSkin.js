@@ -1,9 +1,3 @@
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var skins;
 (function (skins) {
     var simple;
@@ -20,7 +14,8 @@ var skins;
                     new egret.gui.State("disabled", [])
                 ];
             }
-            VScrollBarThumbSkin.prototype.__4_i = function () {
+            var __egretProto__ = VScrollBarThumbSkin.prototype;
+            __egretProto__.__4_i = function () {
                 var t = new egret.gui.UIAsset();
                 this.__s(t, ["fillMode", "percentHeight", "horizontalCenter", "source", "width"], ["scale", 100, 0, "vscrollbtn_png", 10]);
                 return t;

@@ -24,12 +24,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var egret;
 (function (egret) {
     var gui;
@@ -73,7 +67,8 @@ var egret;
                 this.snapIntervalChanged = false;
                 this._explicitSnapInterval = false;
             }
-            Object.defineProperty(Range.prototype, "maximum", {
+            var __egretProto__ = Range.prototype;
+            Object.defineProperty(__egretProto__, "maximum", {
                 /**
                  * 最大有效值
                  * @member egret.gui.Range#maximum
@@ -87,14 +82,14 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Range.prototype._setMaximun = function (value) {
+            __egretProto__._setMaximun = function (value) {
                 if (value == this._maximum)
                     return;
                 this._maximum = value;
                 this.maxChanged = true;
                 this.invalidateProperties();
             };
-            Object.defineProperty(Range.prototype, "minimum", {
+            Object.defineProperty(__egretProto__, "minimum", {
                 /**
                  * 最小有效值
                  * @member egret.gui.Range#minimum
@@ -108,14 +103,14 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Range.prototype._setMinimun = function (value) {
+            __egretProto__._setMinimun = function (value) {
                 if (value == this._minimum)
                     return;
                 this._minimum = value;
                 this.minChanged = true;
                 this.invalidateProperties();
             };
-            Object.defineProperty(Range.prototype, "stepSize", {
+            Object.defineProperty(__egretProto__, "stepSize", {
                 /**
                  * 调用 changeValueByStep() 方法时 value 属性更改的单步大小。默认值为 1。<br/>
                  * 除非 snapInterval 为 0，否则它必须是 snapInterval 的倍数。<br/>
@@ -135,7 +130,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(Range.prototype, "value", {
+            Object.defineProperty(__egretProto__, "value", {
                 /**
                  * 此范围的当前值。
                  * @member egret.gui.Range#value
@@ -149,17 +144,17 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Range.prototype._setValue = function (newValue) {
+            __egretProto__._setValue = function (newValue) {
                 if (newValue == this.value)
                     return;
                 this._changedValue = newValue;
                 this.valueChanged = true;
                 this.invalidateProperties();
             };
-            Range.prototype._getValue = function () {
+            __egretProto__._getValue = function () {
                 return (this.valueChanged) ? this._changedValue : this._value;
             };
-            Object.defineProperty(Range.prototype, "snapInterval", {
+            Object.defineProperty(__egretProto__, "snapInterval", {
                 /**
                  * snapInterval 属性定义 value 属性的有效值。如果为非零，则有效值为 minimum 与此属性的整数倍数之和，且小于或等于 maximum。 <br/>
                  * 例如，如果 minimum 为 10，maximum 为 20，而此属性为 3，则可能的有效值为 10、13、16、19 和 20。<br/>
@@ -192,7 +187,7 @@ var egret;
              * 处理对组件设置的属性
              * @method egret.gui.Range#commitProperties
              */
-            Range.prototype.commitProperties = function () {
+            __egretProto__.commitProperties = function () {
                 _super.prototype.commitProperties.call(this);
                 if (this.minimum > this.maximum) {
                     if (!this.maxChanged)
@@ -222,7 +217,7 @@ var egret;
             /**
              * 修正stepSize到最接近snapInterval的整数倍
              */
-            Range.prototype.nearestValidSize = function (size) {
+            __egretProto__.nearestValidSize = function (size) {
                 var interval = this.snapInterval;
                 if (interval == 0)
                     return size;
@@ -236,7 +231,7 @@ var egret;
              * @param interval {number} snapInterval 的值，或 snapInterval 的整数倍数。
              * @returns {number}
              */
-            Range.prototype.nearestValidValue = function (value, interval) {
+            __egretProto__.nearestValidValue = function (value, interval) {
                 if (interval == 0)
                     return Math.max(this.minimum, Math.min(this.maximum, value));
                 var maxValue = this.maximum - this.minimum;
@@ -259,7 +254,7 @@ var egret;
              * @method egret.gui.Range#setValue
              * @param value {number} value属性的新值
              */
-            Range.prototype.setValue = function (value) {
+            __egretProto__.setValue = function (value) {
                 if (this._value == value)
                     return;
                 if (isNaN(value))
@@ -269,13 +264,14 @@ var egret;
                 else
                     this._value = value;
                 this.valueChanged = false;
+                gui.UIEvent.dispatchUIEvent(this, gui.UIEvent.VALUE_COMMIT);
             };
             /**
              * 按 stepSize增大或减小当前值
              * @method egret.gui.Range#changeValueByStep
              * @param increase {boolean} 若为 true，则向value增加stepSize，否则减去它。
              */
-            Range.prototype.changeValueByStep = function (increase) {
+            __egretProto__.changeValueByStep = function (increase) {
                 if (increase === void 0) { increase = true; }
                 if (this.stepSize == 0)
                     return;

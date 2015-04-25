@@ -1,73 +1,17 @@
 {
 	"groups":[
 	{
-		"keys":"0,2,4,8,16,32,64,128,256,512,1024,2048,titleBg,desktopBg",
+		"keys":"2048,titleBg,desktopBg",
 		"name":"preload"
 	}
     ],
 
 	"resources":[
       {
-        "name":"0",
-        "type":"image",
-        "url":"assets/me2048/0.png"
-      },
-      {
-        "name":"2",
-        "type":"image",
-        "url":"assets/me2048/2.png"
-      },
-      {
-        "name":"4",
-        "type":"image",
-        "url":"assets/me2048/4.png"
-      },
-      {
-        "name":"8",
-        "type":"image",
-        "url":"assets/me2048/8.png"
-      },
-      {
-        "name":"16",
-        "type":"image",
-        "url":"assets/me2048/16.png"
-      },
-      {
-        "name":"32",
-        "type":"image",
-        "url":"assets/me2048/32.png"
-      },
-      {
-        "name":"64",
-        "type":"image",
-        "url":"assets/me2048/64.png"
-      },
-      {
-        "name":"128",
-        "type":"image",
-        "url":"assets/me2048/128.png"
-      },
-      {
-        "name":"256",
-        "type":"image",
-        "url":"assets/me2048/256.png"
-      },
-      {
-        "name":"512",
-        "type":"image",
-        "url":"assets/me2048/512.png"
-      },
-      {
-        "name":"1024",
-        "type":"image",
-        "url":"assets/me2048/1024.png"
-      },
-      {
         "name":"2048",
-        "type":"image",
-        "url":"assets/me2048/2048.png"
+        "type":"sheet",
+        "url":"assets/2048.json"
       },
-
       {
         "name":"titleBg",
         "type":"image",

@@ -24,12 +24,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var egret;
 (function (egret) {
     var gui;
@@ -60,12 +54,13 @@ var egret;
                 this.name = name;
                 this.overrides = overrides;
             }
+            var __egretProto__ = State.prototype;
             /**
              * 初始化视图
              * @method egret.gui.State#initialize
              * @param parent {IStateClient}
              */
-            State.prototype.initialize = function (parent) {
+            __egretProto__.initialize = function (parent) {
                 if (!this.initialized) {
                     this.initialized = true;
                     for (var i = 0; i < this.overrides.length; i++) {

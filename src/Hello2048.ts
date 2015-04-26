@@ -1,7 +1,6 @@
 /**
  * Created by 彬 on 2015/3/6.
  */
-
 class Hello2048 extends egret.DisplayObjectContainer {
 
     public constructor() {
@@ -17,23 +16,30 @@ class Hello2048 extends egret.DisplayObjectContainer {
         RES.loadGroup("preload");
     }//以上都是固定代码
 
-    private uiStage:egret.gui.UIStage;  //主舞台
-    private score:number = 0;
-    private topScore:number;               //这个是真正的总分
-    private label:egret.gui.Label;
-    private key:string = "best";
+    private uiStage : egret.gui.UIStage;  //主舞台
+    private score : number = 0;
+    private topScore : number;               //这个是真正的总分
+    private labelNow : egret.gui.Label;
+    private labelNowTxt : egret.gui.Label;
+    private labelRecord : egret.gui.Label;
+    private labelRecordTxt : egret.gui.Label;
 
-    private tempX:number;
-    private tempY:number;
-    private touchInProcess:boolean;
-    private cell:Grid[][] = new Array(4);
+    private tempX : number;
+    private tempY : number;
+    private touchInProcess : boolean;
+    private cell : Grid[][] = new Array(4);
 
 //UI
-    private desktopSide:number = 480;   //界面宽度
+    private desktopSide : number = 720;   //界面宽度
+    private desktopGao : number = 950;     //界面总高度
     private title;  //标题栏
-    private _titleBarHeight:number = 60;
+    private _titleBarHeight : number = 96;
+    private _gridWidth = 160;
+    private _gridGap = 10;
     private desktop;    //绘制区域,也是触摸区域
-    private hasGameOver:boolean;           //判断游戏是否结束
+    private hasGameOver : boolean;           //判断游戏是否结束
+
+    private hasRead : boolean;//这一把是否已经读取过数据了。
 
     private onResourceLoadComplete(event:RES.ResourceEvent):void {
 
@@ -63,13 +69,15 @@ class Hello2048 extends egret.DisplayObjectContainer {
     }   //初始化
 
     private setTopScore() {
-        var topScoreString:string = "null"; //本地存储只能存字符串，这个是总分的字符串形式
-        if (egret.localStorage.getItem(this.key)) { //本地存着有数据
-            topScoreString = egret.localStorage.getItem(this.key);
-            this.topScore = +topScoreString;
+        if (!this.hasRead) {
+            var topScoreString:string = "null"; //本地存储只能存字符串，这个是总分的字符串形式
+            if (egret.localStorage.getItem("best")) { //本地存着有数据
+                topScoreString = egret.localStorage.getItem("best");
+                this.topScore = +topScoreString;
+                this.hasRead = true;
+            }
         }
 
-        //this.score是即时计算出来的总分，我们不需要这个，直接看当前的最大数字（总分仍然在计算，但是被最大数字替换了）。
         var i,j :number;
         this.score = this.cell[0][0].valueNew;
         for (i=0;i<4;i++) {
@@ -77,16 +85,27 @@ class Hello2048 extends egret.DisplayObjectContainer {
                 this.score = this.cell[i][j].valueNew>this.score ? this.cell[i][j].valueNew:this.score
             }
         }
+
+        if (this.score > this.topScore) {
+            this.topScore = this.score;
+            topScoreString = this.topScore.toString();
+            egret.localStorage.setItem("best", topScoreString);
+        }
         this.topScore = Math.max(this.topScore , this.score);
-        topScoreString = this.topScore.toString();
-        egret.localStorage.setItem("best", topScoreString);
+
     }   //判断是否创纪录
 
     private refresh():void {
         var i, j:number;
         this.setTopScore();
 
-        var nowLever,bestLevel :string = "";
+        for (i = 0; i < 4; i++) {
+            for (j = 0; j < 4; j++) {
+                this.cell[i][j].drawSelf();
+            }
+        }
+
+        var nowLever,bestLevel :string;
         switch (this.score) {
             case 2: nowLever = "学渣";break;
             case 4: nowLever = "学沫";break;
@@ -114,16 +133,16 @@ class Hello2048 extends egret.DisplayObjectContainer {
             case 1024: bestLevel = "学圣";break;
             case 2048: bestLevel = "学神";break;
             case 4096: bestLevel = "超神";break;
-        }
-
-        this.label.text = "当前成绩：" + nowLever + "\n最高成绩：" + bestLevel;  //显示总分
-
-        //this.label.text = "当前段位：" + this.score + "\n最高段位：" + this.topScore;  //显示总分
-        for (i = 0; i < 4; i++) {
-            for (j = 0; j < 4; j++) {
-                this.cell[i][j].drawSelf();
+            default : {
+                this.topScore = this.score;
+                var topScoreString:string = this.topScore.toString();
+                egret.localStorage.setItem("best", topScoreString);
             }
         }
+
+        this.labelNow.text = nowLever;
+        this.labelRecord.text = bestLevel;
+
     }   //刷新ui
 
     private newGrid():void {
@@ -200,7 +219,7 @@ class Hello2048 extends egret.DisplayObjectContainer {
                     }
                     else if (temp[n] == this.cell[row][col].valueOld) { //目标位有数字且和当前遍历的数字相同，就把目标位的数字放大，同时目标位后移
                         temp[n] *= 2;
-                        this.score = this.score + temp[n];
+                        //this.score = this.score + temp[n];
                         n = n + nStep;
                     }
                     else {  //目标位有数字，且和遍历的数字不等，那么直接存到下一个目标位，
@@ -288,7 +307,7 @@ class Hello2048 extends egret.DisplayObjectContainer {
 
         xChange = event.localX - this.tempX;
         yChange = event.localY - this.tempY;
-        if (Math.max(Math.abs(xChange), Math.abs(yChange)) >= 8 && this.touchInProcess) {
+        if (Math.max(Math.abs(xChange), Math.abs(yChange)) >= 6 && this.touchInProcess) {
             this.touchInProcess = false;
             biggerChange = (Math.abs(xChange) >= Math.abs(yChange)) ? xChange : yChange;
             rule = (Math.abs(yChange) >= Math.abs(xChange));
@@ -332,21 +351,19 @@ class Hello2048 extends egret.DisplayObjectContainer {
     }
 
     public titleBarDraw() {   //绘制主界面，摆放元素位置。
-        var titleHeight = this._titleBarHeight;
-        this.title = new egret.Sprite;
 
-        var titleBg = new egret.Bitmap;
+        this.title = new egret.Sprite;
+        this.title.height = this._titleBarHeight;
+        this.title.width = this.desktopSide;
+        this.title.graphics.beginFill(0x003366);
+        this.title.graphics.drawRect(0,0,this.desktopSide,this._titleBarHeight);
+        this.title.graphics.endFill();
         this.uiStage.addElement(this.title);
 
-        titleBg.height = titleHeight;
-        titleBg.width = 480;
-        titleBg.texture = RES.getRes("titleBg");
-        this.title.addChild(titleBg);
-
         var gameName = new egret.gui.Label();
-        gameName.text = "学霸成长记";
+        gameName.text = "← 学霸成长记";
         gameName.size = 36;
-        gameName.height = titleHeight;
+        gameName.height = this._titleBarHeight;
         gameName.verticalAlign = egret.VerticalAlign.MIDDLE;
         gameName.paddingLeft = 25;
         this.title.addChild(gameName);
@@ -355,22 +372,53 @@ class Hello2048 extends egret.DisplayObjectContainer {
     public desktopDraw() {
         var titleHeight = this._titleBarHeight;
         this.desktop = new egret.Sprite;
-        var desktopBg = new egret.Bitmap;
-        desktopBg.texture = RES.getRes("desktopBg");
-        this.desktop.addChild(desktopBg);
+
         this.desktop.y = titleHeight;
-        this.desktop.width = desktopBg.width = 480;
-        this.desktop.height = desktopBg.height = 580;
+        this.desktop.width = this.desktopSide;
+        this.desktop.height = this.desktopGao - this._titleBarHeight;
         this.uiStage.addElement(this.desktop);
 
-        this.label = new egret.gui.Label();//总分
-        this.label.x = 15;
-        this.label.y = this.desktopSide - 15;
-        this.label.padding = 10;
-        this.label.lineSpacing = 10;
-        this.label.size = 32;
-        this.label.textColor = 0x3360B4;
-        this.desktop.addChild(this.label);
+        this.labelNow = new egret.gui.Label();//总分
+        this.labelNow.x = 15;
+        this.labelNow.y = this.desktopSide + 20;
+        this.labelNow.padding = 10;
+        this.labelNow.lineSpacing = 10;
+        this.labelNow.size = 60;
+        this.labelNow.textColor = 0xFFFFFF;
+        this.desktop.addChild(this.labelNow);
+
+        this.labelRecord = new egret.gui.Label();//总分
+        this.labelRecord.x = 100;
+        this.labelRecord.width = this.desktopSide - 20 - 100;
+        this.labelRecord.y = this.desktopSide + 20 ;
+        this.labelRecord.padding = 10;
+        this.labelRecord.lineSpacing = 10;
+        this.labelRecord.size = 60;
+        this.labelRecord.textColor = 0xFFFFFF;
+        this.labelRecord.textAlign = egret.HorizontalAlign.RIGHT;
+        this.desktop.addChild(this.labelRecord);
+
+        this.labelNowTxt = new egret.gui.Label();
+        this.labelNowTxt.x = 15;
+        this.labelNowTxt.y = this.desktopSide + 95;
+        this.labelNowTxt.padding = 10;
+        this.labelNowTxt.lineSpacing = 10;
+        this.labelNowTxt.size = 24;
+        this.labelNowTxt.textColor = 0xFFFFFF;
+        this.labelNowTxt.text = "当前段位";
+        this.desktop.addChild(this.labelNowTxt);
+
+        this.labelRecordTxt = new egret.gui.Label();
+        this.labelRecordTxt.x = 100;
+        this.labelRecordTxt.y = this.desktopSide + 95;
+        this.labelRecordTxt.padding = 10;
+        this.labelRecordTxt.lineSpacing = 10;
+        this.labelRecordTxt.size = 24;
+        this.labelRecordTxt.textColor = 0xFFFFFF;
+        this.labelRecordTxt.width = this.desktopSide - 20 - 100;
+        this.labelRecordTxt.textAlign = egret.HorizontalAlign.RIGHT;
+        this.labelRecordTxt.text = "最高段位";
+        this.desktop.addChild(this.labelRecordTxt);
     }
 
     public cellFormat() {
@@ -379,9 +427,9 @@ class Hello2048 extends egret.DisplayObjectContainer {
             this.cell[i] = new Array(4);
             for (j = 0; j < 4; j++) {
                 this.cell[i][j] = new Grid();
-                this.cell[i][j].format(110, 5);
-                this.cell[i][j].x = j * 110 + 20;
-                this.cell[i][j].y = i * 110 + 20;
+                this.cell[i][j].format(this._gridWidth + this._gridGap, this._gridGap);
+                this.cell[i][j].x = j * (this._gridWidth + this._gridGap) + 20;
+                this.cell[i][j].y = i * (this._gridWidth + this._gridGap) + 20;
                 this.desktop.addChild(this.cell[i][j]);
             }
         }

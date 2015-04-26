@@ -6,11 +6,13 @@ var Hello2048 = (function (_super) {
     function Hello2048() {
         _super.call(this);
         this.score = 0;
-        this.key = "best";
         this.cell = new Array(4);
         //UI
-        this.desktopSide = 480; //界面宽度
-        this._titleBarHeight = 60;
+        this.desktopSide = 720; //界面宽度
+        this.desktopGao = 950; //界面总高度
+        this._titleBarHeight = 96;
+        this._gridWidth = 160;
+        this._gridGap = 10;
         this.addEventListener(egret.Event.ADDED_TO_STAGE, this.startGame, this);
     }
     var __egretProto__ = Hello2048.prototype;
@@ -43,12 +45,14 @@ var Hello2048 = (function (_super) {
         this.refresh();
     }; //初始化
     __egretProto__.setTopScore = function () {
-        var topScoreString = "null"; //本地存储只能存字符串，这个是总分的字符串形式
-        if (egret.localStorage.getItem(this.key)) {
-            topScoreString = egret.localStorage.getItem(this.key);
-            this.topScore = +topScoreString;
+        if (!this.hasRead) {
+            var topScoreString = "null"; //本地存储只能存字符串，这个是总分的字符串形式
+            if (egret.localStorage.getItem("best")) {
+                topScoreString = egret.localStorage.getItem("best");
+                this.topScore = +topScoreString;
+                this.hasRead = true;
+            }
         }
-        //this.score是即时计算出来的总分，我们不需要这个，直接看当前的最大数字（总分仍然在计算，但是被最大数字替换了）。
         var i, j;
         this.score = this.cell[0][0].valueNew;
         for (i = 0; i < 4; i++) {
@@ -56,18 +60,23 @@ var Hello2048 = (function (_super) {
                 this.score = this.cell[i][j].valueNew > this.score ? this.cell[i][j].valueNew : this.score;
             }
         }
+        if (this.score > this.topScore) {
+            this.topScore = this.score;
+            topScoreString = this.topScore.toString();
+            egret.localStorage.setItem("best", topScoreString);
+        }
         this.topScore = Math.max(this.topScore, this.score);
-        topScoreString = this.topScore.toString();
-        egret.localStorage.setItem("best", topScoreString);
     }; //判断是否创纪录
     __egretProto__.refresh = function () {
         var i, j;
         this.setTopScore();
+        for (i = 0; i < 4; i++) {
+            for (j = 0; j < 4; j++) {
+                this.cell[i][j].drawSelf();
+            }
+        }
         var nowLever, bestLevel;
         switch (this.score) {
-            case 0:
-                nowLever = "";
-                break;
             case 2:
                 nowLever = "学渣";
                 break;
@@ -102,13 +111,10 @@ var Hello2048 = (function (_super) {
                 nowLever = "学神";
                 break;
             case 4096:
-                nowLever = "";
+                nowLever = "超神";
                 break;
         }
         switch (this.topScore) {
-            case 0:
-                bestLevel = "";
-                break;
             case 2:
                 bestLevel = "学渣";
                 break;
@@ -143,15 +149,16 @@ var Hello2048 = (function (_super) {
                 bestLevel = "学神";
                 break;
             case 4096:
-                bestLevel = "";
+                bestLevel = "超神";
                 break;
-        }
-        this.label.text = "当前成绩：" + nowLever + "\n最高成绩：" + bestLevel; //显示总分
-        for (i = 0; i < 4; i++) {
-            for (j = 0; j < 4; j++) {
-                this.cell[i][j].drawSelf();
+            default: {
+                this.topScore = this.score;
+                var topScoreString = this.topScore.toString();
+                egret.localStorage.setItem("best", topScoreString);
             }
         }
+        this.labelNow.text = nowLever;
+        this.labelRecord.text = bestLevel;
     }; //刷新ui
     __egretProto__.newGrid = function () {
         var newbieLocation, nullCount, newbieNumber;
@@ -219,7 +226,7 @@ var Hello2048 = (function (_super) {
                     }
                     else if (temp[n] == this.cell[row][col].valueOld) {
                         temp[n] *= 2;
-                        this.score = this.score + temp[n];
+                        //this.score = this.score + temp[n];
                         n = n + nStep;
                     }
                     else {
@@ -338,18 +345,17 @@ var Hello2048 = (function (_super) {
         this.newGrid();
     };
     __egretProto__.titleBarDraw = function () {
-        var titleHeight = this._titleBarHeight;
         this.title = new egret.Sprite;
-        var titleBg = new egret.Bitmap;
+        this.title.height = this._titleBarHeight;
+        this.title.width = this.desktopSide;
+        this.title.graphics.beginFill(0x003366);
+        this.title.graphics.drawRect(0, 0, this.desktopSide, this._titleBarHeight);
+        this.title.graphics.endFill();
         this.uiStage.addElement(this.title);
-        titleBg.height = titleHeight;
-        titleBg.width = 480;
-        titleBg.texture = RES.getRes("titleBg");
-        this.title.addChild(titleBg);
         var gameName = new egret.gui.Label();
-        gameName.text = "学霸成长记";
+        gameName.text = "← 学霸成长记";
         gameName.size = 36;
-        gameName.height = titleHeight;
+        gameName.height = this._titleBarHeight;
         gameName.verticalAlign = egret.VerticalAlign.MIDDLE;
         gameName.paddingLeft = 25;
         this.title.addChild(gameName);
@@ -357,21 +363,48 @@ var Hello2048 = (function (_super) {
     __egretProto__.desktopDraw = function () {
         var titleHeight = this._titleBarHeight;
         this.desktop = new egret.Sprite;
-        var desktopBg = new egret.Bitmap;
-        desktopBg.texture = RES.getRes("desktopBg");
-        this.desktop.addChild(desktopBg);
         this.desktop.y = titleHeight;
-        this.desktop.width = desktopBg.width = 480;
-        this.desktop.height = desktopBg.height = 580;
+        this.desktop.width = this.desktopSide;
+        this.desktop.height = this.desktopGao - this._titleBarHeight;
         this.uiStage.addElement(this.desktop);
-        this.label = new egret.gui.Label(); //总分
-        this.label.x = 15;
-        this.label.y = this.desktopSide - 15;
-        this.label.padding = 10;
-        this.label.lineSpacing = 10;
-        this.label.size = 32;
-        this.label.textColor = 0x3360B4;
-        this.desktop.addChild(this.label);
+        this.labelNow = new egret.gui.Label(); //总分
+        this.labelNow.x = 15;
+        this.labelNow.y = this.desktopSide + 20;
+        this.labelNow.padding = 10;
+        this.labelNow.lineSpacing = 10;
+        this.labelNow.size = 60;
+        this.labelNow.textColor = 0xFFFFFF;
+        this.desktop.addChild(this.labelNow);
+        this.labelRecord = new egret.gui.Label(); //总分
+        this.labelRecord.x = 100;
+        this.labelRecord.width = this.desktopSide - 20 - 100;
+        this.labelRecord.y = this.desktopSide + 20;
+        this.labelRecord.padding = 10;
+        this.labelRecord.lineSpacing = 10;
+        this.labelRecord.size = 60;
+        this.labelRecord.textColor = 0xFFFFFF;
+        this.labelRecord.textAlign = egret.HorizontalAlign.RIGHT;
+        this.desktop.addChild(this.labelRecord);
+        this.labelNowTxt = new egret.gui.Label();
+        this.labelNowTxt.x = 15;
+        this.labelNowTxt.y = this.desktopSide + 95;
+        this.labelNowTxt.padding = 10;
+        this.labelNowTxt.lineSpacing = 10;
+        this.labelNowTxt.size = 24;
+        this.labelNowTxt.textColor = 0xFFFFFF;
+        this.labelNowTxt.text = "当前段位";
+        this.desktop.addChild(this.labelNowTxt);
+        this.labelRecordTxt = new egret.gui.Label();
+        this.labelRecordTxt.x = 100;
+        this.labelRecordTxt.y = this.desktopSide + 95;
+        this.labelRecordTxt.padding = 10;
+        this.labelRecordTxt.lineSpacing = 10;
+        this.labelRecordTxt.size = 24;
+        this.labelRecordTxt.textColor = 0xFFFFFF;
+        this.labelRecordTxt.width = this.desktopSide - 20 - 100;
+        this.labelRecordTxt.textAlign = egret.HorizontalAlign.RIGHT;
+        this.labelRecordTxt.text = "最高段位";
+        this.desktop.addChild(this.labelRecordTxt);
     };
     __egretProto__.cellFormat = function () {
         var i, j;
@@ -379,9 +412,9 @@ var Hello2048 = (function (_super) {
             this.cell[i] = new Array(4);
             for (j = 0; j < 4; j++) {
                 this.cell[i][j] = new Grid();
-                this.cell[i][j].format(110, 5);
-                this.cell[i][j].x = j * 110 + 20;
-                this.cell[i][j].y = i * 110 + 20;
+                this.cell[i][j].format(this._gridWidth + this._gridGap, this._gridGap);
+                this.cell[i][j].x = j * (this._gridWidth + this._gridGap) + 20;
+                this.cell[i][j].y = i * (this._gridWidth + this._gridGap) + 20;
                 this.desktop.addChild(this.cell[i][j]);
             }
         }

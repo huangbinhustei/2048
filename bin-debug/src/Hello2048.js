@@ -10,7 +10,8 @@ var Hello2048 = (function (_super) {
         //UI
         this.desktopSide = 720; //界面宽度
         this.desktopGao = 950; //界面总高度
-        this._titleBarHeight = 96;
+        //private _titleBarHeight : number = 96;
+        this._titleBarHeight = 0;
         this._gridWidth = 160;
         this._gridGap = 10;
         this.addEventListener(egret.Event.ADDED_TO_STAGE, this.startGame, this);
@@ -23,9 +24,10 @@ var Hello2048 = (function (_super) {
         RES.loadGroup("preload");
     }; //以上都是固定代码
     __egretProto__.onResourceLoadComplete = function (event) {
+        console.log("{\"action\":\"loadComplete\"}");
         this.uiStage = new egret.gui.UIStage(); //UI的容器
         this.addChild(this.uiStage);
-        this.titleBarDraw();
+        //this.titleBarDraw();
         this.desktopDraw();
         this.cellFormat();
         this.init();
@@ -47,8 +49,8 @@ var Hello2048 = (function (_super) {
     __egretProto__.setTopScore = function () {
         if (!this.hasRead) {
             var topScoreString = "null"; //本地存储只能存字符串，这个是总分的字符串形式
-            if (egret.localStorage.getItem("best")) {
-                topScoreString = egret.localStorage.getItem("best");
+            if (this.getCookie("best")) {
+                topScoreString = this.getCookie("best");
                 this.topScore = +topScoreString;
                 this.hasRead = true;
             }
@@ -63,7 +65,7 @@ var Hello2048 = (function (_super) {
         if (this.score > this.topScore) {
             this.topScore = this.score;
             topScoreString = this.topScore.toString();
-            egret.localStorage.setItem("best", topScoreString);
+            this.setCookie("best", topScoreString);
         }
         this.topScore = Math.max(this.topScore, this.score);
     }; //判断是否创纪录
@@ -154,7 +156,7 @@ var Hello2048 = (function (_super) {
             default: {
                 this.topScore = this.score;
                 var topScoreString = this.topScore.toString();
-                egret.localStorage.setItem("best", topScoreString);
+                this.setCookie("best", topScoreString);
             }
         }
         this.labelNow.text = nowLever;
@@ -184,18 +186,20 @@ var Hello2048 = (function (_super) {
         }, 1); //延迟刷新新单元格
         if (nullCount == 1) {
             var self = this;
-            if (this.judement()) {
+            if (this.judgement()) {
                 this.refresh();
                 this.hasGameOver = true;
                 setTimeout(function () {
-                    self.lastAlert();
+                    self.gameOver();
                 }, 200);
             }
         }
     }; //逻辑上出新单元格
-    __egretProto__.lastAlert = function () {
-        alert("游戏结束");
-        this.init();
+    __egretProto__.gameOver = function () {
+        //alert("游戏结束");
+        //this.init();
+        //console.log("GAME OVER" +this.score+" "+this.topScore);
+        console.log("{\"action\":\"gameover\",\"score\":\"" + this.score + "\",\"score2\":\"" + this.topScore + "\",\"gameId\":\"2048\"}");
     };
     __egretProto__.merge = function (dir, rule) {
         //dir = true ：向上or向左移动，dir=false：向下or向右移动
@@ -252,7 +256,7 @@ var Hello2048 = (function (_super) {
         }
         return flag;
     }; //合并单元格
-    __egretProto__.judement = function () {
+    __egretProto__.judgement = function () {
         //游戏结束之后的弹层也在这里
         //可以合成 false,不能合成：ture
         var flag = true;
@@ -279,15 +283,15 @@ var Hello2048 = (function (_super) {
             //tapListener.addEventListener(egret.TouchEvent.TOUCH_MOVE,(event:egret.event)=>{},this);
             tapListener.touchEnabled = true;
             tapListener.touchChildren = true;
-            tapListener.addEventListener(egret.TouchEvent.TOUCH_BEGIN, function forBibao2(event) {
+            tapListener.addEventListener(egret.TouchEvent.TOUCH_BEGIN, function forBiBao2(event) {
                 src.onTouchBegin(event);
             }, this);
-            tapListener.addEventListener(egret.TouchEvent.TOUCH_MOVE, function forBibao3(event) {
+            tapListener.addEventListener(egret.TouchEvent.TOUCH_MOVE, function forBiBao3(event) {
                 src.onTouchMove(event);
             }, this);
         }
         else {
-            document.addEventListener("keydown", function forBibao(event) {
+            document.addEventListener("keydown", function forBiBao(event) {
                 src.onKeyDown(event);
             });
         }
@@ -304,7 +308,7 @@ var Hello2048 = (function (_super) {
         var biggerChange;
         xChange = event.localX - this.tempX;
         yChange = event.localY - this.tempY;
-        if (Math.max(Math.abs(xChange), Math.abs(yChange)) >= 8 && this.touchInProcess) {
+        if (Math.max(Math.abs(xChange), Math.abs(yChange)) >= 6 && this.touchInProcess) {
             this.touchInProcess = false;
             biggerChange = (Math.abs(xChange) >= Math.abs(yChange)) ? xChange : yChange;
             rule = (Math.abs(yChange) >= Math.abs(xChange));
@@ -418,6 +422,18 @@ var Hello2048 = (function (_super) {
                 this.desktop.addChild(this.cell[i][j]);
             }
         }
+    };
+    __egretProto__.setCookie = function (key, value) {
+        var date = new Date();
+        date.setTime(date.getTime() + 1 * 1000 * 3600 * 24 * 365);
+        document.cookie = key + "=" + encodeURI(value) + ";expires=" + date.toUTCString() + ";path=/";
+    };
+    __egretProto__.getCookie = function (key) {
+        var cookie = document.cookie, regExp = new RegExp("[sS]*" + key + "=([^;]*)(;|$)"), ret = cookie.match(regExp);
+        if (ret != null) {
+            return ret[1];
+        }
+        return null;
     };
     return Hello2048;
 })(egret.DisplayObjectContainer);

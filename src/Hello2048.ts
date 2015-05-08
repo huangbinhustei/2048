@@ -33,7 +33,7 @@ class Hello2048 extends egret.DisplayObjectContainer {
     private desktopSide : number = 720;   //界面宽度
     private desktopGao : number = 950;     //界面总高度
     private title;  //标题栏
-    private _titleBarHeight : number = 96;
+    private _titleBarHeight : number = 0; //96
     private _gridWidth = 160;
     private _gridGap = 10;
     private desktop;    //绘制区域,也是触摸区域
@@ -43,10 +43,12 @@ class Hello2048 extends egret.DisplayObjectContainer {
 
     private onResourceLoadComplete(event:RES.ResourceEvent):void {
 
+        console.log("{\"action\":\"loadComplete\"}");
+
         this.uiStage = new egret.gui.UIStage();  //UI的容器
         this.addChild(this.uiStage);
 
-        this.titleBarDraw();
+        //this.titleBarDraw();
         this.desktopDraw();
         this.cellFormat();
 
@@ -71,8 +73,8 @@ class Hello2048 extends egret.DisplayObjectContainer {
     private setTopScore() {
         if (!this.hasRead) {
             var topScoreString:string = "null"; //本地存储只能存字符串，这个是总分的字符串形式
-            if (egret.localStorage.getItem("best")) { //本地存着有数据
-                topScoreString = egret.localStorage.getItem("best");
+            if (this.getCookie("best")) { //本地存着有数据
+                topScoreString = this.getCookie("best");
                 this.topScore = +topScoreString;
                 this.hasRead = true;
             }
@@ -89,7 +91,7 @@ class Hello2048 extends egret.DisplayObjectContainer {
         if (this.score > this.topScore) {
             this.topScore = this.score;
             topScoreString = this.topScore.toString();
-            egret.localStorage.setItem("best", topScoreString);
+            this.setCookie("best", topScoreString);
         }
         this.topScore = Math.max(this.topScore , this.score);
 
@@ -136,7 +138,7 @@ class Hello2048 extends egret.DisplayObjectContainer {
             default : {
                 this.topScore = this.score;
                 var topScoreString:string = this.topScore.toString();
-                egret.localStorage.setItem("best", topScoreString);
+                this.setCookie("best", topScoreString);
             }
         }
 
@@ -175,19 +177,21 @@ class Hello2048 extends egret.DisplayObjectContainer {
 
         if (nullCount == 1) {
             var self = this;
-            if (this.judement()) {
+            if (this.judgement()) {
                 this.refresh();
                 this.hasGameOver = true;
                 setTimeout(function () {
-                    self.lastAlert();
+                    self.gameOver();
                 }, 200);
             }
         }
     }   //逻辑上出新单元格
 
-    private lastAlert() {
-        alert("游戏结束");
-        this.init();
+    private gameOver() {
+        //alert("游戏结束");
+        //this.init();
+        //console.log("GAME OVER" +this.score+" "+this.topScore);
+        console.log("{\"action\":\"gameover\",\"score\":\""+this.score+"\",\"score2\":\""+this.topScore+"\",\"gameId\":\"2048\"}");
     }
 
     private merge(dir:boolean, rule:boolean):boolean {
@@ -243,7 +247,7 @@ class Hello2048 extends egret.DisplayObjectContainer {
         return flag;
     }   //合并单元格
 
-    private judement():boolean {
+    private judgement():boolean {
         //游戏结束之后的弹层也在这里
         //可以合成 false,不能合成：ture
         var flag:boolean = true;
@@ -271,14 +275,14 @@ class Hello2048 extends egret.DisplayObjectContainer {
             tapListener.touchChildren = true;
             tapListener.addEventListener(
                 egret.TouchEvent.TOUCH_BEGIN,
-                function forBibao2(event:egret.TouchEvent) {
+                function forBiBao2(event:egret.TouchEvent) {
                     src.onTouchBegin(event);
                 },
                 this
             );
             tapListener.addEventListener(
                 egret.TouchEvent.TOUCH_MOVE,
-                function forBibao3(event:egret.TouchEvent) {
+                function forBiBao3(event:egret.TouchEvent) {
                     src.onTouchMove(event);
                 },
                 this
@@ -286,7 +290,7 @@ class Hello2048 extends egret.DisplayObjectContainer {
         } else {
             document.addEventListener(
                 "keydown",
-                function forBibao(event:KeyboardEvent) {
+                function forBiBao(event:KeyboardEvent) {
                     src.onKeyDown(event);
                 }
             );
@@ -320,6 +324,8 @@ class Hello2048 extends egret.DisplayObjectContainer {
 
     private onKeyDown(event:KeyboardEvent) {
         if (this.hasGameOver) return;
+
+        //console.log(this.topScore + "   "+this.score);
 
         switch (event.keyCode) {
             case 38 ://上
@@ -434,4 +440,25 @@ class Hello2048 extends egret.DisplayObjectContainer {
             }
         }
     }
+    
+	private setCookie(key, value):void {
+
+        var date = new Date();
+
+        date.setTime(date.getTime() + 1 * 1000 * 3600 * 24 * 365);
+
+        document.cookie = key + "=" + encodeURI(value) + ";expires=" + date.toUTCString() + ";path=/";
+    }
+
+    private getCookie(key):string {
+        var cookie = document.cookie,
+            regExp = new RegExp("[sS]*" + key + "=([^;]*)(;|$)"),
+            ret = cookie.match(regExp);
+
+        if (ret != null) {
+            return ret[1];
+        }
+        return null;
+    }
+
 }

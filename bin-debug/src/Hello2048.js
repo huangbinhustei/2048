@@ -182,7 +182,7 @@ var Hello2048 = (function (_super) {
         var self = this;
         setTimeout(function () {
             self.cell[newRow][newCol].drawSelfLatter();
-        }, 1); //延迟刷新新单元格
+        }, 100); //延迟刷新新单元格
         if (nullCount == 1) {
             var self = this;
             if (this.judgement()) {
@@ -190,7 +190,7 @@ var Hello2048 = (function (_super) {
                 this.hasGameOver = true;
                 setTimeout(function () {
                     self.gameOver();
-                }, 200);
+                }, 1);
             }
         }
     }; //逻辑上出新单元格

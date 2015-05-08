@@ -173,7 +173,7 @@ class Hello2048 extends egret.DisplayObjectContainer {
         var self = this;
         setTimeout(function () {
             self.cell[newRow][newCol].drawSelfLatter();
-        }, 1);//延迟刷新新单元格
+        }, 100);//延迟刷新新单元格
 
         if (nullCount == 1) {
             var self = this;
@@ -182,7 +182,7 @@ class Hello2048 extends egret.DisplayObjectContainer {
                 this.hasGameOver = true;
                 setTimeout(function () {
                     self.gameOver();
-                }, 200);
+                }, 1);
             }
         }
     }   //逻辑上出新单元格

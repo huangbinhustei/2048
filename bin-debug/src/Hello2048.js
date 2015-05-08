@@ -10,8 +10,7 @@ var Hello2048 = (function (_super) {
         //UI
         this.desktopSide = 720; //界面宽度
         this.desktopGao = 950; //界面总高度
-        //private _titleBarHeight : number = 96;
-        this._titleBarHeight = 0;
+        this._titleBarHeight = 0; //96
         this._gridWidth = 160;
         this._gridGap = 10;
         this.addEventListener(egret.Event.ADDED_TO_STAGE, this.startGame, this);

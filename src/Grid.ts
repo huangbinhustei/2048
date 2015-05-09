@@ -8,8 +8,8 @@ class Grid extends egret.Sprite {
     public pic : egret.Bitmap = new egret.Bitmap();
 
     public format(len:number,gap:number) {
-        this.width = this.height =len;
-        this.pic.height = this.pic.width = len-2*gap;
+        this.width = this.height = len;
+        this.pic.height = this.pic.width = len - 2 * gap;
         this.pic.y =  this.pic.x = gap;
         this.valueOld = 0;
         this.pic.texture = RES.getRes(this.valueOld.toString());
@@ -24,17 +24,9 @@ class Grid extends egret.Sprite {
         }
     }
 
-    public drawSelfLatter() {
-        this.pic.texture = RES.getRes(this.valueNew.toString());
+    public drawSelfLater() {
+        this.pic.texture = RES.getRes("2048."+this.valueNew.toString());
         this.valueOld = this.valueNew;
-        egret.Tween.get(this.pic.texture, { loop:false })
-        .to (
-            { alpha:0},
-            1000
-        )
-        .to (
-            {alpha:1},
-            1000
-        )
-    }//没有实现渐入渐出。
+        egret.Tween.get(this,{ loop: false }).to({ alpha: 0.2 }, 0).to({ alpha: 1 }, 500);
+    }
 }

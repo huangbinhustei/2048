@@ -6,6 +6,8 @@ var Hello2048 = (function (_super) {
     function Hello2048() {
         _super.call(this);
         this.score = 0;
+        this.nowScore = new egret.TextField;
+        this.bestScore = new egret.TextField;
         this.cell = new Array(4);
         //UI
         this.desktopSide = 720; //界面宽度
@@ -17,7 +19,6 @@ var Hello2048 = (function (_super) {
     }
     var __egretProto__ = Hello2048.prototype;
     __egretProto__.startGame = function () {
-        //egret.Profiler.getInstance().run();//看帧率的？
         RES.addEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
         RES.loadConfig("resource/resource.json", "resource/");
         RES.loadGroup("preload");
@@ -158,8 +159,14 @@ var Hello2048 = (function (_super) {
                 this.setCookie("best", topScoreString);
             }
         }
-        this.labelNow.text = nowLever;
-        this.labelRecord.text = bestLevel;
+        this.nowScore.textFlow = [
+            { text: nowLever, style: { "size": 60 } },
+            { text: "\n当前段位", style: { "size": 24 } }
+        ];
+        this.bestScore.textFlow = [
+            { text: bestLevel, style: { "textColor": 0xFFFFFF, "size": 60 } },
+            { text: "\n最高段位", style: { "textColor": 0xFFFFFF, "size": 24 } }
+        ];
     }; //刷新ui
     __egretProto__.newGrid = function () {
         var newbieLocation, nullCount, newbieNumber;
@@ -179,10 +186,11 @@ var Hello2048 = (function (_super) {
         var newRow = (nullGroup[newbieLocation] / 4) ^ 0; //row
         var newCol = nullGroup[newbieLocation] % 4; //col
         this.cell[newRow][newCol].valueNew = newbieNumber;
-        var self = this;
-        setTimeout(function () {
-            self.cell[newRow][newCol].drawSelfLatter();
-        }, 100); //延迟刷新新单元格
+        //var self = this;
+        //setTimeout(function () {
+        //    self.cell[newRow][newCol].drawSelf();
+        //}, 100);//延迟刷新新单元格
+        this.cell[newRow][newCol].drawSelfLater();
         if (nullCount == 1) {
             var self = this;
             if (this.judgement()) {
@@ -197,7 +205,6 @@ var Hello2048 = (function (_super) {
     __egretProto__.gameOver = function () {
         //alert("游戏结束");
         //this.init();
-        //console.log("GAME OVER" +this.score+" "+this.topScore);
         console.log("{\"action\":\"gameover\",\"score\":\"" + this.score + "\",\"score2\":\"" + this.topScore + "\",\"gameId\":\"2048\"}");
     };
     __egretProto__.merge = function (dir, rule) {
@@ -276,20 +283,15 @@ var Hello2048 = (function (_super) {
     __egretProto__.inputListener = function () {
         var tapListener = this.desktop;
         var src = this;
-        if (egret.MainContext.deviceType == egret.MainContext.DEVICE_MOBILE) {
-            //tapListener.addEventListener(egret.event.TouchEvent.TOUCH_BEGIN,this.onBegin,this);
-            //tapListener.addEventListener(egret.TouchEvent.TOUCH_MOVE,(e)=>{},this);
-            //tapListener.addEventListener(egret.TouchEvent.TOUCH_MOVE,(event:egret.event)=>{},this);
-            tapListener.touchEnabled = true;
-            tapListener.touchChildren = true;
-            tapListener.addEventListener(egret.TouchEvent.TOUCH_BEGIN, function forBiBao2(event) {
-                src.onTouchBegin(event);
-            }, this);
-            tapListener.addEventListener(egret.TouchEvent.TOUCH_MOVE, function forBiBao3(event) {
-                src.onTouchMove(event);
-            }, this);
-        }
-        else {
+        tapListener.touchEnabled = true;
+        tapListener.touchChildren = true;
+        tapListener.addEventListener(egret.TouchEvent.TOUCH_BEGIN, function forBiBao2(event) {
+            src.onTouchBegin(event);
+        }, this);
+        tapListener.addEventListener(egret.TouchEvent.TOUCH_MOVE, function forBiBao3(event) {
+            src.onTouchMove(event);
+        }, this);
+        if (egret.MainContext.deviceType != egret.MainContext.DEVICE_MOBILE) {
             document.addEventListener("keydown", function forBiBao(event) {
                 src.onKeyDown(event);
             });
@@ -366,48 +368,26 @@ var Hello2048 = (function (_super) {
     __egretProto__.desktopDraw = function () {
         var titleHeight = this._titleBarHeight;
         this.desktop = new egret.Sprite;
+        this.desktop.graphics.beginFill();
+        this.desktop.graphics.drawRect(0, 0, this.desktopSide, this.desktopSide);
+        this.desktop.graphics.endFill();
+        //this.desktop.cacheAsBitmap = true;
         this.desktop.y = titleHeight;
         this.desktop.width = this.desktopSide;
         this.desktop.height = this.desktopGao - this._titleBarHeight;
         this.uiStage.addElement(this.desktop);
-        this.labelNow = new egret.gui.Label(); //总分
-        this.labelNow.x = 15;
-        this.labelNow.y = this.desktopSide + 20;
-        this.labelNow.padding = 10;
-        this.labelNow.lineSpacing = 10;
-        this.labelNow.size = 60;
-        this.labelNow.textColor = 0xFFFFFF;
-        this.desktop.addChild(this.labelNow);
-        this.labelRecord = new egret.gui.Label(); //总分
-        this.labelRecord.x = 100;
-        this.labelRecord.width = this.desktopSide - 20 - 100;
-        this.labelRecord.y = this.desktopSide + 20;
-        this.labelRecord.padding = 10;
-        this.labelRecord.lineSpacing = 10;
-        this.labelRecord.size = 60;
-        this.labelRecord.textColor = 0xFFFFFF;
-        this.labelRecord.textAlign = egret.HorizontalAlign.RIGHT;
-        this.desktop.addChild(this.labelRecord);
-        this.labelNowTxt = new egret.gui.Label();
-        this.labelNowTxt.x = 15;
-        this.labelNowTxt.y = this.desktopSide + 95;
-        this.labelNowTxt.padding = 10;
-        this.labelNowTxt.lineSpacing = 10;
-        this.labelNowTxt.size = 24;
-        this.labelNowTxt.textColor = 0xFFFFFF;
-        this.labelNowTxt.text = "当前段位";
-        this.desktop.addChild(this.labelNowTxt);
-        this.labelRecordTxt = new egret.gui.Label();
-        this.labelRecordTxt.x = 100;
-        this.labelRecordTxt.y = this.desktopSide + 95;
-        this.labelRecordTxt.padding = 10;
-        this.labelRecordTxt.lineSpacing = 10;
-        this.labelRecordTxt.size = 24;
-        this.labelRecordTxt.textColor = 0xFFFFFF;
-        this.labelRecordTxt.width = this.desktopSide - 20 - 100;
-        this.labelRecordTxt.textAlign = egret.HorizontalAlign.RIGHT;
-        this.labelRecordTxt.text = "最高段位";
-        this.desktop.addChild(this.labelRecordTxt);
+        this.nowScore.x = 25;
+        this.nowScore.y = this.desktopSide;
+        this.nowScore.lineSpacing = 10;
+        this.nowScore.textColor = 0xFFFFFF;
+        this.desktop.addChild(this.nowScore);
+        this.bestScore.x = 100;
+        this.bestScore.y = this.desktopSide;
+        this.bestScore.lineSpacing = 10;
+        this.nowScore.textColor = 0xFFFFFF;
+        this.bestScore.width = this.desktopSide - 30 - 100;
+        this.bestScore.textAlign = egret.HorizontalAlign.RIGHT;
+        this.desktop.addChild(this.bestScore);
     };
     __egretProto__.cellFormat = function () {
         var i, j;

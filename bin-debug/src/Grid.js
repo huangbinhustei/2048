@@ -23,11 +23,11 @@ var Grid = (function (_super) {
             this.valueOld = this.valueNew;
         }
     };
-    __egretProto__.drawSelfLatter = function () {
-        this.pic.texture = RES.getRes(this.valueNew.toString());
+    __egretProto__.drawSelfLater = function () {
+        this.pic.texture = RES.getRes("2048." + this.valueNew.toString());
         this.valueOld = this.valueNew;
-        egret.Tween.get(this.pic.texture, { loop: false }).to({ alpha: 0 }, 1000).to({ alpha: 1 }, 1000);
-    }; //没有实现渐入渐出。
+        egret.Tween.get(this, { loop: false }).to({ alpha: 0.2 }, 0).to({ alpha: 1 }, 500);
+    };
     return Grid;
 })(egret.Sprite);
 Grid.prototype.__class__ = "Grid";

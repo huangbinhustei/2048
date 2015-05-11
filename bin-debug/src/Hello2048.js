@@ -19,6 +19,7 @@ var Hello2048 = (function (_super) {
     }
     var __egretProto__ = Hello2048.prototype;
     __egretProto__.startGame = function () {
+        window["gameBoy"] = this;
         RES.addEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
         RES.loadConfig("resource/resource.json", "resource/");
         RES.loadGroup("preload");
@@ -30,15 +31,15 @@ var Hello2048 = (function (_super) {
         //this.titleBarDraw();
         this.desktopDraw();
         this.cellFormat();
-        this.init();
+        this.reStart();
         this.inputListener();
     };
-    __egretProto__.init = function () {
+    __egretProto__.reStart = function () {
         this.hasGameOver = false;
         var i, j;
         for (i = 0; i < 4; i++) {
             for (j = 0; j < 4; j++) {
-                this.cell[i][j].valueNew = this.cell[i][j].valueOld = 0;
+                this.cell[i][j].value = 0;
             }
         }
         this.score = 0;
@@ -56,10 +57,10 @@ var Hello2048 = (function (_super) {
             }
         }
         var i, j;
-        this.score = this.cell[0][0].valueNew;
+        this.score = this.cell[0][0].value;
         for (i = 0; i < 4; i++) {
             for (j = 0; j < 4; j++) {
-                this.score = this.cell[i][j].valueNew > this.score ? this.cell[i][j].valueNew : this.score;
+                this.score = this.cell[i][j].value > this.score ? this.cell[i][j].value : this.score;
             }
         }
         if (this.score > this.topScore) {
@@ -175,7 +176,7 @@ var Hello2048 = (function (_super) {
         nullGroup = new Array(16);
         for (var i = 0; i < 4; i++) {
             for (var j = 0; j < 4; j++) {
-                if (this.cell[i][j].valueOld == 0) {
+                if (this.cell[i][j].value == 0) {
                     nullGroup[nullCount] = i * 4 + j;
                     nullCount += 1;
                 }
@@ -185,7 +186,7 @@ var Hello2048 = (function (_super) {
         newbieNumber = ((Math.random() + 1.5) ^ 0) * 2; //随机一个2~4的数字
         var newRow = (nullGroup[newbieLocation] / 4) ^ 0; //row
         var newCol = nullGroup[newbieLocation] % 4; //col
-        this.cell[newRow][newCol].valueNew = newbieNumber;
+        this.cell[newRow][newCol].value = newbieNumber;
         //var self = this;
         //setTimeout(function () {
         //    self.cell[newRow][newCol].drawSelf();
@@ -230,33 +231,33 @@ var Hello2048 = (function (_super) {
                 else {
                     col = dir ? _row : 3 - _row;
                 }
-                if (this.cell[row][col].valueOld != 0) {
+                if (this.cell[row][col].value != 0) {
                     if (temp[n] == 0) {
-                        temp[n] = this.cell[row][col].valueOld;
+                        temp[n] = this.cell[row][col].value;
                     }
-                    else if (temp[n] == this.cell[row][col].valueOld) {
+                    else if (temp[n] == this.cell[row][col].value) {
                         temp[n] *= 2;
                         //this.score = this.score + temp[n];
                         n = n + nStep;
                     }
                     else {
                         n = n + nStep;
-                        temp[n] = this.cell[row][col].valueOld;
+                        temp[n] = this.cell[row][col].value;
                     }
                 }
             }
             if (rule) {
                 for (var l = 0; l < 4; l++) {
-                    if (this.cell[l][col].valueOld != temp[l])
+                    if (this.cell[l][col].value != temp[l])
                         flag = true;
-                    this.cell[l][col].valueNew = temp[l];
+                    this.cell[l][col].value = temp[l];
                 }
             }
             else {
                 for (var l = 0; l < 4; l++) {
-                    if (this.cell[row][l].valueOld != temp[l])
+                    if (this.cell[row][l].value != temp[l])
                         flag = true;
-                    this.cell[row][l].valueNew = temp[l];
+                    this.cell[row][l].value = temp[l];
                 }
             }
         }
@@ -268,13 +269,13 @@ var Hello2048 = (function (_super) {
         var flag = true;
         for (var i = 0; i < 4; i++) {
             for (var j = 0; j < 3; j++) {
-                if (this.cell[i][j].valueNew == this.cell[i][j + 1].valueNew)
+                if (this.cell[i][j].value == this.cell[i][j + 1].value)
                     flag = false;
             }
         }
         for (var i = 0; i < 4; i++) {
             for (var j = 0; j < 3; j++) {
-                if (this.cell[j][i].valueNew == this.cell[j + 1][i].valueNew)
+                if (this.cell[j][i].value == this.cell[j + 1][i].value)
                     flag = false;
             }
         }

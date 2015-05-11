@@ -12,21 +12,16 @@ var Grid = (function (_super) {
         this.width = this.height = len;
         this.pic.height = this.pic.width = len - 2 * gap;
         this.pic.y = this.pic.x = gap;
-        this.valueOld = 0;
-        this.pic.texture = RES.getRes(this.valueOld.toString());
-        this.pic.texture = RES.getRes(this.valueOld.toString());
+        this.value = 0;
+        this.pic.texture = RES.getRes(this.value.toString());
         this.addChild(this.pic);
     };
     __egretProto__.drawSelf = function () {
-        if (this.valueNew != this.valueOld) {
-            this.pic.texture = RES.getRes("2048." + this.valueNew.toString());
-            this.valueOld = this.valueNew;
-        }
+        this.pic.texture = RES.getRes("2048." + this.value.toString());
     };
     __egretProto__.drawSelfLater = function () {
-        this.pic.texture = RES.getRes("2048." + this.valueNew.toString());
-        this.valueOld = this.valueNew;
-        egret.Tween.get(this, { loop: false }).to({ alpha: 0.2 }, 0).to({ alpha: 1 }, 500);
+        this.pic.texture = RES.getRes("2048." + this.value.toString());
+        egret.Tween.get(this, { loop: false }).to({ alpha: 0.5 }, 0).to({ alpha: 1 }, 500);
     };
     return Grid;
 })(egret.Sprite);

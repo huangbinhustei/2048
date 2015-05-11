@@ -6,6 +6,8 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Grid.ts" afterPath="$PROJECT_DIR$/src/Grid.ts" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin-debug/src/Hello2048.js" afterPath="$PROJECT_DIR$/bin-debug/src/Hello2048.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Hello2048.ts" afterPath="$PROJECT_DIR$/src/Hello2048.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/core/egret/context/StageDelegate.js" afterPath="$PROJECT_DIR$/libs/core/egret/context/StageDelegate.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/core/core.d.ts" afterPath="$PROJECT_DIR$/libs/core/core.d.ts" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="HelloGui.iws" />
@@ -27,36 +29,30 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Hello2048.ts" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Hello2048.ts" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Hello2048.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-8.0">
-              <caret line="179" column="0" selection-start-line="179" selection-start-column="0" selection-end-line="179" selection-end-column="0" />
+            <state vertical-scroll-proportion="10.0">
+              <caret line="407" column="25" selection-start-line="407" selection-start-column="25" selection-end-line="407" selection-end-column="25" />
               <folding>
-                <element signature="n#!!block;n#init#0;n#Hello2048#0" expanded="false" />
-                <element signature="n#!!block;n#setTopScore#0;n#Hello2048#0" expanded="false" />
-                <element signature="e#3108#3673#0" expanded="false" />
-                <element signature="n#!!block;n#gameOver#0;n#Hello2048#0" expanded="false" />
-                <element signature="n#!!block;n#merge#0;n#Hello2048#0" expanded="false" />
-                <element signature="n#!!block;n#judgement#0;n#Hello2048#0" expanded="false" />
-                <element signature="n#!!block;n#inputListener#0;n#Hello2048#0" expanded="false" />
+                <element signature="e#3125#3690#0" expanded="false" />
+                <element signature="e#3699#4487#0" expanded="false" />
                 <element signature="n#!!block;n#onTouchBegin#0;n#Hello2048#0" expanded="false" />
                 <element signature="n#!!block;n#onTouchMove#0;n#Hello2048#0" expanded="false" />
                 <element signature="n#!!block;n#onKeyDown#0;n#Hello2048#0" expanded="false" />
                 <element signature="n#!!block;n#afterMerge#0;n#Hello2048#0" expanded="false" />
                 <element signature="n#!!block;n#titleBarDraw#0;n#Hello2048#0" expanded="false" />
-                <element signature="n#!!block;n#cellFormat#0;n#Hello2048#0" expanded="false" />
                 <element signature="n#!!block;n#getCookie#0;n#Hello2048#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Grid.ts" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Grid.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Grid.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.12942779">
-              <caret line="5" column="28" selection-start-line="5" selection-start-column="28" selection-end-line="5" selection-end-column="28" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="21" column="28" selection-start-line="21" selection-start-column="28" selection-end-line="21" selection-end-column="28" />
               <folding />
             </state>
           </provider>
@@ -153,38 +149,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="HelloGui" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="2048" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="resource" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="HelloGui" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="2048" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="resource" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="assets" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
       <pane id="Scope" />
@@ -261,11 +225,11 @@
     <frame x="0" y="23" width="1440" height="831" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.13090418" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24583334" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24947146" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -275,7 +239,7 @@
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32939634" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -294,7 +258,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="37" />
+      <option name="time" value="38" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -334,19 +298,13 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="n#!!block;n#init#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#setTopScore#0;n#Hello2048#0" expanded="false" />
-            <element signature="e#3108#3673#0" expanded="false" />
-            <element signature="n#!!block;n#gameOver#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#merge#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#judgement#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#inputListener#0;n#Hello2048#0" expanded="false" />
+            <element signature="e#3125#3690#0" expanded="false" />
+            <element signature="e#3699#4487#0" expanded="false" />
             <element signature="n#!!block;n#onTouchBegin#0;n#Hello2048#0" expanded="false" />
             <element signature="n#!!block;n#onTouchMove#0;n#Hello2048#0" expanded="false" />
             <element signature="n#!!block;n#onKeyDown#0;n#Hello2048#0" expanded="false" />
             <element signature="n#!!block;n#afterMerge#0;n#Hello2048#0" expanded="false" />
             <element signature="n#!!block;n#titleBarDraw#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#cellFormat#0;n#Hello2048#0" expanded="false" />
             <element signature="n#!!block;n#getCookie#0;n#Hello2048#0" expanded="false" />
           </folding>
         </state>
@@ -357,19 +315,13 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="n#!!block;n#init#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#setTopScore#0;n#Hello2048#0" expanded="false" />
-            <element signature="e#3108#3673#0" expanded="false" />
-            <element signature="n#!!block;n#gameOver#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#merge#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#judgement#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#inputListener#0;n#Hello2048#0" expanded="false" />
+            <element signature="e#3125#3690#0" expanded="false" />
+            <element signature="e#3699#4487#0" expanded="false" />
             <element signature="n#!!block;n#onTouchBegin#0;n#Hello2048#0" expanded="false" />
             <element signature="n#!!block;n#onTouchMove#0;n#Hello2048#0" expanded="false" />
             <element signature="n#!!block;n#onKeyDown#0;n#Hello2048#0" expanded="false" />
             <element signature="n#!!block;n#afterMerge#0;n#Hello2048#0" expanded="false" />
             <element signature="n#!!block;n#titleBarDraw#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#cellFormat#0;n#Hello2048#0" expanded="false" />
             <element signature="n#!!block;n#getCookie#0;n#Hello2048#0" expanded="false" />
           </folding>
         </state>
@@ -380,19 +332,13 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="345" column="18" selection-start-line="345" selection-start-column="18" selection-end-line="345" selection-end-column="18" />
           <folding>
-            <element signature="n#!!block;n#init#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#setTopScore#0;n#Hello2048#0" expanded="false" />
-            <element signature="e#3108#3673#0" expanded="false" />
-            <element signature="n#!!block;n#gameOver#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#merge#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#judgement#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#inputListener#0;n#Hello2048#0" expanded="false" />
+            <element signature="e#3125#3690#0" expanded="false" />
+            <element signature="e#3699#4487#0" expanded="false" />
             <element signature="n#!!block;n#onTouchBegin#0;n#Hello2048#0" expanded="false" />
             <element signature="n#!!block;n#onTouchMove#0;n#Hello2048#0" expanded="false" />
             <element signature="n#!!block;n#onKeyDown#0;n#Hello2048#0" expanded="false" />
             <element signature="n#!!block;n#afterMerge#0;n#Hello2048#0" expanded="false" />
             <element signature="n#!!block;n#titleBarDraw#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#cellFormat#0;n#Hello2048#0" expanded="false" />
             <element signature="n#!!block;n#getCookie#0;n#Hello2048#0" expanded="false" />
           </folding>
         </state>
@@ -403,19 +349,13 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="n#!!block;n#init#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#setTopScore#0;n#Hello2048#0" expanded="false" />
-            <element signature="e#3108#3673#0" expanded="false" />
-            <element signature="n#!!block;n#gameOver#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#merge#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#judgement#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#inputListener#0;n#Hello2048#0" expanded="false" />
+            <element signature="e#3125#3690#0" expanded="false" />
+            <element signature="e#3699#4487#0" expanded="false" />
             <element signature="n#!!block;n#onTouchBegin#0;n#Hello2048#0" expanded="false" />
             <element signature="n#!!block;n#onTouchMove#0;n#Hello2048#0" expanded="false" />
             <element signature="n#!!block;n#onKeyDown#0;n#Hello2048#0" expanded="false" />
             <element signature="n#!!block;n#afterMerge#0;n#Hello2048#0" expanded="false" />
             <element signature="n#!!block;n#titleBarDraw#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#cellFormat#0;n#Hello2048#0" expanded="false" />
             <element signature="n#!!block;n#getCookie#0;n#Hello2048#0" expanded="false" />
           </folding>
         </state>
@@ -426,19 +366,13 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="n#!!block;n#init#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#setTopScore#0;n#Hello2048#0" expanded="false" />
-            <element signature="e#3108#3673#0" expanded="false" />
-            <element signature="n#!!block;n#gameOver#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#merge#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#judgement#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#inputListener#0;n#Hello2048#0" expanded="false" />
+            <element signature="e#3125#3690#0" expanded="false" />
+            <element signature="e#3699#4487#0" expanded="false" />
             <element signature="n#!!block;n#onTouchBegin#0;n#Hello2048#0" expanded="false" />
             <element signature="n#!!block;n#onTouchMove#0;n#Hello2048#0" expanded="false" />
             <element signature="n#!!block;n#onKeyDown#0;n#Hello2048#0" expanded="false" />
             <element signature="n#!!block;n#afterMerge#0;n#Hello2048#0" expanded="false" />
             <element signature="n#!!block;n#titleBarDraw#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#cellFormat#0;n#Hello2048#0" expanded="false" />
             <element signature="n#!!block;n#getCookie#0;n#Hello2048#0" expanded="false" />
           </folding>
         </state>
@@ -449,19 +383,13 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="n#!!block;n#init#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#setTopScore#0;n#Hello2048#0" expanded="false" />
-            <element signature="e#3108#3673#0" expanded="false" />
-            <element signature="n#!!block;n#gameOver#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#merge#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#judgement#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#inputListener#0;n#Hello2048#0" expanded="false" />
+            <element signature="e#3125#3690#0" expanded="false" />
+            <element signature="e#3699#4487#0" expanded="false" />
             <element signature="n#!!block;n#onTouchBegin#0;n#Hello2048#0" expanded="false" />
             <element signature="n#!!block;n#onTouchMove#0;n#Hello2048#0" expanded="false" />
             <element signature="n#!!block;n#onKeyDown#0;n#Hello2048#0" expanded="false" />
             <element signature="n#!!block;n#afterMerge#0;n#Hello2048#0" expanded="false" />
             <element signature="n#!!block;n#titleBarDraw#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#cellFormat#0;n#Hello2048#0" expanded="false" />
             <element signature="n#!!block;n#getCookie#0;n#Hello2048#0" expanded="false" />
           </folding>
         </state>
@@ -479,19 +407,13 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="n#!!block;n#init#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#setTopScore#0;n#Hello2048#0" expanded="false" />
-            <element signature="e#3108#3673#0" expanded="false" />
-            <element signature="n#!!block;n#gameOver#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#merge#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#judgement#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#inputListener#0;n#Hello2048#0" expanded="false" />
+            <element signature="e#3125#3690#0" expanded="false" />
+            <element signature="e#3699#4487#0" expanded="false" />
             <element signature="n#!!block;n#onTouchBegin#0;n#Hello2048#0" expanded="false" />
             <element signature="n#!!block;n#onTouchMove#0;n#Hello2048#0" expanded="false" />
             <element signature="n#!!block;n#onKeyDown#0;n#Hello2048#0" expanded="false" />
             <element signature="n#!!block;n#afterMerge#0;n#Hello2048#0" expanded="false" />
             <element signature="n#!!block;n#titleBarDraw#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#cellFormat#0;n#Hello2048#0" expanded="false" />
             <element signature="n#!!block;n#getCookie#0;n#Hello2048#0" expanded="false" />
           </folding>
         </state>
@@ -516,19 +438,13 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="n#!!block;n#init#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#setTopScore#0;n#Hello2048#0" expanded="false" />
-            <element signature="e#3108#3673#0" expanded="false" />
-            <element signature="n#!!block;n#gameOver#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#merge#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#judgement#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#inputListener#0;n#Hello2048#0" expanded="false" />
+            <element signature="e#3125#3690#0" expanded="false" />
+            <element signature="e#3699#4487#0" expanded="false" />
             <element signature="n#!!block;n#onTouchBegin#0;n#Hello2048#0" expanded="false" />
             <element signature="n#!!block;n#onTouchMove#0;n#Hello2048#0" expanded="false" />
             <element signature="n#!!block;n#onKeyDown#0;n#Hello2048#0" expanded="false" />
             <element signature="n#!!block;n#afterMerge#0;n#Hello2048#0" expanded="false" />
             <element signature="n#!!block;n#titleBarDraw#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#cellFormat#0;n#Hello2048#0" expanded="false" />
             <element signature="n#!!block;n#getCookie#0;n#Hello2048#0" expanded="false" />
           </folding>
         </state>
@@ -553,19 +469,13 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="n#!!block;n#init#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#setTopScore#0;n#Hello2048#0" expanded="false" />
-            <element signature="e#3108#3673#0" expanded="false" />
-            <element signature="n#!!block;n#gameOver#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#merge#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#judgement#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#inputListener#0;n#Hello2048#0" expanded="false" />
+            <element signature="e#3125#3690#0" expanded="false" />
+            <element signature="e#3699#4487#0" expanded="false" />
             <element signature="n#!!block;n#onTouchBegin#0;n#Hello2048#0" expanded="false" />
             <element signature="n#!!block;n#onTouchMove#0;n#Hello2048#0" expanded="false" />
             <element signature="n#!!block;n#onKeyDown#0;n#Hello2048#0" expanded="false" />
             <element signature="n#!!block;n#afterMerge#0;n#Hello2048#0" expanded="false" />
             <element signature="n#!!block;n#titleBarDraw#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#cellFormat#0;n#Hello2048#0" expanded="false" />
             <element signature="n#!!block;n#getCookie#0;n#Hello2048#0" expanded="false" />
           </folding>
         </state>
@@ -697,13 +607,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/egretProperties.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.021566402">
-          <caret line="1" column="32" selection-start-line="1" selection-start-column="32" selection-end-line="1" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/libs/core/extension/gui/gui.d.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -746,13 +649,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/libs/core/core.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5314917">
-          <caret line="1525" column="2" selection-start-line="1525" selection-start-column="2" selection-end-line="1525" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/launcher/egret_loader.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -771,7 +667,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="18" column="7" selection-start-line="18" selection-start-column="7" selection-end-line="18" selection-end-column="7" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -779,7 +674,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.04223433">
           <caret line="17" column="26" selection-start-line="17" selection-start-column="26" selection-end-line="17" selection-end-column="26" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -787,38 +681,47 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.41416892">
           <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libs/core/core.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.64803314">
+          <caret line="1497" column="59" selection-start-line="1497" selection-start-column="59" selection-end-line="1497" selection-end-column="59" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/egretProperties.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.04157549">
+          <caret line="1" column="32" selection-start-line="1" selection-start-column="32" selection-end-line="1" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Grid.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="21" column="28" selection-start-line="21" selection-start-column="28" selection-end-line="21" selection-end-column="28" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Hello2048.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-8.0">
-          <caret line="179" column="0" selection-start-line="179" selection-start-column="0" selection-end-line="179" selection-end-column="0" />
+        <state vertical-scroll-proportion="10.0">
+          <caret line="407" column="25" selection-start-line="407" selection-start-column="25" selection-end-line="407" selection-end-column="25" />
           <folding>
-            <element signature="n#!!block;n#init#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#setTopScore#0;n#Hello2048#0" expanded="false" />
-            <element signature="e#3108#3673#0" expanded="false" />
-            <element signature="n#!!block;n#gameOver#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#merge#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#judgement#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#inputListener#0;n#Hello2048#0" expanded="false" />
+            <element signature="e#3125#3690#0" expanded="false" />
+            <element signature="e#3699#4487#0" expanded="false" />
             <element signature="n#!!block;n#onTouchBegin#0;n#Hello2048#0" expanded="false" />
             <element signature="n#!!block;n#onTouchMove#0;n#Hello2048#0" expanded="false" />
             <element signature="n#!!block;n#onKeyDown#0;n#Hello2048#0" expanded="false" />
             <element signature="n#!!block;n#afterMerge#0;n#Hello2048#0" expanded="false" />
             <element signature="n#!!block;n#titleBarDraw#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#cellFormat#0;n#Hello2048#0" expanded="false" />
             <element signature="n#!!block;n#getCookie#0;n#Hello2048#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Grid.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.12942779">
-          <caret line="5" column="28" selection-start-line="5" selection-start-column="28" selection-end-line="5" selection-end-column="28" />
-          <folding />
         </state>
       </provider>
     </entry>

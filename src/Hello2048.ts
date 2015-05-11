@@ -9,6 +9,7 @@ class Hello2048 extends egret.DisplayObjectContainer {
     }
 
     public startGame():void {
+        window["gameBoy"] = this;
         RES.addEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
         RES.loadConfig("resource/resource.json", "resource/");
         RES.loadGroup("preload");
@@ -48,16 +49,16 @@ class Hello2048 extends egret.DisplayObjectContainer {
         this.desktopDraw();
         this.cellFormat();
 
-        this.init();
+        this.reStart();
         this.inputListener();
     }
 
-    private init() {
+    private reStart() {
         this.hasGameOver = false;
         var i, j:number;
         for (i = 0; i < 4; i++) {
             for (j = 0; j < 4; j++) {
-                this.cell[i][j].valueNew = this.cell[i][j].valueOld = 0;
+                this.cell[i][j].value = 0;
             }
         }
         this.score = 0;
@@ -77,10 +78,10 @@ class Hello2048 extends egret.DisplayObjectContainer {
         }
 
         var i,j :number;
-        this.score = this.cell[0][0].valueNew;
-        for (i=0;i<4;i++) {
-            for (j=0;j<4;j++) {
-                this.score = this.cell[i][j].valueNew>this.score ? this.cell[i][j].valueNew:this.score
+        this.score = this.cell[0][0].value;
+        for (i = 0; i < 4; i ++) {
+            for (j = 0; j < 4; j ++) {
+                this.score = this.cell[i][j].value > this.score ? this.cell[i][j].value:this.score
             }
         }
 
@@ -159,7 +160,7 @@ class Hello2048 extends egret.DisplayObjectContainer {
 
         for (var i = 0; i < 4; i++) {
             for (var j = 0; j < 4; j++) {
-                if (this.cell[i][j].valueOld == 0) {
+                if (this.cell[i][j].value == 0) {
                     nullGroup[nullCount] = i * 4 + j;
                     nullCount += 1;
                 }
@@ -171,7 +172,7 @@ class Hello2048 extends egret.DisplayObjectContainer {
 
         var newRow = (nullGroup[newbieLocation] / 4) ^ 0;//row
         var newCol = nullGroup[newbieLocation] % 4;//col
-        this.cell[newRow][newCol].valueNew = newbieNumber;
+        this.cell[newRow][newCol].value = newbieNumber;
 
         //var self = this;
         //setTimeout(function () {
@@ -221,30 +222,30 @@ class Hello2048 extends egret.DisplayObjectContainer {
                 } else {
                     col = dir ? _row : 3 - _row;
                 }
-                if (this.cell[row][col].valueOld != 0) {    //假如这个格子有数字
+                if (this.cell[row][col].value != 0) {    //假如这个格子有数字
                     if (temp[n] == 0) {     //假如目标位没有数字，就存进去
-                        temp[n] = this.cell[row][col].valueOld;
+                        temp[n] = this.cell[row][col].value;
                     }
-                    else if (temp[n] == this.cell[row][col].valueOld) { //目标位有数字且和当前遍历的数字相同，就把目标位的数字放大，同时目标位后移
+                    else if (temp[n] == this.cell[row][col].value) { //目标位有数字且和当前遍历的数字相同，就把目标位的数字放大，同时目标位后移
                         temp[n] *= 2;
                         //this.score = this.score + temp[n];
                         n = n + nStep;
                     }
                     else {  //目标位有数字，且和遍历的数字不等，那么直接存到下一个目标位，
                         n = n + nStep;
-                        temp[n] = this.cell[row][col].valueOld;
+                        temp[n] = this.cell[row][col].value;
                     }
                 }
             }
             if (rule) {
                 for (var l = 0; l < 4; l++) {
-                    if (this.cell[l][col].valueOld != temp[l]) flag = true;
-                    this.cell[l][col].valueNew = temp[l];
+                    if (this.cell[l][col].value != temp[l]) flag = true;
+                    this.cell[l][col].value = temp[l];
                 }
             } else {
                 for (var l = 0; l < 4; l++) {
-                    if (this.cell[row][l].valueOld != temp[l]) flag = true;
-                    this.cell[row][l].valueNew = temp[l];
+                    if (this.cell[row][l].value != temp[l]) flag = true;
+                    this.cell[row][l].value = temp[l];
                 }
             }
         }
@@ -257,12 +258,12 @@ class Hello2048 extends egret.DisplayObjectContainer {
         var flag:boolean = true;
         for (var i = 0; i < 4; i++) {
             for (var j = 0; j < 3; j++) {
-                if (this.cell[i][j].valueNew == this.cell[i][j + 1].valueNew) flag = false;
+                if (this.cell[i][j].value == this.cell[i][j + 1].value) flag = false;
             }
         }   //用来判断是否可以合成
         for (var i = 0; i < 4; i++) {
             for (var j = 0; j < 3; j++) {
-                if (this.cell[j][i].valueNew == this.cell[j + 1][i].valueNew) flag = false;
+                if (this.cell[j][i].value == this.cell[j + 1][i].value) flag = false;
             }
         }   //用来判断是否可以合成
         return flag;

@@ -314,7 +314,7 @@ class Hello2048 extends egret.DisplayObjectContainer {
 
         xChange = event.localX - this.tempX;
         yChange = event.localY - this.tempY;
-        if (Math.max(Math.abs(xChange), Math.abs(yChange)) >= 6 && this.touchInProcess) {
+        if (Math.max(Math.abs(xChange), Math.abs(yChange)) >= 8 && this.touchInProcess) {
             this.touchInProcess = false;
             biggerChange = (Math.abs(xChange) >= Math.abs(yChange)) ? xChange : yChange;
             rule = (Math.abs(yChange) >= Math.abs(xChange));

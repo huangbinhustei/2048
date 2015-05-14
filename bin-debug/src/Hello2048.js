@@ -49,11 +49,15 @@ var Hello2048 = (function (_super) {
     }; //初始化
     __egretProto__.setTopScore = function () {
         if (!this.hasRead) {
-            var topScoreString = "null"; //本地存储只能存字符串，这个是总分的字符串形式
+            var topScoreString = "0"; //本地存储只能存字符串，这个是总分的字符串形式
             if (this.getCookie("best")) {
                 topScoreString = this.getCookie("best");
-                this.topScore = +topScoreString;
+                var t = parseInt(topScoreString);
+                this.topScore = (isNaN(t) ? 0 : 4);
                 this.hasRead = true;
+            }
+            else {
+                this.topScore = 4;
             }
         }
         var i, j;
@@ -65,6 +69,9 @@ var Hello2048 = (function (_super) {
         }
         if (this.score > this.topScore) {
             this.topScore = this.score;
+            if (this.topScore == null || this.topScore == undefined) {
+                this.topScore = 4;
+            }
             topScoreString = this.topScore.toString();
             this.setCookie("best", topScoreString);
         }
@@ -156,6 +163,9 @@ var Hello2048 = (function (_super) {
                 break;
             default: {
                 this.topScore = this.score;
+                if (!this.topScore) {
+                    this.topScore = 4;
+                }
                 var topScoreString = this.topScore.toString();
                 this.setCookie("best", topScoreString);
             }
@@ -199,13 +209,13 @@ var Hello2048 = (function (_super) {
                 this.hasGameOver = true;
                 setTimeout(function () {
                     self.gameOver();
-                }, 1);
+                }, 600);
             }
         }
     }; //逻辑上出新单元格
     __egretProto__.gameOver = function () {
         //alert("游戏结束");
-        //this.init();
+        //this.reStart();
         console.log("{\"action\":\"gameover\",\"score\":\"" + this.score + "\",\"score2\":\"" + this.topScore + "\",\"gameId\":\"2048\"}");
     };
     __egretProto__.merge = function (dir, rule) {
@@ -310,7 +320,7 @@ var Hello2048 = (function (_super) {
         var biggerChange;
         xChange = event.localX - this.tempX;
         yChange = event.localY - this.tempY;
-        if (Math.max(Math.abs(xChange), Math.abs(yChange)) >= 6 && this.touchInProcess) {
+        if (Math.max(Math.abs(xChange), Math.abs(yChange)) >= 8 && this.touchInProcess) {
             this.touchInProcess = false;
             biggerChange = (Math.abs(xChange) >= Math.abs(yChange)) ? xChange : yChange;
             rule = (Math.abs(yChange) >= Math.abs(xChange));

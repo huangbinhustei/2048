@@ -69,11 +69,14 @@ class Hello2048 extends egret.DisplayObjectContainer {
 
     private setTopScore() {
         if (!this.hasRead) {
-            var topScoreString:string = "null"; //本地存储只能存字符串，这个是总分的字符串形式
+            var topScoreString:string = "0"; //本地存储只能存字符串，这个是总分的字符串形式
             if (this.getCookie("best")) { //本地存着有数据
                 topScoreString = this.getCookie("best");
-                this.topScore = +topScoreString;
+                var t : number = parseInt(topScoreString);
+                this.topScore = (isNaN(t) ? 4 : t);
                 this.hasRead = true;
+            } else {
+                this.topScore = 4;
             }
         }
 
@@ -87,6 +90,7 @@ class Hello2048 extends egret.DisplayObjectContainer {
 
         if (this.score > this.topScore) {
             this.topScore = this.score;
+            if (this.topScore == null || this.topScore == undefined) {this.topScore = 4}
             topScoreString = this.topScore.toString();
             this.setCookie("best", topScoreString);
         }
@@ -134,6 +138,7 @@ class Hello2048 extends egret.DisplayObjectContainer {
             case 4096: bestLevel = "超神";break;
             default : {
                 this.topScore = this.score;
+                if (!this.topScore) {this.topScore = 4}
                 var topScoreString:string = this.topScore.toString();
                 this.setCookie("best", topScoreString);
             }
@@ -188,14 +193,14 @@ class Hello2048 extends egret.DisplayObjectContainer {
                 this.hasGameOver = true;
                 setTimeout(function () {
                     self.gameOver();
-                }, 1);
+                }, 600);
             }
         }
     }   //逻辑上出新单元格
 
     private gameOver() {
         //alert("游戏结束");
-        //this.init();
+        //this.reStart();
         console.log("{\"action\":\"gameover\",\"score\":\""+this.score+"\",\"score2\":\""+this.topScore+"\",\"gameId\":\"2048\"}");
     }
 

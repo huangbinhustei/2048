@@ -20,7 +20,8 @@ class Grid extends egret.Sprite {
     }
 
     public drawSelfLater() {
-        this.pic.texture = RES.getRes("2048."+this.value.toString());
-        egret.Tween.get(this,{ loop: false }).to({ alpha: 0.5 }, 0).to({ alpha: 1 }, 500);
+        egret.Tween.get(this).to({ alpha: 0.3 }, 200, egret.Ease.circIn).call(function(ea:egret.Tween):void{
+            this.pic.texture = RES.getRes("2048."+this.value.toString());
+        }).to({ alpha: 1 }, 800,egret.Ease.circOut);
     }
 }

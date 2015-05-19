@@ -19,7 +19,7 @@ var Hello2048 = (function (_super) {
     }
     var __egretProto__ = Hello2048.prototype;
     __egretProto__.startGame = function () {
-        window["gameBoy"] = this;
+        window["gameBoy"] = this; //和Android接口用的
         RES.addEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
         RES.loadConfig("resource/resource.json", "resource/");
         RES.loadGroup("preload");
@@ -53,7 +53,7 @@ var Hello2048 = (function (_super) {
             if (this.getCookie("best")) {
                 topScoreString = this.getCookie("best");
                 var t = parseInt(topScoreString);
-                this.topScore = (isNaN(t) ? 0 : 4);
+                this.topScore = (isNaN(t) ? 4 : t);
                 this.hasRead = true;
             }
             else {

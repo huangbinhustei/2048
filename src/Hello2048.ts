@@ -9,7 +9,7 @@ class Hello2048 extends egret.DisplayObjectContainer {
     }
 
     public startGame():void {
-        window["gameBoy"] = this;
+        window["gameBoy"] = this;//和Android接口用的
         RES.addEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
         RES.loadConfig("resource/resource.json", "resource/");
         RES.loadGroup("preload");
@@ -18,7 +18,6 @@ class Hello2048 extends egret.DisplayObjectContainer {
     private uiStage : egret.gui.UIStage;  //主舞台
     private score : number = 0;
     private topScore : number;
-
     private nowScore : egret.TextField = new egret.TextField;
     private bestScore : egret.TextField = new egret.TextField;
 
@@ -35,7 +34,6 @@ class Hello2048 extends egret.DisplayObjectContainer {
     private _gridGap = 10;
     private desktop;    //绘制区域,也是触摸区域
     private hasGameOver : boolean;           //判断游戏是否结束
-
     private hasRead : boolean;//这一把是否已经读取过数据了。
 
     private onResourceLoadComplete(event:RES.ResourceEvent):void {

@@ -2598,7 +2598,7 @@ declare module egret {
         private _contentStrategy;
         constructor(containerStg: any, contentStg: any);
         /**
-         * @method egret.ResolutionPolicy#reStart
+         * @method egret.ResolutionPolicy#init
          * @param view {egret.StageDelegate}
          */
         init(view: StageDelegate): void;
@@ -2623,7 +2623,7 @@ declare module egret {
          */
         static initialize(): void;
         /**
-         * @method egret.ContainerStrategy#reStart
+         * @method egret.ContainerStrategy#init
          * @param vie {any}
          */
         init(view: any): void;
@@ -2649,7 +2649,7 @@ declare module egret {
      */
     class ContentStrategy {
         /**
-         * @method egret.ContentStrategy#reStart
+         * @method egret.ContentStrategy#init
          * @param vie {any}
          */
         init(view: any): void;

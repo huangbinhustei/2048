@@ -123,7 +123,7 @@ var egret;
         }
         var __egretProto__ = ResolutionPolicy.prototype;
         /**
-         * @method egret.ResolutionPolicy#reStart
+         * @method egret.ResolutionPolicy#init
          * @param view {egret.StageDelegate}
          */
         __egretProto__.init = function (view) {
@@ -158,7 +158,7 @@ var egret;
             ContainerStrategy.EQUAL_TO_FRAME = new EqualToFrame();
         };
         /**
-         * @method egret.ContainerStrategy#reStart
+         * @method egret.ContainerStrategy#init
          * @param vie {any}
          */
         __egretProto__.init = function (view) {
@@ -218,7 +218,7 @@ var egret;
         }
         var __egretProto__ = ContentStrategy.prototype;
         /**
-         * @method egret.ContentStrategy#reStart
+         * @method egret.ContentStrategy#init
          * @param vie {any}
          */
         __egretProto__.init = function (view) {

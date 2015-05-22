@@ -2,19 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e23a2c78-fd68-4100-9eb6-e9ecd0729ec0" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin-debug/lib/egret_file_list.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin-debug/lib/egret_file_list_native.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin-debug/src/AssetAdapter.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin-debug/src/Grid.ts.bak" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin-debug/src/HelloGUI.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin-debug/src/LoadingUI.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin-debug/src/Main.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin-debug/src/MainUI.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/LoadingUI.ts" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/Main.ts" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/UI.ts" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin-debug/src/Hello2048.js" afterPath="$PROJECT_DIR$/bin-debug/src/Hello2048.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Hello2048.ts" afterPath="$PROJECT_DIR$/src/Hello2048.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/core/egret/context/StageDelegate.js" afterPath="$PROJECT_DIR$/libs/core/egret/context/StageDelegate.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/core/core.d.ts" afterPath="$PROJECT_DIR$/libs/core/core.d.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/core/egret/context/native.d.ts" afterPath="$PROJECT_DIR$/libs/core/egret/context/native.d.ts" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="HelloGui.iws" />
@@ -95,7 +85,6 @@
     </navigator>
     <panes>
       <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -162,6 +151,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -243,7 +233,7 @@
     <frame x="0" y="23" width="1440" height="827" extended-state="6" />
     <editor active="false" />
     <layout>
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24966079" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2489796" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32928476" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -292,7 +282,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -300,11 +289,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!block;n#onTouchBegin#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#titleBarDraw#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#getCookie#0;n#Hello2048#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -312,11 +296,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!block;n#onTouchBegin#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#titleBarDraw#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#getCookie#0;n#Hello2048#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -324,11 +303,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="345" column="18" selection-start-line="345" selection-start-column="18" selection-end-line="345" selection-end-column="18" />
-          <folding>
-            <element signature="n#!!block;n#onTouchBegin#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#titleBarDraw#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#getCookie#0;n#Hello2048#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -336,11 +310,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!block;n#onTouchBegin#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#titleBarDraw#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#getCookie#0;n#Hello2048#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -348,11 +317,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!block;n#onTouchBegin#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#titleBarDraw#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#getCookie#0;n#Hello2048#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -360,11 +324,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!block;n#onTouchBegin#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#titleBarDraw#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#getCookie#0;n#Hello2048#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -379,11 +338,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!block;n#onTouchBegin#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#titleBarDraw#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#getCookie#0;n#Hello2048#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -405,11 +359,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!block;n#onTouchBegin#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#titleBarDraw#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#getCookie#0;n#Hello2048#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -431,11 +380,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!block;n#onTouchBegin#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#titleBarDraw#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#getCookie#0;n#Hello2048#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -562,7 +506,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.04157549">
           <caret line="1" column="32" selection-start-line="1" selection-start-column="32" selection-end-line="1" selection-end-column="32" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -582,11 +525,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.21714285">
           <caret line="23" column="27" selection-start-line="23" selection-start-column="27" selection-end-line="23" selection-end-column="27" />
-          <folding>
-            <element signature="n#!!block;n#onTouchBegin#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#titleBarDraw#0;n#Hello2048#0" expanded="false" />
-            <element signature="n#!!block;n#getCookie#0;n#Hello2048#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -594,7 +532,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.7961905">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -602,7 +539,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="49" column="17" selection-start-line="49" selection-start-column="17" selection-end-line="49" selection-end-column="17" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -610,7 +546,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.05904762">
           <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -618,7 +553,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="7193" column="15" selection-start-line="7193" selection-start-column="10" selection-end-line="7193" selection-end-column="15" />
-          <folding />
         </state>
       </provider>
     </entry>

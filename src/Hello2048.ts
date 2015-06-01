@@ -197,8 +197,8 @@ class Hello2048 extends egret.DisplayObjectContainer {
     }   //逻辑上出新单元格
 
     private gameOver() {
-        //alert("游戏结束");
-        //this.reStart();
+        alert("游戏结束，请再接再厉");
+        this.reStart();
         console.log("{\"action\":\"gameover\",\"score\":\""+this.score+"\",\"score2\":\""+this.topScore+"\",\"gameId\":\"2048\"}");
     }
 

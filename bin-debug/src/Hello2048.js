@@ -35,6 +35,9 @@ var Hello2048 = (function (_super) {
         this.desktopDraw();
         this.reStart();
         this.inputListener();
+        var ua = navigator.userAgent.toLowerCase();
+        this.isIphone = ua.indexOf("iphone") > 0 || ua.indexOf("ipad") > 0;
+        console.log("ua:" + this.isIphone);
     };
     __egretProto__.application = function () {
         var dataI, dataJ, cellI;
@@ -229,9 +232,13 @@ var Hello2048 = (function (_super) {
         }
     }; //逻辑上出新单元格
     __egretProto__.gameOver = function () {
-        alert("游戏结束，请再接再厉");
-        this.reStart();
-        console.log("{\"action\":\"gameover\",\"score\":\"" + this.score + "\",\"score2\":\"" + this.topScore + "\",\"gameId\":\"2048\"}");
+        if (this.isIphone) {
+            alert("游戏结束，请再接再厉");
+            this.reStart();
+        }
+        else {
+            console.log("{\"action\":\"gameover\",\"score\":\"" + this.score + "\",\"score2\":\"" + this.topScore + "\",\"gameId\":\"2048\"}");
+        }
     };
     __egretProto__.merge = function (dir, rule) {
         //dir = true ：向上or向左移动，dir=false：向下or向右移动

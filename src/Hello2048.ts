@@ -38,6 +38,7 @@ class Hello2048 extends egret.DisplayObjectContainer {
     private desktop;    //绘制区域,也是触摸区域
     private hasGameOver : boolean;           //判断游戏是否结束
     private hasRead : boolean;//这一把是否已经读取过数据了。
+    private isIphone : boolean;
 
     private onResourceLoadComplete(event:RES.ResourceEvent):void {
 
@@ -50,6 +51,8 @@ class Hello2048 extends egret.DisplayObjectContainer {
         this.desktopDraw();
         this.reStart();
         this.inputListener();
+        var ua = navigator.userAgent.toLowerCase();
+        this.isIphone = ua.indexOf("iphone")>0 || ua.indexOf("ipad")>0;
     }
 
     private application() {
@@ -212,9 +215,12 @@ class Hello2048 extends egret.DisplayObjectContainer {
     }   //逻辑上出新单元格
 
     private gameOver() {
-        alert("游戏结束，请再接再厉");
-        this.reStart();
-        console.log("{\"action\":\"gameover\",\"score\":\""+this.score+"\",\"score2\":\""+this.topScore+"\",\"gameId\":\"2048\"}");
+        if (this.isIphone) {
+            alert("游戏结束，请再接再厉");
+            this.reStart();
+        } else {
+            console.log("{\"action\":\"gameover\",\"score\":\""+this.score+"\",\"score2\":\""+this.topScore+"\",\"gameId\":\"2048\"}");
+        }
     }
 
     private merge(dir:boolean, rule:boolean):boolean {

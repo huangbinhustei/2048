@@ -1,7 +1,7 @@
 {
 	"groups":[
 	{
-		"keys":"2048",
+		"keys":"2048,titleBg",
 		"name":"preload"
 	}
     ],
@@ -15,7 +15,7 @@
       {
         "name":"titleBg",
         "type":"image",
-        "url":"assets/2048.png"
+        "url":"assets/desktopBg.png"
       }
 	]
 }

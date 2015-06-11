@@ -2,6 +2,7 @@ var game_file_list = [
 	"skins/simple/HScrollBarThumbSkin.js",
 	"skins/simple/TreeDisclosureButtonSkin.js",
 	"skins/simple/VScrollBarThumbSkin.js",
+	"Data.js",
 	"Grid.js",
 	"skins/simple/CloseButtonSkin.js",
 	"skins/simple/DropDownListItemRendererSkin.js",

@@ -9,6 +9,7 @@ class Hello2048 extends egret.DisplayObjectContainer {
     }
 
     public startGame():void {
+        //egret.Profiler.getInstance().run();//看帧率的？
         window["gameBoy"] = this;//和Android接口用的
         RES.addEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
         RES.loadConfig("resource/resource.json", "resource/");
@@ -20,18 +21,20 @@ class Hello2048 extends egret.DisplayObjectContainer {
     private topScore : number;
     private nowScore : egret.TextField = new egret.TextField;
     private bestScore : egret.TextField = new egret.TextField;
-
     private tempX : number;
     private tempY : number;
     private touchInProcess : boolean;
-    private cell : Grid[][] = new Array(4);
+    private cell:Grid[] = new Array(16);
+    private dataGrid : Data[][] = new Array(4);
+
+    private onMoving :boolean = false;
+    private lockTimeForAnimation : number = 200;
+
 //UI
     private desktopSide : number = 720;   //界面宽度
     private desktopGao : number = 950;     //界面总高度
     private title;  //标题栏
     private _titleBarHeight : number = 0; //96
-    private _gridWidth = 160;
-    private _gridGap = 10;
     private desktop;    //绘制区域,也是触摸区域
     private hasGameOver : boolean;           //判断游戏是否结束
     private hasRead : boolean;//这一把是否已经读取过数据了。
@@ -42,24 +45,37 @@ class Hello2048 extends egret.DisplayObjectContainer {
 
         this.uiStage = new egret.gui.UIStage();  //UI的容器
         this.addChild(this.uiStage);
-
         //this.titleBarDraw();
+        this.application();//申请dataGrid 和 cellID；
         this.desktopDraw();
-        this.cellFormat();
-
         this.reStart();
         this.inputListener();
     }
 
-    private reStart() {
-        this.hasGameOver = false;
-        var i, j:number;
-        for (i = 0; i < 4; i++) {
-            for (j = 0; j < 4; j++) {
-                this.cell[i][j].value = 0;
+    private application() {
+        var dataI, dataJ , cellI:number;
+        for (dataI = 0; dataI < 4; dataI++) {
+            this.dataGrid[dataI] = new Array(4);
+            for (dataJ = 0; dataJ < 4; dataJ++) {
+                this.dataGrid[dataI][dataJ] = new Data();
             }
         }
-        this.score = 0;
+        for (cellI = 0; cellI < 16; cellI++) {
+            this.cell[cellI] = new Grid();
+        }
+    }
+
+    private reStart() {
+        this.hasGameOver = false;
+        var dataI, dataJ , cellI:number;
+        for (dataI = 0; dataI < 4; dataI++) {
+            for (dataJ = 0; dataJ < 4; dataJ++) {
+                this.dataGrid[dataI][dataJ].newSelf();
+            }
+        }
+        for (cellI = 0; cellI < 16; cellI++) {
+            this.cell[cellI].newSelf();
+        }
         this.newGrid();
         this.newGrid();
         this.refresh();
@@ -67,7 +83,7 @@ class Hello2048 extends egret.DisplayObjectContainer {
 
     private setTopScore() {
         if (!this.hasRead) {
-            var topScoreString:string = "0"; //本地存储只能存字符串，这个是总分的字符串形式
+            var topScoreString : string = "0"; //本地存储只能存字符串，这个是总分的字符串形式
             if (this.getCookie("best")) { //本地存着有数据
                 topScoreString = this.getCookie("best");
                 var t : number = parseInt(topScoreString);
@@ -79,10 +95,10 @@ class Hello2048 extends egret.DisplayObjectContainer {
         }
 
         var i,j :number;
-        this.score = this.cell[0][0].value;
+        this.score = this.dataGrid[0][0].value;
         for (i = 0; i < 4; i ++) {
             for (j = 0; j < 4; j ++) {
-                this.score = this.cell[i][j].value > this.score ? this.cell[i][j].value:this.score
+                this.score = this.dataGrid[i][j].value > this.score ? this.dataGrid[i][j].value:this.score
             }
         }
 
@@ -93,20 +109,13 @@ class Hello2048 extends egret.DisplayObjectContainer {
             this.setCookie("best", topScoreString);
         }
         this.topScore = Math.max(this.topScore , this.score);
-
     }   //判断是否创纪录
 
     private refresh():void {
-        var i, j:number;
         this.setTopScore();
 
-        for (i = 0; i < 4; i++) {
-            for (j = 0; j < 4; j++) {
-                this.cell[i][j].drawSelf();
-            }
-        }
+        var nowLever,bestLevel,topScoreString :string;
 
-        var nowLever,bestLevel :string;
         switch (this.score) {
             case 2: nowLever = "学渣";break;
             case 4: nowLever = "学沫";break;
@@ -135,9 +144,8 @@ class Hello2048 extends egret.DisplayObjectContainer {
             case 2048: bestLevel = "学神";break;
             case 4096: bestLevel = "超神";break;
             default : {
-                this.topScore = this.score;
-                if (!this.topScore) {this.topScore = 4}
-                var topScoreString:string = this.topScore.toString();
+                this.topScore = 4;
+                topScoreString = this.topScore.toString();
                 this.setCookie("best", topScoreString);
             }
         }
@@ -163,36 +171,43 @@ class Hello2048 extends egret.DisplayObjectContainer {
 
         for (var i = 0; i < 4; i++) {
             for (var j = 0; j < 4; j++) {
-                if (this.cell[i][j].value == 0) {
+                if (this.dataGrid[i][j].value == 0) {
                     nullGroup[nullCount] = i * 4 + j;
                     nullCount += 1;
                 }
             }
         }
-
         newbieLocation = Math.random() * nullCount ^ 0;   //挑一个=0的格子出来
-        newbieNumber = ((Math.random() + 1.5) ^ 0) * 2;  //随机一个2~4的数字
-
+        newbieNumber = (Math.random() > 0.5) ? 2 : 4;  //随机一个2~4的数字
         var newRow = (nullGroup[newbieLocation] / 4) ^ 0;//row
         var newCol = nullGroup[newbieLocation] % 4;//col
-        this.cell[newRow][newCol].value = newbieNumber;
+        this.dataGrid[newRow][newCol].value  = newbieNumber;
 
-        //var self = this;
-        //setTimeout(function () {
-        //    self.cell[newRow][newCol].drawSelf();
-        //}, 100);//延迟刷新新单元格
-
-        this.cell[newRow][newCol].drawSelfLater();
-
-        if (nullCount == 1) {
-            var self = this;
-            if (this.judgement()) {
-                this.refresh();
-                this.hasGameOver = true;
-                setTimeout(function () {
-                    self.gameOver();
-                }, 600);
+        //找一个空cell出来。
+        var newCell : number;
+        for ( newCell = 0 ; newCell < 16 ; newCell ++ ) {
+            if (!this.cell[newCell].isFilled) {
+                break;
             }
+        }
+
+        this.desktop.addChild(this.cell[newCell]);
+        this.cell[newCell].isFilled = true;
+        this.cell[newCell].col = newCol;
+        this.cell[newCell].row = newRow;
+        this.cell[newCell].x = newCol * 160 + 20;
+        this.cell[newCell].y = newRow * 160 + 20;
+        this.dataGrid[newRow][newCol].cellID = newCell;
+
+        var self = this;
+        self.cell[newCell].drawSelfLatter(newbieNumber);
+
+        if (nullCount == 1 && this.judge()) {
+            this.refresh();
+            this.hasGameOver = true;
+            setTimeout(function () {
+                self.gameOver();
+            },this.lockTimeForAnimation);
         }
     }   //逻辑上出新单元格
 
@@ -205,71 +220,118 @@ class Hello2048 extends egret.DisplayObjectContainer {
     private merge(dir:boolean, rule:boolean):boolean {
         //dir = true ：向上or向左移动，dir=false：向下or向右移动
         //rule = true : 纵向，rule = false：横向
-        var row, col, _row, _col, n, nStep:number;
+        var row, col, _row, _col, n, nStep, gridValue, gridCellID :number;
         var flag:boolean = false;
-        var temp:number[];
+        var temp:Data[] = new Array(4);
+        var nMean :string;
 
-        for (_col = 0; _col < 4; _col++) {
+        for (_col = 0; _col < 4; _col++) {//纵向移动 → 先遍历列，横向移动 → 先遍历行
+            // 不管怎么样，row都是行，col都是列
             if (rule) {
                 col = _col;
+                nMean = "row";
             } else {
                 row = _col;
+                nMean = "col";
             }
             n = dir ? 0 : 3;
             nStep = dir ? 1 : -1;
-            temp = [0, 0, 0, 0];
 
-            for (_row = 0; _row < 4; _row++) {
+            for (var z = 0; z < 4; z++) {
+                temp[z] = new Data();
+            }
+
+            //var nMean:string = rule ? "row" : "col"; //纵向移动 → n是新行号,横向移动 → n是新列号
+            for (_row = 0; _row < 4; _row++) {  //纵向移动 → 先遍历列，横向移动 → 先遍历行
                 if (rule) {
                     row = dir ? _row : 3 - _row;
                 } else {
                     col = dir ? _row : 3 - _row;
                 }
-                if (this.cell[row][col].value != 0) {    //假如这个格子有数字
-                    if (temp[n] == 0) {     //假如目标位没有数字，就存进去
-                        temp[n] = this.cell[row][col].value;
-                    }
-                    else if (temp[n] == this.cell[row][col].value) { //目标位有数字且和当前遍历的数字相同，就把目标位的数字放大，同时目标位后移
-                        temp[n] *= 2;
-                        //this.score = this.score + temp[n];
+
+                gridValue = this.dataGrid[row][col].value;
+                gridCellID = this.dataGrid[row][col].cellID;
+
+                if (gridValue == 0 ) continue; //假如这个格子没有数字直接进入下一个格子
+
+                switch  (temp[n].value) {
+                    case 0: {//假如目标位没有数字，就存进去
+                        temp[n].value = gridValue;
+                        temp[n].cellID = gridCellID;
+                        this.cell[gridCellID][nMean] = n;
+                    } break;
+
+                    case gridValue : {//目标位有数字且和当前遍历的数字相同，就把目标位的数字放大，同时目标位后移
+                        temp[n].value *= 2;
+                        this.score = this.score + temp[n].value;
+                        this.cell[gridCellID][nMean] = n;
+                        this.cell[gridCellID].needDis = true;
                         n = n + nStep;
-                    }
-                    else {  //目标位有数字，且和遍历的数字不等，那么直接存到下一个目标位，
+                    } break;
+
+                    default : {//目标位有数字，且和遍历的数字不等，那么直接存到下一个目标位，
                         n = n + nStep;
-                        temp[n] = this.cell[row][col].value;
+                        temp[n].value = gridValue;
+                        temp[n].cellID = gridCellID;
+                        this.cell[gridCellID][nMean] = n;
                     }
                 }
             }
-            if (rule) {
+
+            if (rule) { //如果是纵向移动，此时是列在外围就被遍历了，此时处理的是特定某一列，l是行号
                 for (var l = 0; l < 4; l++) {
-                    if (this.cell[l][col].value != temp[l]) flag = true;
-                    this.cell[l][col].value = temp[l];
+                    if (this.dataGrid[l][col].value != temp[l].value) flag = true;
+                    this.dataGrid[l][col].value = temp[l].value;
+                    this.dataGrid[l][col].cellID = temp[l].cellID;
                 }
-            } else {
+            } else {   //如果是横向移动，此时是行在外围就被遍历了，此时处理的是特定某一行，l是列号
                 for (var l = 0; l < 4; l++) {
-                    if (this.cell[row][l].value != temp[l]) flag = true;
-                    this.cell[row][l].value = temp[l];
+                    if (this.dataGrid[row][l].value != temp[l].value) flag = true;
+                    this.dataGrid[row][l].value = temp[l].value;
+                    this.dataGrid[row][l].cellID = temp[l].cellID;
                 }
             }
         }
+
+        this.cellMove();
+        this.refresh();
+        if (flag) {
+            var selfAtMerge = this;
+            setTimeout(function () {
+                selfAtMerge.newGrid();
+            }, selfAtMerge.lockTimeForAnimation);//先移动，然后再摧毁单元格
+        }
+
         return flag;
     }   //合并单元格
 
-    private judgement():boolean {
-        //游戏结束之后的弹层也在这里
-        //可以合成 false,不能合成：ture
-        var flag:boolean = true;
+    private cellMove() {
+        var tempId ,temp_col ,temp_row ,cellValue :number;
+        for (tempId = 0 ; tempId < 16 ; tempId ++ ) {
+            if (this.cell[tempId].isFilled) {
+                temp_row = this.cell[tempId].row;
+                temp_col = this.cell[tempId].col;
+                cellValue = this.dataGrid[temp_row][temp_col].value;
+                this.cell[tempId].move();
+                this.cell[tempId].drawSelf(cellValue);
+            }
+        }
+
+    }
+
+    private judge():boolean {
+        //可以合成 false,不能合成：true
         for (var i = 0; i < 4; i++) {
             for (var j = 0; j < 3; j++) {
-                if (this.cell[i][j].value == this.cell[i][j + 1].value) flag = false;
+                if (this.dataGrid[i][j].value == this.dataGrid[i][j + 1].value) return false;
             }
         }   //用来判断是否可以合成
         for (var i = 0; i < 4; i++) {
             for (var j = 0; j < 3; j++) {
-                if (this.cell[j][i].value == this.cell[j + 1][i].value) flag = false;
+                if (this.dataGrid[j][i].value == this.dataGrid[j + 1][i].value) return false;
             }
         }   //用来判断是否可以合成
-        return flag;
+        return true;
     }
 
     public inputListener() {
@@ -291,7 +353,7 @@ class Hello2048 extends egret.DisplayObjectContainer {
                 src.onTouchMove(event);
             },
             this
-            );
+        );
 
         if (egret.MainContext.deviceType != egret.MainContext.DEVICE_MOBILE) {
             document.addEventListener(
@@ -304,6 +366,7 @@ class Hello2048 extends egret.DisplayObjectContainer {
     }
 
     private onTouchBegin(event:egret.TouchEvent):void {
+        if (this.onMoving) return;
         this.tempX = event.localX;
         this.tempY = event.localY;
         this.touchInProcess = true;
@@ -318,77 +381,73 @@ class Hello2048 extends egret.DisplayObjectContainer {
         xChange = event.localX - this.tempX;
         yChange = event.localY - this.tempY;
         if (Math.max(Math.abs(xChange), Math.abs(yChange)) >= 8 && this.touchInProcess) {
+            this.lockForAnimation();
             this.touchInProcess = false;
             biggerChange = (Math.abs(xChange) >= Math.abs(yChange)) ? xChange : yChange;
             rule = (Math.abs(yChange) >= Math.abs(xChange));
             dir = biggerChange < 0;
-            if (this.merge(dir, rule)) {      //this.merge = false 只是表示不能移动
-                this.afterMerge();
-            }
+            this.merge(dir, rule)
         }
     }   //处理触摸屏
 
+    private lockForAnimation(){
+        this.onMoving = true;
+        var self = this;
+        setTimeout(function () {
+            self.onMoving = false;
+        }, this.lockTimeForAnimation);//锁定时间内不接收输入
+    }
+
     private onKeyDown(event:KeyboardEvent) {
         if (this.hasGameOver) return;
-
+        if (this.onMoving) return;
+        this.lockForAnimation();
         switch (event.keyCode) {
             case 38 ://上
-                if (this.merge(true, true)) {      //this.merge = false 只是表示不能移动
-                    this.afterMerge();
-                }
+                this.merge(true, true);
                 break;
             case 40://下
-                if (this.merge(false, true)) {
-                    this.afterMerge();
-                }
+                this.merge(false, true);
                 break;
             case 37://左
-                if (this.merge(true, false)) {
-                    this.afterMerge();
-                }
+                this.merge(true, false);
                 break;
             case 39://右
-                if (this.merge(false, false)) {
-                    this.afterMerge();
-                }
+                this.merge(false, false);
                 break;
         }
     }   //处理键盘
 
-    private afterMerge():void {
-        this.refresh();
-        this.newGrid();
-    }
-
     public titleBarDraw() {   //绘制主界面，摆放元素位置。
-
+        var titleHeight = this._titleBarHeight;
         this.title = new egret.Sprite;
-        this.title.height = this._titleBarHeight;
-        this.title.width = this.desktopSide;
-        this.title.graphics.beginFill(0x003366);
-        this.title.graphics.drawRect(0,0,this.desktopSide,this._titleBarHeight);
-        this.title.graphics.endFill();
+
+        var titleBg = new egret.Bitmap;
         this.uiStage.addElement(this.title);
 
+        titleBg.height = titleHeight;
+        titleBg.width = this.desktopSide;
+        titleBg.texture = RES.getRes("titleBg");
+        titleBg.fillMode = egret.BitmapFillMode.REPEAT;
+        this.title.addChild(titleBg);
+
         var gameName = new egret.gui.Label();
-        gameName.text = "← 学霸成长记";
+        gameName.text = "2048";
         gameName.size = 36;
-        gameName.height = this._titleBarHeight;
+        gameName.height = titleHeight;
         gameName.verticalAlign = egret.VerticalAlign.MIDDLE;
         gameName.paddingLeft = 25;
         this.title.addChild(gameName);
     }
 
     public desktopDraw() {
-        var titleHeight = this._titleBarHeight;
         this.desktop = new egret.Sprite;
 
         this.desktop.graphics.beginFill();
         this.desktop.graphics.drawRect(0,0,this.desktopSide,this.desktopSide);
         this.desktop.graphics.endFill();
-        //this.desktop.cacheAsBitmap = true;
 
-        this.desktop.y = titleHeight;
+        this.desktop.y = this._titleBarHeight;
         this.desktop.width = this.desktopSide;
         this.desktop.height = this.desktopGao - this._titleBarHeight;
         this.uiStage.addElement(this.desktop);
@@ -406,23 +465,20 @@ class Hello2048 extends egret.DisplayObjectContainer {
         this.bestScore.width = this.desktopSide - 30 - 100;
         this.bestScore.textAlign = egret.HorizontalAlign.RIGHT;
         this.desktop.addChild(this.bestScore);
-    }
 
-    public cellFormat() {
-        var i, j:number;
-        for (i = 0; i < 4; i++) {
-            this.cell[i] = new Array(4);
-            for (j = 0; j < 4; j++) {
-                this.cell[i][j] = new Grid();
-                this.cell[i][j].format(this._gridWidth + this._gridGap, this._gridGap);
-                this.cell[i][j].x = j * (this._gridWidth + this._gridGap) + 20;
-                this.cell[i][j].y = i * (this._gridWidth + this._gridGap) + 20;
-                this.desktop.addChild(this.cell[i][j]);
-            }
+        //画0
+        var i:number;
+        var bgCell : Grid[] = new Array(16);
+        for (i = 0; i < 16; i++) {
+            bgCell[i] = new Grid();
+            bgCell[i].pic.texture = RES.getRes("2048.0");
+            bgCell[i].x = (i % 4) * 160 + 20;
+            bgCell[i].y = ((i / 4) ^ 0) * 160 + 20;
+            this.desktop.addChild(bgCell[i]);
         }
     }
-    
-	private setCookie(key, value):void {
+
+    private setCookie(key, value):void {
         var date = new Date();
         date.setTime(date.getTime() + 1 * 1000 * 3600 * 24 * 365);
         document.cookie = key + "=" + encodeURI(value) + ";expires=" + date.toUTCString() + ";path=/";
@@ -438,5 +494,4 @@ class Hello2048 extends egret.DisplayObjectContainer {
         }
         return null;
     }
-
 }

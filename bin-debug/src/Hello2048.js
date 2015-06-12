@@ -15,12 +15,12 @@ var Hello2048 = (function (_super) {
         //UI
         this.desktopSide = 720; //界面宽度
         this.desktopGao = 950; //界面总高度
-        this._titleBarHeight = 0; //96
+        this._titleBarHeight = 96; //0
         this.addEventListener(egret.Event.ADDED_TO_STAGE, this.startGame, this);
     }
     var __egretProto__ = Hello2048.prototype;
     __egretProto__.startGame = function () {
-        //egret.Profiler.getInstance().run();//看帧率的？
+        egret.Profiler.getInstance().run(); //看帧率的？
         window["gameBoy"] = this; //和Android接口用的
         RES.addEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
         RES.loadConfig("resource/resource.json", "resource/");
@@ -30,7 +30,7 @@ var Hello2048 = (function (_super) {
         console.log("{\"action\":\"loadComplete\"}");
         this.uiStage = new egret.gui.UIStage(); //UI的容器
         this.addChild(this.uiStage);
-        //this.titleBarDraw();
+        this.titleBarDraw();
         this.application(); //申请dataGrid 和 cellID；
         this.desktopDraw();
         this.reStart();
@@ -47,10 +47,11 @@ var Hello2048 = (function (_super) {
             }
         }
         for (cellI = 0; cellI < 16; cellI++) {
-            this.cell[cellI] = new Grid();
+            this.cell[cellI] = new Grid(false);
         }
         var wid = document.documentElement.clientWidth;
         var hei = document.documentElement.clientHeight;
+        console.log("wid:" + wid + "  hei:" + hei);
     };
     __egretProto__.reStart = function () {
         this.hasGameOver = false;
@@ -428,6 +429,10 @@ var Hello2048 = (function (_super) {
         this.uiStage.addElement(this.title);
         titleBg.height = titleHeight;
         titleBg.width = this.desktopSide;
+        //this.title.percentWidth = 100;
+        //this.title.graphics.beginFill(0x00F000);
+        //this.title.graphics.drawRect(0,0,this.desktopSide,this.desktopSide);
+        //this.title.graphics.endFill();
         titleBg.texture = RES.getRes("titleBg");
         titleBg.fillMode = egret.BitmapFillMode.REPEAT;
         this.title.addChild(titleBg);
@@ -464,8 +469,7 @@ var Hello2048 = (function (_super) {
         var i;
         var bgCell = new Array(16);
         for (i = 0; i < 16; i++) {
-            bgCell[i] = new Grid();
-            bgCell[i].pic.texture = RES.getRes("2048.0");
+            bgCell[i] = new Grid(true);
             bgCell[i].x = (i % 4) * 160 + 20;
             bgCell[i].y = ((i / 4) ^ 0) * 160 + 20;
             this.desktop.addChild(bgCell[i]);

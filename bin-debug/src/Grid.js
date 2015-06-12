@@ -3,11 +3,11 @@
  */
 var Grid = (function (_super) {
     __extends(Grid, _super);
-    function Grid() {
+    function Grid(isBg) {
         _super.call(this);
         this.pic = new egret.Bitmap();
         this.moveTime = 80;
-        this.format(160, 5);
+        this.format(160, 5, isBg);
     }
     var __egretProto__ = Grid.prototype;
     __egretProto__.newSelf = function () {
@@ -17,10 +17,12 @@ var Grid = (function (_super) {
         this.needDis = false;
         this.isFilled = false;
     };
-    __egretProto__.format = function (len, gap) {
+    __egretProto__.format = function (len, gap, isBackground) {
         this.width = this.height = len;
         this.pic.height = this.pic.width = len - 2 * gap;
         this.pic.y = this.pic.x = gap;
+        if (isBackground)
+            this.pic.texture = RES.getRes("2048.0");
         this.isFilled = false;
         this.needDis = false;
         this.addChild(this.pic);

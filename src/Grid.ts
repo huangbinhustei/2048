@@ -3,17 +3,20 @@
  */
 
 class Grid extends egret.Sprite {
-    public constructor() {
-        super();
-        this.format(160,5);
-    }
 
-    public pic : egret.Bitmap = new egret.Bitmap();
     public isFilled : boolean;
     public needDis : boolean;
     public row : number;
     public col : number;
-    public moveTime : number = 80;
+
+    public constructor(isBg:boolean) {
+        super();
+        this.format(160,5,isBg);
+    }
+
+    private pic : egret.Bitmap = new egret.Bitmap();
+
+    private moveTime : number = 80;
 
     public newSelf() {
         if (this.parent) {this.parent.removeChild(this);}
@@ -21,11 +24,11 @@ class Grid extends egret.Sprite {
         this.isFilled = false;
     }
 
-    public format(len:number,gap:number) {
+    public format(len:number,gap:number,isBackground:boolean) {
         this.width = this.height =len;
-        this.pic.height = this.pic.width = len-2*gap;
+        this.pic.height = this.pic.width = len - 2 * gap;
         this.pic.y =  this.pic.x = gap;
-
+        if (isBackground) this.pic.texture = RES.getRes("2048.0");
         this.isFilled = false;
         this.needDis = false;
         this.addChild(this.pic);

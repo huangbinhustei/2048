@@ -66,6 +66,9 @@ class Hello2048 extends egret.DisplayObjectContainer {
         for (cellI = 0; cellI < 16; cellI++) {
             this.cell[cellI] = new Grid();
         }
+
+        var wid = document.documentElement.clientWidth;
+        var hei = document.documentElement.clientHeight;
     }
 
     private reStart() {

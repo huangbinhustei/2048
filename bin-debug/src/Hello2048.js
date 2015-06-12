@@ -37,7 +37,6 @@ var Hello2048 = (function (_super) {
         this.inputListener();
         var ua = navigator.userAgent.toLowerCase();
         this.isIphone = ua.indexOf("iphone") > 0 || ua.indexOf("ipad") > 0;
-        console.log("ua:" + this.isIphone);
     };
     __egretProto__.application = function () {
         var dataI, dataJ, cellI;
@@ -50,6 +49,8 @@ var Hello2048 = (function (_super) {
         for (cellI = 0; cellI < 16; cellI++) {
             this.cell[cellI] = new Grid();
         }
+        var wid = document.documentElement.clientWidth;
+        var hei = document.documentElement.clientHeight;
     };
     __egretProto__.reStart = function () {
         this.hasGameOver = false;

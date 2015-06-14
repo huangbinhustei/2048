@@ -9,7 +9,7 @@ class Hello2048 extends egret.DisplayObjectContainer {
     }
 
     public startGame():void {
-        egret.Profiler.getInstance().run();//看帧率的？
+        //egret.Profiler.getInstance().run();//看帧率的？
         window["gameBoy"] = this;//和Android接口用的
         RES.addEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
         RES.loadConfig("resource/resource.json", "resource/");
@@ -33,7 +33,7 @@ class Hello2048 extends egret.DisplayObjectContainer {
     private desktopSide : number = 720;   //界面宽度
     private desktopGao : number = 950;     //界面总高度
     private title;  //标题栏
-    private _titleBarHeight : number = 96; //0
+    private _titleBarHeight : number = 0; //96
     private desktop;    //绘制区域,也是触摸区域
     private hasGameOver : boolean;           //判断游戏是否结束
     private hasRead : boolean;//这一把是否已经读取过数据了。
@@ -45,7 +45,7 @@ class Hello2048 extends egret.DisplayObjectContainer {
 
         this.uiStage = new egret.gui.UIStage();  //UI的容器
         this.addChild(this.uiStage);
-        this.titleBarDraw();
+        //this.titleBarDraw();
         this.application();//申请dataGrid 和 cellID；
         this.desktopDraw();
         this.reStart();
@@ -205,9 +205,9 @@ class Hello2048 extends egret.DisplayObjectContainer {
         this.cell[newCell].y = newRow * 160 + 20;
         this.dataGrid[newRow][newCol].cellID = newCell;
 
-        var self = this;
-        self.cell[newCell].drawSelfLatter(newbieNumber);
+        this.cell[newCell].drawSelfLatter(newbieNumber);
 
+        var self = this;
         if (nullCount == 1 && this.judge()) {
             this.refresh();
             this.hasGameOver = true;
@@ -275,6 +275,7 @@ class Hello2048 extends egret.DisplayObjectContainer {
                         this.score = this.score + temp[n].value;
                         this.cell[gridCellID][nMean] = n;
                         this.cell[gridCellID].needDis = true;
+                        this.cell[temp[n].cellID].needBig = true;
                         n = n + nStep;
                     } break;
 
@@ -389,7 +390,7 @@ class Hello2048 extends egret.DisplayObjectContainer {
 
         xChange = event.localX - this.tempX;
         yChange = event.localY - this.tempY;
-        if (Math.max(Math.abs(xChange), Math.abs(yChange)) >= 8 && this.touchInProcess) {
+        if (Math.abs(Math.abs(xChange) - Math.abs(yChange)) >= 8 && this.touchInProcess) {
             this.lockForAnimation();
             this.touchInProcess = false;
             biggerChange = (Math.abs(xChange) >= Math.abs(yChange)) ? xChange : yChange;

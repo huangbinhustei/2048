@@ -6,6 +6,7 @@ class Grid extends egret.Sprite {
 
     public isFilled : boolean;
     public needDis : boolean;
+    public needBig : boolean;
     public row : number;
     public col : number;
 
@@ -22,6 +23,7 @@ class Grid extends egret.Sprite {
         if (this.parent) {this.parent.removeChild(this);}
         this.needDis = false;
         this.isFilled = false;
+        this.needBig = false;
     }
 
     public format(len:number,gap:number,isBackground:boolean) {
@@ -37,34 +39,37 @@ class Grid extends egret.Sprite {
     public drawSelf(value) {
         if (!this.isFilled) return;
         if (this.needDis) return;
-        this.pic.texture = RES.getRes("2048."+value.toString());
+        if (!this.needBig) return;
+        var self = this;
+        setTimeout(function () {
+            egret.Tween.get(self,{loop :false})
+                .to({scaleX:1.1,scaleY:1.1},80)
+                .to({scaleX:1.0,scaleY:1.0},40)
+                .call(self.pic.texture = RES.getRes("2048."+value.toString()),self);
+            egret.Tween.get(self,{loop :false})
+                .to({x : self.x - 8,y:self.y - 8}, 80)
+                .to({x : self.x,y:self.y}, 40)
+                .call(function (){self.needBig = false },self);
+        }, this.moveTime);//先移动，然后再摧毁单元格
     }
 
     public move() {
         if (!this.isFilled) return;
         egret.Tween.get(this,{loop :false}).to({x:this.col * 160 + 20,y:this.row * 160 + 20},this.moveTime);
-
-        var self = this;
-        if (this.needDis) {
-            setTimeout(function () {
-                self.disSelf();
-            }, this.moveTime);//先移动，然后再摧毁单元格
-        }
+        if (this.needDis) { this.disSelf();}
     }
 
     private disSelf() {
         this.parent.removeChild(this);
         this.needDis = false;
         this.isFilled = false;
+        this.scaleX = this.scaleY = 0;
     }
 
-    public drawSelfLatter(value) {
-        this.pic.alpha = 0;
+    public drawSelfLatter(value:number) {
+        this.alpha = 0;
         this.pic.texture = RES.getRes("2048." +value.toString());
-        egret.Tween.get(this.pic, { loop:false })
-        .to (
-            {alpha:1},
-            300
-        )
+        egret.Tween.get(this, { loop:false }).to({alpha:1}, 200);
+        egret.Tween.get(this, { loop:false }).to({scaleX:1.0,scaleY:1.0},200)
     }
 }

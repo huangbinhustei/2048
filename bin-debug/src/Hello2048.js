@@ -15,12 +15,12 @@ var Hello2048 = (function (_super) {
         //UI
         this.desktopSide = 720; //界面宽度
         this.desktopGao = 950; //界面总高度
-        this._titleBarHeight = 96; //0
+        this._titleBarHeight = 0; //96
         this.addEventListener(egret.Event.ADDED_TO_STAGE, this.startGame, this);
     }
     var __egretProto__ = Hello2048.prototype;
     __egretProto__.startGame = function () {
-        egret.Profiler.getInstance().run(); //看帧率的？
+        //egret.Profiler.getInstance().run();//看帧率的？
         window["gameBoy"] = this; //和Android接口用的
         RES.addEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
         RES.loadConfig("resource/resource.json", "resource/");
@@ -30,7 +30,7 @@ var Hello2048 = (function (_super) {
         console.log("{\"action\":\"loadComplete\"}");
         this.uiStage = new egret.gui.UIStage(); //UI的容器
         this.addChild(this.uiStage);
-        this.titleBarDraw();
+        //this.titleBarDraw();
         this.application(); //申请dataGrid 和 cellID；
         this.desktopDraw();
         this.reStart();
@@ -223,8 +223,8 @@ var Hello2048 = (function (_super) {
         this.cell[newCell].x = newCol * 160 + 20;
         this.cell[newCell].y = newRow * 160 + 20;
         this.dataGrid[newRow][newCol].cellID = newCell;
+        this.cell[newCell].drawSelfLatter(newbieNumber);
         var self = this;
-        self.cell[newCell].drawSelfLatter(newbieNumber);
         if (nullCount == 1 && this.judge()) {
             this.refresh();
             this.hasGameOver = true;
@@ -289,6 +289,7 @@ var Hello2048 = (function (_super) {
                             this.score = this.score + temp[n].value;
                             this.cell[gridCellID][nMean] = n;
                             this.cell[gridCellID].needDis = true;
+                            this.cell[temp[n].cellID].needBig = true;
                             n = n + nStep;
                         }
                         break;
@@ -385,7 +386,7 @@ var Hello2048 = (function (_super) {
         var biggerChange;
         xChange = event.localX - this.tempX;
         yChange = event.localY - this.tempY;
-        if (Math.max(Math.abs(xChange), Math.abs(yChange)) >= 8 && this.touchInProcess) {
+        if (Math.abs(Math.abs(xChange) - Math.abs(yChange)) >= 8 && this.touchInProcess) {
             this.lockForAnimation();
             this.touchInProcess = false;
             biggerChange = (Math.abs(xChange) >= Math.abs(yChange)) ? xChange : yChange;

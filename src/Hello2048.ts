@@ -27,7 +27,7 @@ class Hello2048 extends egret.DisplayObjectContainer {
     private cell:Grid[] = new Array(16);
     private dataGrid : Data[][] = new Array(4);
     private onMoving :boolean = false;
-    private lockTimeForAnimation : number = 200;
+    private lockTimeForAnimation : number = 300;
 
 //UI
     private desktopSide : number = 720;   //界面宽度
@@ -393,8 +393,8 @@ class Hello2048 extends egret.DisplayObjectContainer {
         if (Math.abs(Math.abs(xChange) - Math.abs(yChange)) >= 8 && this.touchInProcess) {
             this.lockForAnimation();
             this.touchInProcess = false;
-            biggerChange = (Math.abs(xChange) >= Math.abs(yChange)) ? xChange : yChange;
-            rule = (Math.abs(yChange) >= Math.abs(xChange));
+            biggerChange = (Math.abs(xChange) > Math.abs(yChange)) ? xChange : yChange;
+            rule = (Math.abs(yChange) > Math.abs(xChange));
             dir = biggerChange < 0;
             this.merge(dir, rule)
         }

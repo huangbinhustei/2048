@@ -55,8 +55,11 @@ class Grid extends egret.Sprite {
 
     public move() {
         if (!this.isFilled) return;
-        egret.Tween.get(this,{loop :false}).to({x:this.col * 160 + 20,y:this.row * 160 + 20},this.moveTime);
-        if (this.needDis) { this.disSelf();}
+        egret.Tween.get(this,{loop :false})
+            .to({x:this.col * 160 + 20,y:this.row * 160 + 20},this.moveTime)
+            .call(function() {
+                if (this.needDis) this.disSelf();
+            });
     }
 
     private disSelf() {
@@ -69,7 +72,7 @@ class Grid extends egret.Sprite {
     public drawSelfLatter(value:number) {
         this.alpha = 0;
         this.pic.texture = RES.getRes("2048." +value.toString());
-        egret.Tween.get(this, { loop:false }).to({alpha:1}, 200);
-        egret.Tween.get(this, { loop:false }).to({scaleX:1.0,scaleY:1.0},200)
+        egret.Tween.get(this, { loop:false }).to({alpha:1}, 120);
+        egret.Tween.get(this, { loop:false }).to({scaleX:1,scaleY:1},120)
     }
 }

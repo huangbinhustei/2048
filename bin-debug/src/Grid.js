@@ -46,10 +46,11 @@ var Grid = (function (_super) {
     __egretProto__.move = function () {
         if (!this.isFilled)
             return;
-        egret.Tween.get(this, { loop: false }).to({ x: this.col * 160 + 20, y: this.row * 160 + 20 }, this.moveTime);
-        if (this.needDis) {
-            this.disSelf();
-        }
+        egret.Tween.get(this, { loop: false }).to({ x: this.col * 160 + 20, y: this.row * 160 + 20 }, this.moveTime).call(function () {
+            if (this.needDis) {
+                this.disSelf();
+            }
+        });
     };
     __egretProto__.disSelf = function () {
         this.parent.removeChild(this);
@@ -60,11 +61,8 @@ var Grid = (function (_super) {
     __egretProto__.drawSelfLatter = function (value) {
         this.alpha = 0;
         this.pic.texture = RES.getRes("2048." + value.toString());
-        //egret.Tween.get(this, { loop:false })
-        //    .to({x:this.x + 40,y:this.y + 40},0)
-        //    .to({x:this.x,y:this.y},200);
-        egret.Tween.get(this, { loop: false }).to({ alpha: 1 }, 200);
-        egret.Tween.get(this, { loop: false }).to({ scaleX: 1.0, scaleY: 1.0 }, 200);
+        egret.Tween.get(this, { loop: false }).to({ alpha: 1 }, 120);
+        egret.Tween.get(this, { loop: false }).to({ scaleX: 1, scaleY: 1 }, 120);
     };
     return Grid;
 })(egret.Sprite);

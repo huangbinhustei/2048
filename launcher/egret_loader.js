@@ -31,9 +31,9 @@ egret_h5.startGame = function () {
     context.deviceContext = new egret.HTML5DeviceContext();
     context.netContext = new egret.HTML5NetContext();
 
-    //var wid = document.documentElement.clientWidth;
-    //var hei = document.documentElement.clientHeight;
-
+    var wid = document.documentElement.clientWidth;
+    var hei = document.documentElement.clientHeight;
+    //egret.StageDelegate.getInstance().setDesignSize(wid, hei);
     egret.StageDelegate.getInstance().setDesignSize(720, 950);
     context.stage = new egret.Stage();
     var scaleMode =  egret.MainContext.deviceType == egret.MainContext.DEVICE_MOBILE ? egret.StageScaleMode.SHOW_ALL : egret.StageScaleMode.NO_SCALE;

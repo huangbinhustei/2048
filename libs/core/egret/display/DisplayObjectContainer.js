@@ -1,29 +1,31 @@
-/**
- * Copyright (c) 2014,Egret-Labs.org
- * All rights reserved.
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- *
- *     * Redistributions of source code must retain the above copyright
- *       notice, this list of conditions and the following disclaimer.
- *     * Redistributions in binary form must reproduce the above copyright
- *       notice, this list of conditions and the following disclaimer in the
- *       documentation and/or other materials provided with the distribution.
- *     * Neither the name of the Egret-Labs.org nor the
- *       names of its contributors may be used to endorse or promote products
- *       derived from this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY EGRET-LABS.ORG AND CONTRIBUTORS "AS IS" AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL EGRET-LABS.ORG AND CONTRIBUTORS BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
- * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
+//////////////////////////////////////////////////////////////////////////////////////
+//
+//  Copyright (c) 2014-2015, Egret Technology Inc.
+//  All rights reserved.
+//  Redistribution and use in source and binary forms, with or without
+//  modification, are permitted provided that the following conditions are met:
+//
+//     * Redistributions of source code must retain the above copyright
+//       notice, this list of conditions and the following disclaimer.
+//     * Redistributions in binary form must reproduce the above copyright
+//       notice, this list of conditions and the following disclaimer in the
+//       documentation and/or other materials provided with the distribution.
+//     * Neither the name of the Egret nor the
+//       names of its contributors may be used to endorse or promote products
+//       derived from this software without specific prior written permission.
+//
+//  THIS SOFTWARE IS PROVIDED BY EGRET AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
+//  OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+//  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+//  IN NO EVENT SHALL EGRET AND CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+//  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+//  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;LOSS OF USE, DATA,
+//  OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+//  LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+//  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+//  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+//
+//////////////////////////////////////////////////////////////////////////////////////
 var egret;
 (function (egret) {
     /**
@@ -32,7 +34,7 @@ var egret;
      * @classdesc
      * DisplayObjectContainer 类是可用作显示列表中显示对象容器的所有对象的基类。
      * 该显示列表管理运行时中显示的所有对象。使用 DisplayObjectContainer 类排列显示列表中的显示对象。每个 DisplayObjectContainer 对象都有自己的子级列表，用于组织对象的 Z 轴顺序。Z 轴顺序是由前至后的顺序，可确定哪个对象绘制在前，哪个对象绘制在后等。
-     * @link http://docs.egret-labs.org/post/manual/displaycon/aboutdisplaycon.html 显示容器的概念与实现
+     * @see http://edn.egret.com/cn/index.php?g=&m=article&a=index&id=108&terms1_id=25&terms2_id=28 显示容器的概念与实现
      */
     var DisplayObjectContainer = (function (_super) {
         __extends(DisplayObjectContainer, _super);
@@ -43,7 +45,7 @@ var egret;
             _super.call(this);
             this._touchChildren = true;
             this._children = [];
-            this._isContainer = true;
+            this._DO_Props_._isContainer = true;
         }
         var __egretProto__ = DisplayObjectContainer.prototype;
         Object.defineProperty(__egretProto__, "touchChildren", {
@@ -84,7 +86,7 @@ var egret;
         __egretProto__.doSetChildIndex = function (child, index) {
             var lastIdx = this._children.indexOf(child);
             if (lastIdx < 0) {
-                egret.Logger.fatalWithErrorId(1006);
+                egret.$error(1006);
             }
             //从原来的位置删除
             this._children.splice(lastIdx, 1);
@@ -104,7 +106,7 @@ var egret;
          */
         __egretProto__.addChild = function (child) {
             var index = this._children.length;
-            if (child._parent == this)
+            if (child.parent == this)
                 index--;
             return this._doAddChild(child, index);
         };
@@ -123,10 +125,10 @@ var egret;
             if (child == this)
                 return child;
             if (index < 0 || index > this._children.length) {
-                egret.Logger.fatalWithErrorId(1007);
+                egret.$error(1007);
                 return child;
             }
-            var host = child._parent;
+            var host = child.parent;
             if (host == this) {
                 this.doSetChildIndex(child, index);
                 return child;
@@ -141,7 +143,7 @@ var egret;
             child._parentChanged(this);
             if (notifyListeners)
                 child.dispatchEventWith(egret.Event.ADDED, true);
-            if (this._stage) {
+            if (this._DO_Props_._stage) {
                 child._onAddToStage();
                 var list = DisplayObjectContainer.__EVENT__ADD_TO_STAGE_LIST;
                 while (list.length > 0) {
@@ -167,7 +169,7 @@ var egret;
                 return this._doRemoveChild(index);
             }
             else {
-                egret.Logger.fatalWithErrorId(1008);
+                egret.$error(1008);
                 return null;
             }
         };
@@ -182,7 +184,7 @@ var egret;
                 return this._doRemoveChild(index);
             }
             else {
-                egret.Logger.fatalWithErrorId(1007);
+                egret.$error(1007);
                 return null;
             }
         };
@@ -193,7 +195,7 @@ var egret;
             if (notifyListeners) {
                 child.dispatchEventWith(egret.Event.REMOVED, true);
             }
-            if (this._stage) {
+            if (this._DO_Props_._stage) {
                 child._onRemoveFromStage();
                 var list = DisplayObjectContainer.__EVENT__REMOVE_FROM_STAGE_LIST;
                 while (list.length > 0) {
@@ -201,7 +203,7 @@ var egret;
                     if (notifyListeners) {
                         childAddToStage.dispatchEventWith(egret.Event.REMOVED_FROM_STAGE);
                     }
-                    childAddToStage._stage = null;
+                    childAddToStage._DO_Props_._stage = null;
                 }
             }
             child._parentChanged(null);
@@ -220,7 +222,7 @@ var egret;
                 return this._children[index];
             }
             else {
-                egret.Logger.fatalWithErrorId(1007);
+                egret.$error(1007);
                 return null;
             }
         };
@@ -235,7 +237,7 @@ var egret;
                 if (child == this) {
                     return true;
                 }
-                child = child._parent;
+                child = child.parent;
             }
             return false;
         };
@@ -250,7 +252,7 @@ var egret;
                 this._swapChildrenAt(index1, index2);
             }
             else {
-                egret.Logger.fatalWithErrorId(1007);
+                egret.$error(1007);
             }
         };
         /**
@@ -263,7 +265,7 @@ var egret;
             var index1 = this._children.indexOf(child1);
             var index2 = this._children.indexOf(child2);
             if (index1 == -1 || index2 == -1) {
-                egret.Logger.fatalWithErrorId(1008);
+                egret.$error(1008);
             }
             else {
                 this._swapChildrenAt(index1, index2);
@@ -299,21 +301,18 @@ var egret;
         };
         __egretProto__._updateTransform = function () {
             var o = this;
-            if (!o._visible) {
+            if (!o._DO_Props_._visible) {
                 return;
             }
-            if (o._filter) {
-                egret.RenderCommand.push(o._setGlobalFilter, o);
+            if (o._hasFilters()) {
+                egret.RenderCommand.push(o._setGlobalFilters, o);
             }
-            if (o._colorTransform) {
-                egret.RenderCommand.push(o._setGlobalColorTransform, o);
-            }
-            var mask = o.mask || o._scrollRect;
+            var mask = o.mask || o._DO_Props_._scrollRect;
             if (mask) {
                 egret.RenderCommand.push(o._pushMask, o);
             }
             _super.prototype._updateTransform.call(this);
-            if (!o["_cacheAsBitmap"] || !o._texture_to_render) {
+            if (!o._DO_Props_._cacheAsBitmap || !o._texture_to_render) {
                 for (var i = 0, children = o._children, length = children.length; i < length; i++) {
                     var child = children[i];
                     child._updateTransform();
@@ -322,11 +321,8 @@ var egret;
             if (mask) {
                 egret.RenderCommand.push(o._popMask, o);
             }
-            if (o._colorTransform) {
-                egret.RenderCommand.push(o._removeGlobalColorTransform, o);
-            }
-            if (o._filter) {
-                egret.RenderCommand.push(o._removeGlobalFilter, o);
+            if (o._hasFilters()) {
+                egret.RenderCommand.push(o._removeGlobalFilters, o);
             }
         };
         __egretProto__._render = function (renderContext) {
@@ -350,7 +346,7 @@ var egret;
             var l = children.length;
             for (var i = 0; i < l; i++) {
                 var child = children[i];
-                if (!child._visible) {
+                if (!child.visible) {
                     continue;
                 }
                 var childBounds = child.getBounds(egret.Rectangle.identity, false);
@@ -389,11 +385,11 @@ var egret;
             if (ignoreTouchEnabled === void 0) { ignoreTouchEnabled = false; }
             var o = this;
             var result;
-            if (!o._visible) {
+            if (!o._DO_Props_._visible) {
                 return null;
             }
-            if (o._scrollRect) {
-                if (x < o._scrollRect.x || y < o._scrollRect.y || x > o._scrollRect.x + o._scrollRect.width || y > o._scrollRect.y + o._scrollRect.height) {
+            if (o._DO_Props_._scrollRect) {
+                if (x < o._DO_Props_._scrollRect.x || y < o._DO_Props_._scrollRect.y || x > o._DO_Props_._scrollRect.x + o._DO_Props_._scrollRect.width || y > o._DO_Props_._scrollRect.y + o._DO_Props_._scrollRect.height) {
                     return null;
                 }
             }
@@ -408,7 +404,8 @@ var egret;
             for (var i = l - 1; i >= 0; i--) {
                 var child = children[i];
                 var mtx = child._getMatrix();
-                var scrollRect = child._scrollRect;
+                //todo
+                var scrollRect = child.scrollRect;
                 if (scrollRect) {
                     mtx.append(1, 0, 0, 1, -scrollRect.x, -scrollRect.y);
                 }
@@ -419,7 +416,7 @@ var egret;
                     if (!touchChildren) {
                         return o;
                     }
-                    if (childHitTestResult._touchEnabled && touchChildren) {
+                    if (childHitTestResult._DO_Props_._touchEnabled && touchChildren) {
                         return childHitTestResult;
                     }
                     result = o;

@@ -1,29 +1,31 @@
-/**
- * Copyright (c) 2014,Egret-Labs.org
- * All rights reserved.
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- *
- *     * Redistributions of source code must retain the above copyright
- *       notice, this list of conditions and the following disclaimer.
- *     * Redistributions in binary form must reproduce the above copyright
- *       notice, this list of conditions and the following disclaimer in the
- *       documentation and/or other materials provided with the distribution.
- *     * Neither the name of the Egret-Labs.org nor the
- *       names of its contributors may be used to endorse or promote products
- *       derived from this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY EGRET-LABS.ORG AND CONTRIBUTORS "AS IS" AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL EGRET-LABS.ORG AND CONTRIBUTORS BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
- * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
+//////////////////////////////////////////////////////////////////////////////////////
+//
+//  Copyright (c) 2014-2015, Egret Technology Inc.
+//  All rights reserved.
+//  Redistribution and use in source and binary forms, with or without
+//  modification, are permitted provided that the following conditions are met:
+//
+//     * Redistributions of source code must retain the above copyright
+//       notice, this list of conditions and the following disclaimer.
+//     * Redistributions in binary form must reproduce the above copyright
+//       notice, this list of conditions and the following disclaimer in the
+//       documentation and/or other materials provided with the distribution.
+//     * Neither the name of the Egret nor the
+//       names of its contributors may be used to endorse or promote products
+//       derived from this software without specific prior written permission.
+//
+//  THIS SOFTWARE IS PROVIDED BY EGRET AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
+//  OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+//  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+//  IN NO EVENT SHALL EGRET AND CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+//  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+//  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;LOSS OF USE, DATA,
+//  OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+//  LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+//  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+//  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+//
+//////////////////////////////////////////////////////////////////////////////////////
 var egret;
 (function (egret) {
     var gui;
@@ -48,12 +50,6 @@ var egret;
                 this.lastUnscaledWidth = NaN;
                 this.strokeColorChanged = false;
                 this._strokeColor = 0x000000;
-                /**
-                 * 表示描边宽度。
-                 * 0为没有描边。
-                 * 默认值为 0。
-                 * @member {number} egret.TextField#stroke
-                 */
                 this._stroke = 0;
                 this.strokeChanged = false;
                 this._padding = 0;
@@ -113,6 +109,12 @@ var egret;
                 this.invalidateProperties();
             };
             Object.defineProperty(__egretProto__, "stroke", {
+                /**
+                 * 表示描边宽度。
+                 * 0为没有描边。
+                 * 默认值为 0。
+                 * @member {number} egret.TextField#stroke
+                 */
                 get: function () {
                     return this._stroke;
                 },
@@ -239,12 +241,12 @@ var egret;
              */
             __egretProto__.measure = function () {
                 //先提交属性，防止样式发生改变导致的测量不准确问题。
-                if (this._invalidatePropertiesFlag)
+                if (this._UIC_Props_._invalidatePropertiesFlag)
                     this.validateProperties();
                 if (this.isSpecialCase()) {
                     if (isNaN(this.lastUnscaledWidth)) {
-                        this._oldPreferWidth = NaN;
-                        this._oldPreferHeight = NaN;
+                        this._UIC_Props_._oldPreferWidth = NaN;
+                        this._UIC_Props_._oldPreferHeight = NaN;
                     }
                     else {
                         this.measureUsingWidth(this.lastUnscaledWidth);
@@ -317,15 +319,15 @@ var egret;
                     var firstTime = isNaN(this.lastUnscaledWidth) || this.lastUnscaledWidth != unscaledWidth;
                     this.lastUnscaledWidth = unscaledWidth;
                     if (firstTime) {
-                        this._oldPreferWidth = NaN;
-                        this._oldPreferHeight = NaN;
+                        this._UIC_Props_._oldPreferWidth = NaN;
+                        this._UIC_Props_._oldPreferHeight = NaN;
                         this.invalidateSize();
                         return;
                     }
                 }
                 //防止在父级validateDisplayList()阶段改变的text属性值，
                 //接下来直接调用自身的updateDisplayList()而没有经过measure(),使用的测量尺寸是上一次的错误值。
-                if (this._invalidateSizeFlag)
+                if (this._UIC_Props_._invalidateSizeFlag)
                     this.validateSize();
                 if (!this._textField.visible)
                     this._textField.visible = true;

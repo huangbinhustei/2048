@@ -1,29 +1,31 @@
-/**
- * Copyright (c) 2014,Egret-Labs.org
- * All rights reserved.
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- *
- *     * Redistributions of source code must retain the above copyright
- *       notice, this list of conditions and the following disclaimer.
- *     * Redistributions in binary form must reproduce the above copyright
- *       notice, this list of conditions and the following disclaimer in the
- *       documentation and/or other materials provided with the distribution.
- *     * Neither the name of the Egret-Labs.org nor the
- *       names of its contributors may be used to endorse or promote products
- *       derived from this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY EGRET-LABS.ORG AND CONTRIBUTORS "AS IS" AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL EGRET-LABS.ORG AND CONTRIBUTORS BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
- * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
+//////////////////////////////////////////////////////////////////////////////////////
+//
+//  Copyright (c) 2014-2015, Egret Technology Inc.
+//  All rights reserved.
+//  Redistribution and use in source and binary forms, with or without
+//  modification, are permitted provided that the following conditions are met:
+//
+//     * Redistributions of source code must retain the above copyright
+//       notice, this list of conditions and the following disclaimer.
+//     * Redistributions in binary form must reproduce the above copyright
+//       notice, this list of conditions and the following disclaimer in the
+//       documentation and/or other materials provided with the distribution.
+//     * Neither the name of the Egret nor the
+//       names of its contributors may be used to endorse or promote products
+//       derived from this software without specific prior written permission.
+//
+//  THIS SOFTWARE IS PROVIDED BY EGRET AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
+//  OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+//  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+//  IN NO EVENT SHALL EGRET AND CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+//  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+//  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;LOSS OF USE, DATA,
+//  OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+//  LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+//  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+//  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+//
+//////////////////////////////////////////////////////////////////////////////////////
 var egret;
 (function (egret) {
     /**
@@ -79,8 +81,8 @@ var egret;
                 this.inputElement.onblur = this.onBlurHandler;
             }
             this._resetStageText();
-            if (this._textfield._properties._maxChars > 0) {
-                this.inputElement.setAttribute("maxlength", this._textfield._properties._maxChars);
+            if (this._textfield._TF_Props_._maxChars > 0) {
+                this.inputElement.setAttribute("maxlength", this._textfield._TF_Props_._maxChars);
             }
             else {
                 this.inputElement.removeAttribute("maxlength");
@@ -148,7 +150,7 @@ var egret;
         __egretProto__._resetStageText = function () {
             if (this.inputElement) {
                 var textfield = this._textfield;
-                var propertie = textfield._properties;
+                var propertie = textfield._TF_Props_;
                 this.setElementStyle("fontFamily", propertie._fontFamily);
                 this.setElementStyle("fontStyle", propertie._italic ? "italic" : "normal");
                 this.setElementStyle("fontWeight", propertie._bold ? "bold" : "normal");
@@ -165,6 +167,9 @@ var egret;
     })(egret.StageText);
     egret.HTML5StageText = HTML5StageText;
     HTML5StageText.prototype.__class__ = "egret.HTML5StageText";
+    /**
+     * @private
+     */
     var HTMLInput = (function () {
         function HTMLInput() {
             this._needShow = false;
@@ -183,7 +188,7 @@ var egret;
             dom.style.border = "none";
             dom.style.padding = "0";
         };
-        __egretProto__.initStageDelegateDiv = function () {
+        __egretProto__._initStageDelegateDiv = function () {
             var self = this;
             var stageDelegateDiv = egret.Browser.getInstance().$("#StageDelegateDiv");
             if (!stageDelegateDiv) {
@@ -322,7 +327,6 @@ var egret;
         HTMLInput.getInstance = function () {
             if (HTMLInput._instance == null) {
                 HTMLInput._instance = new egret.HTMLInput();
-                HTMLInput._instance.initStageDelegateDiv();
             }
             return HTMLInput._instance;
         };
@@ -332,5 +336,6 @@ var egret;
     HTMLInput.prototype.__class__ = "egret.HTMLInput";
 })(egret || (egret = {}));
 egret.StageText.create = function () {
+    egret.HTMLInput.getInstance()._initStageDelegateDiv();
     return new egret.HTML5StageText();
 };

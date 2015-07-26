@@ -1,29 +1,31 @@
-/**
- * Copyright (c) 2014,Egret-Labs.org
- * All rights reserved.
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- *
- *     * Redistributions of source code must retain the above copyright
- *       notice, this list of conditions and the following disclaimer.
- *     * Redistributions in binary form must reproduce the above copyright
- *       notice, this list of conditions and the following disclaimer in the
- *       documentation and/or other materials provided with the distribution.
- *     * Neither the name of the Egret-Labs.org nor the
- *       names of its contributors may be used to endorse or promote products
- *       derived from this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY EGRET-LABS.ORG AND CONTRIBUTORS "AS IS" AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL EGRET-LABS.ORG AND CONTRIBUTORS BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
- * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
+//////////////////////////////////////////////////////////////////////////////////////
+//
+//  Copyright (c) 2014-2015, Egret Technology Inc.
+//  All rights reserved.
+//  Redistribution and use in source and binary forms, with or without
+//  modification, are permitted provided that the following conditions are met:
+//
+//     * Redistributions of source code must retain the above copyright
+//       notice, this list of conditions and the following disclaimer.
+//     * Redistributions in binary form must reproduce the above copyright
+//       notice, this list of conditions and the following disclaimer in the
+//       documentation and/or other materials provided with the distribution.
+//     * Neither the name of the Egret nor the
+//       names of its contributors may be used to endorse or promote products
+//       derived from this software without specific prior written permission.
+//
+//  THIS SOFTWARE IS PROVIDED BY EGRET AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
+//  OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+//  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+//  IN NO EVENT SHALL EGRET AND CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+//  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+//  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;LOSS OF USE, DATA,
+//  OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+//  LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+//  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+//  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+//
+//////////////////////////////////////////////////////////////////////////////////////
 var egret;
 (function (egret) {
     var gui;
@@ -64,7 +66,7 @@ var egret;
             __egretProto__.onAddToStage = function (event) {
                 if (event === void 0) { event = null; }
                 if (gui.UIGlobals._uiStage) {
-                    throw new Error(egret.getString(3013));
+                    egret.$error(3013);
                 }
                 gui.UIGlobals._uiStage = this;
                 if (this._autoResize) {
@@ -123,7 +125,7 @@ var egret;
                  * @constant egret.gui.UIStage#x
                  */
                 get: function () {
-                    return this._x;
+                    return this._DO_Props_._x;
                 },
                 /**
                  * @inheritDoc
@@ -131,7 +133,7 @@ var egret;
                 set: function (value) {
                     if (this._autoResize)
                         return;
-                    this._x = value;
+                    this._DO_Props_._x = value;
                 },
                 enumerable: true,
                 configurable: true
@@ -141,7 +143,7 @@ var egret;
                  * @constant egret.gui.UIStage#y
                  */
                 get: function () {
-                    return this._y;
+                    return this._DO_Props_._y;
                 },
                 /**
                  * @inheritDoc
@@ -149,7 +151,7 @@ var egret;
                 set: function (value) {
                     if (this._autoResize)
                         return;
-                    this._y = value;
+                    this._DO_Props_._y = value;
                 },
                 enumerable: true,
                 configurable: true
@@ -159,7 +161,7 @@ var egret;
                  * @member egret.gui.UIStage#width
                  */
                 get: function () {
-                    return this._width;
+                    return this._UIC_Props_._width;
                 },
                 /**
                  * @inheritDoc
@@ -177,7 +179,7 @@ var egret;
                  * @member egret.gui.UIStage#height
                  */
                 get: function () {
-                    return this._height;
+                    return this._UIC_Props_._height;
                 },
                 /**
                  * @inheritDoc
@@ -195,7 +197,7 @@ var egret;
                  * @member egret.gui.UIStage#scaleX
                  */
                 get: function () {
-                    return this._scaleX;
+                    return this._DO_Props_._scaleX;
                 },
                 /**
                  * @inheritDoc
@@ -212,7 +214,7 @@ var egret;
                 /**
                  */
                 get: function () {
-                    return this._scaleY;
+                    return this._DO_Props_._scaleY;
                 },
                 /**
                  * @inheritDoc

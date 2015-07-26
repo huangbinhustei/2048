@@ -35,8 +35,14 @@ var Hello2048 = (function (_super) {
         this.desktopDraw();
         this.reStart();
         this.inputListener();
-        var ua = navigator.userAgent.toLowerCase();
-        this.isIphone = ua.indexOf("iphone") > 0 || ua.indexOf("ipad") > 0;
+        var isMobileDevice = (egret.MainContext.deviceType == egret.MainContext.DEVICE_MOBILE);
+        if (isMobileDevice) {
+            var ua = navigator.userAgent.toLowerCase();
+            this.isNotAndroid = ua.indexOf("iphone") > 0 || ua.indexOf("ipad") > 0;
+        }
+        else {
+            this.isNotAndroid = true;
+        }
     };
     __egretProto__.application = function () {
         var dataI, dataJ, cellI;
@@ -49,9 +55,8 @@ var Hello2048 = (function (_super) {
         for (cellI = 0; cellI < 16; cellI++) {
             this.cell[cellI] = new Grid(false);
         }
-        var wid = document.documentElement.clientWidth;
-        var hei = document.documentElement.clientHeight;
-        console.log("wid:" + wid + "  hei:" + hei);
+        //var wid = document.documentElement.clientWidth;
+        //var hei = document.documentElement.clientHeight;
     };
     __egretProto__.reStart = function () {
         this.hasGameOver = false;
@@ -234,7 +239,7 @@ var Hello2048 = (function (_super) {
         }
     }; //逻辑上出新单元格
     __egretProto__.gameOver = function () {
-        if (this.isIphone) {
+        if (this.isNotAndroid) {
             alert("游戏结束，请再接再厉");
             this.reStart();
         }
@@ -389,8 +394,8 @@ var Hello2048 = (function (_super) {
         if (Math.abs(Math.abs(xChange) - Math.abs(yChange)) >= 8 && this.touchInProcess) {
             this.lockForAnimation();
             this.touchInProcess = false;
-            biggerChange = (Math.abs(xChange) >= Math.abs(yChange)) ? xChange : yChange;
-            rule = (Math.abs(yChange) >= Math.abs(xChange));
+            biggerChange = (Math.abs(xChange) > Math.abs(yChange)) ? xChange : yChange;
+            rule = (Math.abs(yChange) > Math.abs(xChange));
             dir = biggerChange < 0;
             this.merge(dir, rule);
         }

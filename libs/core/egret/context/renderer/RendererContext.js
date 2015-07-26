@@ -1,29 +1,31 @@
-/**
- * Copyright (c) 2014,Egret-Labs.org
- * All rights reserved.
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- *
- *     * Redistributions of source code must retain the above copyright
- *       notice, this list of conditions and the following disclaimer.
- *     * Redistributions in binary form must reproduce the above copyright
- *       notice, this list of conditions and the following disclaimer in the
- *       documentation and/or other materials provided with the distribution.
- *     * Neither the name of the Egret-Labs.org nor the
- *       names of its contributors may be used to endorse or promote products
- *       derived from this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY EGRET-LABS.ORG AND CONTRIBUTORS "AS IS" AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL EGRET-LABS.ORG AND CONTRIBUTORS BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
- * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
+//////////////////////////////////////////////////////////////////////////////////////
+//
+//  Copyright (c) 2014-2015, Egret Technology Inc.
+//  All rights reserved.
+//  Redistribution and use in source and binary forms, with or without
+//  modification, are permitted provided that the following conditions are met:
+//
+//     * Redistributions of source code must retain the above copyright
+//       notice, this list of conditions and the following disclaimer.
+//     * Redistributions in binary form must reproduce the above copyright
+//       notice, this list of conditions and the following disclaimer in the
+//       documentation and/or other materials provided with the distribution.
+//     * Neither the name of the Egret nor the
+//       names of its contributors may be used to endorse or promote products
+//       derived from this software without specific prior written permission.
+//
+//  THIS SOFTWARE IS PROVIDED BY EGRET AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
+//  OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+//  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+//  IN NO EVENT SHALL EGRET AND CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+//  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+//  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;LOSS OF USE, DATA,
+//  OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+//  LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+//  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+//  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+//
+//////////////////////////////////////////////////////////////////////////////////////
 var egret;
 (function (egret) {
     /**
@@ -178,29 +180,18 @@ var egret;
         };
         __egretProto__.onRenderFinish = function () {
         };
-        __egretProto__.setGlobalColorTransform = function (colorTransformMatrix) {
+        __egretProto__.createLinearGradient = function (x0, y0, x1, y1) {
+            return null;
         };
-        __egretProto__.setGlobalFilter = function (filterData) {
+        __egretProto__.createRadialGradient = function (x0, y0, r0, x1, y1, r1) {
+            return null;
+        };
+        __egretProto__.setGlobalFilters = function (filterData) {
         };
         __egretProto__.drawCursor = function (x1, y1, x2, y2) {
         };
         RendererContext.createRendererContext = function (canvas) {
             return null;
-        };
-        RendererContext.deleteTexture = function (texture) {
-            var context = egret.MainContext.instance.rendererContext;
-            var gl = context["gl"];
-            var bitmapData = texture._bitmapData;
-            if (bitmapData) {
-                var webGLTexture = bitmapData.webGLTexture;
-                if (webGLTexture && gl) {
-                    for (var key in webGLTexture) {
-                        var glTexture = webGLTexture[key];
-                        gl.deleteTexture(glTexture);
-                    }
-                }
-                bitmapData.webGLTexture = null;
-            }
         };
         RendererContext.initBlendMode = function () {
             RendererContext.blendModesForGL = {};
@@ -219,7 +210,7 @@ var egret;
          */
         RendererContext.registerBlendModeForGL = function (key, src, dst, override) {
             if (RendererContext.blendModesForGL[key] && !override) {
-                egret.Logger.warningWithErrorId(1005, key);
+                egret.$warn(1005, key);
             }
             else {
                 RendererContext.blendModesForGL[key] = [src, dst];
@@ -228,6 +219,7 @@ var egret;
         /**
          * 是否对图像使用平滑处理
          * 该特性目前只支持Canvas
+         * @platform Web
          */
         RendererContext.imageSmoothingEnabled = true;
         RendererContext.blendModesForGL = null;

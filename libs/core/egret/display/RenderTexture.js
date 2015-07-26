@@ -1,29 +1,31 @@
-/**
- * Copyright (c) 2014,Egret-Labs.org
- * All rights reserved.
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- *
- *     * Redistributions of source code must retain the above copyright
- *       notice, this list of conditions and the following disclaimer.
- *     * Redistributions in binary form must reproduce the above copyright
- *       notice, this list of conditions and the following disclaimer in the
- *       documentation and/or other materials provided with the distribution.
- *     * Neither the name of the Egret-Labs.org nor the
- *       names of its contributors may be used to endorse or promote products
- *       derived from this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY EGRET-LABS.ORG AND CONTRIBUTORS "AS IS" AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL EGRET-LABS.ORG AND CONTRIBUTORS BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
- * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
+//////////////////////////////////////////////////////////////////////////////////////
+//
+//  Copyright (c) 2014-2015, Egret Technology Inc.
+//  All rights reserved.
+//  Redistribution and use in source and binary forms, with or without
+//  modification, are permitted provided that the following conditions are met:
+//
+//     * Redistributions of source code must retain the above copyright
+//       notice, this list of conditions and the following disclaimer.
+//     * Redistributions in binary form must reproduce the above copyright
+//       notice, this list of conditions and the following disclaimer in the
+//       documentation and/or other materials provided with the distribution.
+//     * Neither the name of the Egret nor the
+//       names of its contributors may be used to endorse or promote products
+//       derived from this software without specific prior written permission.
+//
+//  THIS SOFTWARE IS PROVIDED BY EGRET AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
+//  OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+//  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+//  IN NO EVENT SHALL EGRET AND CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+//  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+//  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;LOSS OF USE, DATA,
+//  OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+//  LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+//  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+//  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+//
+//////////////////////////////////////////////////////////////////////////////////////
 var egret;
 (function (egret) {
     /**
@@ -41,8 +43,12 @@ var egret;
             _super.call(this);
         }
         var __egretProto__ = RenderTexture.prototype;
+        /**
+         * @private
+         */
         __egretProto__.init = function () {
             this._bitmapData = document.createElement("canvas");
+            this._bitmapData["avaliable"] = true;
             this.renderContext = egret.RendererContext.createRendererContext(this._bitmapData);
         };
         /**
@@ -80,11 +86,11 @@ var egret;
                 displayObject._worldTransform.a *= scale;
                 displayObject._worldTransform.d *= scale;
             }
-            var anchorOffsetX = displayObject._anchorOffsetX;
-            var anchorOffsetY = displayObject._anchorOffsetY;
-            if (displayObject._anchorX != 0 || displayObject._anchorY != 0) {
-                anchorOffsetX = displayObject._anchorX * width;
-                anchorOffsetY = displayObject._anchorY * height;
+            var anchorOffsetX = displayObject._DO_Props_._anchorOffsetX;
+            var anchorOffsetY = displayObject._DO_Props_._anchorOffsetY;
+            if (displayObject._DO_Props_._anchorX != 0 || displayObject._DO_Props_._anchorY != 0) {
+                anchorOffsetX = displayObject._DO_Props_._anchorX * width;
+                anchorOffsetY = displayObject._DO_Props_._anchorY * height;
             }
             this._offsetX = x + anchorOffsetX;
             this._offsetY = y + anchorOffsetY;
@@ -107,14 +113,11 @@ var egret;
             renderFilter._drawAreaList.length = 0;
             this.renderContext.clearScreen();
             this.renderContext.onRenderStart();
-            egret.RendererContext.deleteTexture(this);
-            if (displayObject._filter) {
-                this.renderContext.setGlobalFilter(displayObject._filter);
+            egret.Texture.deleteWebGLTexture(this);
+            if (displayObject._hasFilters()) {
+                displayObject._setGlobalFilters(this.renderContext);
             }
-            if (displayObject._colorTransform) {
-                this.renderContext.setGlobalColorTransform(displayObject._colorTransform.matrix);
-            }
-            var mask = displayObject.mask || displayObject._scrollRect;
+            var mask = displayObject.mask || displayObject._DO_Props_._scrollRect;
             if (mask) {
                 this.renderContext.pushMask(mask);
             }
@@ -125,11 +128,8 @@ var egret;
             if (mask) {
                 this.renderContext.popMask();
             }
-            if (displayObject._colorTransform) {
-                this.renderContext.setGlobalColorTransform(null);
-            }
-            if (displayObject._filter) {
-                this.renderContext.setGlobalFilter(null);
+            if (displayObject._hasFilters()) {
+                displayObject._removeGlobalFilters(this.renderContext);
             }
             RenderTexture.identityRectangle.width = width;
             RenderTexture.identityRectangle.height = height;
@@ -138,8 +138,8 @@ var egret;
             renderFilter._drawAreaList = drawAreaList;
             this._sourceWidth = width;
             this._sourceHeight = height;
-            this._textureWidth = originalWidth;
-            this._textureHeight = originalHeight;
+            this._textureWidth = Math.round(originalWidth);
+            this._textureHeight = Math.round(originalHeight);
             this.end();
             //测试代码
             //            var cacheCanvas:HTMLCanvasElement = this._bitmapData;
@@ -148,6 +148,9 @@ var egret;
             //            document.documentElement.appendChild(cacheCanvas);
             return true;
         };
+        /**
+         * @private
+         */
         __egretProto__.setSize = function (width, height) {
             var cacheCanvas = this._bitmapData;
             cacheCanvas.width = width;
@@ -159,17 +162,46 @@ var egret;
                 this.renderContext._cacheCanvas.height = height;
             }
         };
+        /**
+         * @private
+         */
         __egretProto__.begin = function () {
         };
+        /**
+         * @private
+         */
         __egretProto__.end = function () {
         };
+        /**
+         * 销毁 RenderTexture 对象
+         * @method egret.RenderTexture#dispose
+         */
         __egretProto__.dispose = function () {
             if (this._bitmapData) {
                 this._bitmapData = null;
                 this.renderContext = null;
             }
         };
+        /**
+         * @private
+         */
+        RenderTexture.create = function () {
+            if (RenderTexture._pool.length) {
+                return RenderTexture._pool.pop();
+            }
+            return new RenderTexture();
+        };
+        /**
+         * @private
+         */
+        RenderTexture.release = function (value) {
+            RenderTexture._pool.push(value);
+        };
+        /**
+         * @private
+         */
         RenderTexture.identityRectangle = new egret.Rectangle();
+        RenderTexture._pool = [];
         return RenderTexture;
     })(egret.Texture);
     egret.RenderTexture = RenderTexture;

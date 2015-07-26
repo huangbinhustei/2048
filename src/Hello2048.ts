@@ -27,7 +27,7 @@ class Hello2048 extends egret.DisplayObjectContainer {
     private cell:Grid[] = new Array(16);
     private dataGrid : Data[][] = new Array(4);
     private onMoving :boolean = false;
-    private lockTimeForAnimation : number = 300;
+    private lockTimeForAnimation : number = 200;
 
 //UI
     private desktopSide : number = 720;   //界面宽度
@@ -37,7 +37,7 @@ class Hello2048 extends egret.DisplayObjectContainer {
     private desktop;    //绘制区域,也是触摸区域
     private hasGameOver : boolean;           //判断游戏是否结束
     private hasRead : boolean;//这一把是否已经读取过数据了。
-    private isIphone : boolean;
+    private isNotAndroid : boolean;
 
     private onResourceLoadComplete(event:RES.ResourceEvent):void {
 
@@ -50,8 +50,13 @@ class Hello2048 extends egret.DisplayObjectContainer {
         this.desktopDraw();
         this.reStart();
         this.inputListener();
-        var ua = navigator.userAgent.toLowerCase();
-        this.isIphone = ua.indexOf("iphone")>0 || ua.indexOf("ipad")>0;
+        var isMobileDevice = (egret.MainContext.deviceType == egret.MainContext.DEVICE_MOBILE);
+        if(isMobileDevice) {
+            var ua = navigator.userAgent.toLowerCase();
+            this.isNotAndroid = ua.indexOf("iphone")>0 || ua.indexOf("ipad")>0;
+        } else {
+            this.isNotAndroid = true
+        }
     }
 
     private application() {
@@ -66,9 +71,8 @@ class Hello2048 extends egret.DisplayObjectContainer {
             this.cell[cellI] = new Grid(false);
         }
 
-        var wid = document.documentElement.clientWidth;
-        var hei = document.documentElement.clientHeight;
-        console.log("wid:" + wid+"  hei:"  +hei);
+        //var wid = document.documentElement.clientWidth;
+        //var hei = document.documentElement.clientHeight;
     }
 
     private reStart() {
@@ -204,7 +208,6 @@ class Hello2048 extends egret.DisplayObjectContainer {
         this.cell[newCell].x = newCol * 160 + 20;
         this.cell[newCell].y = newRow * 160 + 20;
         this.dataGrid[newRow][newCol].cellID = newCell;
-
         this.cell[newCell].drawSelfLatter(newbieNumber);
 
         var self = this;
@@ -218,7 +221,7 @@ class Hello2048 extends egret.DisplayObjectContainer {
     }   //逻辑上出新单元格
 
     private gameOver() {
-        if (this.isIphone) {
+        if (this.isNotAndroid) {
             alert("游戏结束，请再接再厉");
             this.reStart();
         } else {

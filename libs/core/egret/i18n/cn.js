@@ -1,5 +1,8 @@
 var egret;
 (function (egret) {
+    /**
+     * @private
+     */
     egret.egret_string_code = {};
     egret.egret_string_code[-1] = "不存在的stringId:{0}";
     egret.egret_string_code[1000] = "Browser.isMobile接口参数已经变更，请尽快调整用法为 egret.MainContext.deviceType == egret.MainContext.DEVICE_MOBILE";
@@ -33,6 +36,8 @@ var egret;
     egret.egret_string_code[1028] = "调用了未配置的注入规则:{0}。 请先在项目初始化里配置指定的注入规则，再调用对应单例。";
     egret.egret_string_code[1029] = "Function.prototype.bind - what is trying to be bound is not callable";
     egret.egret_string_code[1030] = "该API已废弃";
+    egret.egret_string_code[1031] = "setVolume已废弃，请使用this.volume = value代替";
+    egret.egret_string_code[1032] = "getVolume已废弃，请使用this.volume代替";
     egret.egret_string_code[2000] = "RES.createGroup()传入了配置中不存在的键值: {0}";
     egret.egret_string_code[2001] = "RES加载了不存在或空的资源组:\"{0}\"";
     egret.egret_string_code[3000] = "主题配置文件加载失败: {0}";
@@ -49,10 +54,12 @@ var egret;
     egret.egret_string_code[3011] = "索引:\"{0}\"超出可视元素索引范围";
     egret.egret_string_code[3012] = "此方法在Scroller组件内不可用!";
     egret.egret_string_code[3013] = "UIStage是GUI根容器，只能有一个此实例在显示列表中！";
+    egret.egret_string_code[3014] = "propNotPropOrStyle";
     egret.egret_string_code[4000] = "An Bone cannot be added as a child to itself or one of its children (or children's children, etc.)";
     egret.egret_string_code[4001] = "Abstract class can not be instantiated!";
     egret.egret_string_code[4002] = "Unnamed data!";
     egret.egret_string_code[4003] = "Nonsupport version!";
+    egret.egret_string_code[4004] = "Abstract method needs to be implemented in subclass!";
     egret.egret_string_code[3100] = "当前浏览器不支持WebSocket";
     egret.egret_string_code[3101] = "请先连接WebSocket";
     egret.egret_string_code[3102] = "请先设置type为二进制类型";

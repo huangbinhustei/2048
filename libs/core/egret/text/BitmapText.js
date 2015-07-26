@@ -1,29 +1,31 @@
-/**
- * Copyright (c) 2014,Egret-Labs.org
- * All rights reserved.
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- *
- *     * Redistributions of source code must retain the above copyright
- *       notice, this list of conditions and the following disclaimer.
- *     * Redistributions in binary form must reproduce the above copyright
- *       notice, this list of conditions and the following disclaimer in the
- *       documentation and/or other materials provided with the distribution.
- *     * Neither the name of the Egret-Labs.org nor the
- *       names of its contributors may be used to endorse or promote products
- *       derived from this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY EGRET-LABS.ORG AND CONTRIBUTORS "AS IS" AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL EGRET-LABS.ORG AND CONTRIBUTORS BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
- * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
+//////////////////////////////////////////////////////////////////////////////////////
+//
+//  Copyright (c) 2014-2015, Egret Technology Inc.
+//  All rights reserved.
+//  Redistribution and use in source and binary forms, with or without
+//  modification, are permitted provided that the following conditions are met:
+//
+//     * Redistributions of source code must retain the above copyright
+//       notice, this list of conditions and the following disclaimer.
+//     * Redistributions in binary form must reproduce the above copyright
+//       notice, this list of conditions and the following disclaimer in the
+//       documentation and/or other materials provided with the distribution.
+//     * Neither the name of the Egret nor the
+//       names of its contributors may be used to endorse or promote products
+//       derived from this software without specific prior written permission.
+//
+//  THIS SOFTWARE IS PROVIDED BY EGRET AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
+//  OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+//  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+//  IN NO EVENT SHALL EGRET AND CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+//  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+//  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;LOSS OF USE, DATA,
+//  OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+//  LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+//  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+//  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+//
+//////////////////////////////////////////////////////////////////////////////////////
 var egret;
 (function (egret) {
     /**
@@ -46,6 +48,8 @@ var egret;
             this._textChanged = false;
             this._font = null;
             this._fontChanged = false;
+            this._letterSpacing = 0;
+            this._lineSpacing = 0;
             this._textWidth = 0;
             this._textHeight = 0;
             this._textOffsetX = 0;
@@ -65,16 +69,19 @@ var egret;
                 return this._text;
             },
             set: function (value) {
-                if (this._text == value) {
-                    return;
-                }
-                this._textChanged = true;
-                this._text = value;
-                this._setSizeDirty();
+                this.$setText(value);
             },
             enumerable: true,
             configurable: true
         });
+        __egretProto__.$setText = function (value) {
+            if (this._text == value) {
+                return;
+            }
+            this._textChanged = true;
+            this._text = value;
+            this._setSizeDirty();
+        };
         Object.defineProperty(__egretProto__, "font", {
             /**
              * BitmapFont对象，缓存了所有文本的位图纹理
@@ -84,31 +91,74 @@ var egret;
                 return this._font;
             },
             set: function (value) {
-                if (this._font == value)
-                    return;
-                this._font = value;
-                this._fontChanged = true;
-                this._setSizeDirty();
+                this.$setFont(value);
             },
             enumerable: true,
             configurable: true
         });
+        __egretProto__.$setFont = function (value) {
+            if (this._font == value)
+                return;
+            this._font = value;
+            this._fontChanged = true;
+            this._setSizeDirty();
+        };
+        Object.defineProperty(__egretProto__, "letterSpacing", {
+            get: function () {
+                return this._letterSpacing;
+            },
+            /**
+             * 字符之间的距离
+             * @default 0
+             * @version 1.7.2
+             * @param value
+             */
+            set: function (value) {
+                this._setLetterSpacing(value);
+            },
+            enumerable: true,
+            configurable: true
+        });
+        __egretProto__._setLetterSpacing = function (value) {
+            this._letterSpacing = value;
+            this._setSizeDirty();
+        };
+        Object.defineProperty(__egretProto__, "lineSpacing", {
+            get: function () {
+                return this._lineSpacing;
+            },
+            /**
+             * 行与行之间的距离
+             * @default 0
+             * @version 1.7.2
+             * @param value
+             */
+            set: function (value) {
+                this._setLineSpacing(value);
+            },
+            enumerable: true,
+            configurable: true
+        });
+        __egretProto__._setLineSpacing = function (value) {
+            this._lineSpacing = value;
+        };
         __egretProto__._setSizeDirty = function () {
             _super.prototype._setSizeDirty.call(this);
             this.textLinesChange = true;
         };
         __egretProto__._render = function (renderContext) {
-            var textLines = this._getTextLines();
+            var self = this;
+            var textLines = self._getTextLines();
             var length = textLines.length;
             if (length == 0) {
                 return;
             }
-            var bitmapFont = this._font;
+            var bitmapFont = self._font;
             var emptyHeight = bitmapFont._getFirstCharHeight();
             var emptyWidth = Math.ceil(emptyHeight * BitmapText.EMPTY_FACTOR);
             var yPos = 0;
-            var maxHeight = this._hasHeightSet ? this._explicitHeight : Number.POSITIVE_INFINITY;
-            var lineHeights = this._lineHeights;
+            var maxHeight = self._DO_Props_._hasHeightSet ? self._DO_Props_._explicitHeight : Number.POSITIVE_INFINITY;
+            var lineHeights = self._lineHeights;
             for (var i = 0; i < length; i++) {
                 var lineHeight = lineHeights[i];
                 if (i > 0 && yPos + lineHeight > maxHeight) {
@@ -125,49 +175,50 @@ var egret;
                             xPos += emptyWidth;
                         }
                         else {
-                            egret.Logger.warningWithErrorId(1011, character);
+                            egret.$warn(1011, character);
                         }
                         continue;
                     }
                     var bitmapWidth = texture._bitmapWidth || texture._textureWidth;
                     var bitmapHeight = texture._bitmapHeight || texture._textureHeight;
-                    this._texture_to_render = texture;
-                    egret.RenderFilter.getInstance().drawImage(renderContext, this, texture._bitmapX, texture._bitmapY, bitmapWidth, bitmapHeight, xPos + texture._offsetX, yPos + texture._offsetY, bitmapWidth, bitmapHeight);
-                    xPos += texture._textureWidth;
+                    self._texture_to_render = texture;
+                    egret.RenderFilter.getInstance().drawImage(renderContext, self, texture._bitmapX, texture._bitmapY, bitmapWidth, bitmapHeight, xPos + texture._offsetX, yPos + texture._offsetY, bitmapWidth, bitmapHeight);
+                    xPos += texture._textureWidth + self._letterSpacing;
                 }
-                yPos += lineHeight;
+                yPos += lineHeight + self._lineSpacing;
             }
-            this._texture_to_render = null;
+            self._texture_to_render = null;
         };
         __egretProto__._measureBounds = function () {
             var lines = this._getTextLines();
             if (lines.length == 0) {
                 return egret.Rectangle.identity.initialize(0, 0, 0, 0);
             }
-            return egret.Rectangle.identity.initialize(this._textOffsetX, this._textOffsetY, this._textWidth - this._textOffsetX, this._textHeight - this._textOffsetY);
+            return egret.Rectangle.identity.initialize(this._textOffsetX, this._textOffsetY, this._textWidth - this._textOffsetX, this._textHeight - this._textOffsetY + (lines.length - 1) * this._lineSpacing);
         };
         __egretProto__._getTextLines = function () {
-            if (!this.textLinesChange) {
-                return this._textLines;
+            var self = this;
+            if (!self.textLinesChange) {
+                return self._textLines;
             }
             var textLines = [];
-            this._textLines = textLines;
-            this.textLinesChange = false;
+            self._textLines = textLines;
+            self.textLinesChange = false;
             var lineHeights = [];
-            this._lineHeights = lineHeights;
-            if (!this._text || !this._font) {
+            self._lineHeights = lineHeights;
+            if (!self._text || !self._font) {
                 return textLines;
             }
             var textWidth = 0;
             var textHeight = 0;
             var textStartX = 0;
             var textStartY = 0;
-            var hasWidthSet = this._hasWidthSet;
-            var maxWidth = this._hasWidthSet ? this._explicitWidth : Number.POSITIVE_INFINITY;
-            var bitmapFont = this._font;
+            var hasWidthSet = self._DO_Props_._hasWidthSet;
+            var maxWidth = self._DO_Props_._hasWidthSet ? self._DO_Props_._explicitWidth : Number.POSITIVE_INFINITY;
+            var bitmapFont = self._font;
             var emptyHeight = bitmapFont._getFirstCharHeight();
             var emptyWidth = Math.ceil(emptyHeight * BitmapText.EMPTY_FACTOR);
-            var text = this._text;
+            var text = self._text;
             var textArr = text.split(/(?:\r\n|\r|\n)/);
             var length = textArr.length;
             var isFirstLine = true;
@@ -176,8 +227,11 @@ var egret;
                 var len = line.length;
                 var lineHeight = 0;
                 var xPos = 0;
-                var isFistChar = true;
+                var isFirstChar = true;
                 for (var j = 0; j < len; j++) {
+                    if (!isFirstChar) {
+                        xPos += self._letterSpacing;
+                    }
                     var character = line.charAt(j);
                     var texureWidth;
                     var textureHeight;
@@ -190,9 +244,9 @@ var egret;
                             textureHeight = emptyHeight;
                         }
                         else {
-                            egret.Logger.warningWithErrorId(1011, character);
-                            if (isFistChar) {
-                                isFistChar = false;
+                            egret.$warn(1011, character);
+                            if (isFirstChar) {
+                                isFirstChar = false;
                             }
                             continue;
                         }
@@ -203,8 +257,8 @@ var egret;
                         offsetX = texture._offsetX;
                         offsetY = texture._offsetY;
                     }
-                    if (isFistChar) {
-                        isFistChar = false;
+                    if (isFirstChar) {
+                        isFirstChar = false;
                         textStartX = Math.min(offsetX, textStartX);
                     }
                     if (isFirstLine) {
@@ -233,12 +287,15 @@ var egret;
                 textHeight += lineHeight;
                 textWidth = Math.max(xPos, textWidth);
             }
-            this._textWidth = textWidth;
-            this._textHeight = textHeight;
-            this._textOffsetX = textStartX;
-            this._textOffsetY = textStartY;
+            self._textWidth = textWidth;
+            self._textHeight = textHeight;
+            self._textOffsetX = textStartX;
+            self._textOffsetY = textStartY;
             return textLines;
         };
+        /**
+         * @private
+         */
         BitmapText.EMPTY_FACTOR = 0.33;
         return BitmapText;
     })(egret.DisplayObject);

@@ -40,15 +40,17 @@ class Grid extends egret.Sprite {
         if (!this.isFilled) return;
         if (this.needDis) return;
         if (!this.needBig) return;
+        var moveTime_1 :number = this.moveTime*0.7;
+        var moveTime_2 :number = this.moveTime - moveTime_1;
         var self = this;
         setTimeout(function () {
             egret.Tween.get(self,{loop :false})
-                .to({scaleX:1.1,scaleY:1.1},80)
-                .to({scaleX:1.0,scaleY:1.0},40)
+                .to({scaleX:1.2,scaleY:1.2},moveTime_1)
+                .to({scaleX:1.0,scaleY:1.0},moveTime_2)
                 .call(self.pic.texture = RES.getRes("2048."+value.toString()),self);
             egret.Tween.get(self,{loop :false})
-                .to({x : self.x - 8,y:self.y - 8}, 80)
-                .to({x : self.x,y:self.y}, 40)
+                .to({x : self.x - 16,y:self.y - 16}, moveTime_1)
+                .to({x : self.x,y:self.y}, moveTime_2)
                 .call(function (){self.needBig = false },self);
         }, this.moveTime);//先移动，然后再摧毁单元格
     }
@@ -57,12 +59,11 @@ class Grid extends egret.Sprite {
         if (!this.isFilled) return;
         egret.Tween.get(this,{loop :false})
             .to({x:this.col * 160 + 20,y:this.row * 160 + 20},this.moveTime)
-            .call(function() {
-                if (this.needDis) this.disSelf();
-            });
+            .call(this.disSelf,this);
     }
 
     private disSelf() {
+        if (!this.needDis) return;
         this.parent.removeChild(this);
         this.needDis = false;
         this.isFilled = false;
@@ -72,7 +73,7 @@ class Grid extends egret.Sprite {
     public drawSelfLatter(value:number) {
         this.alpha = 0;
         this.pic.texture = RES.getRes("2048." +value.toString());
-        egret.Tween.get(this, { loop:false }).to({alpha:1}, 120);
-        egret.Tween.get(this, { loop:false }).to({scaleX:1,scaleY:1},120)
+        egret.Tween.get(this, { loop:false }).to({alpha:1}, this.moveTime);
+        egret.Tween.get(this, { loop:false }).to({scaleX:1,scaleY:1},this.moveTime)
     }
 }

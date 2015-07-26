@@ -1,29 +1,31 @@
-/**
- * Copyright (c) 2014,Egret-Labs.org
- * All rights reserved.
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- *
- *     * Redistributions of source code must retain the above copyright
- *       notice, this list of conditions and the following disclaimer.
- *     * Redistributions in binary form must reproduce the above copyright
- *       notice, this list of conditions and the following disclaimer in the
- *       documentation and/or other materials provided with the distribution.
- *     * Neither the name of the Egret-Labs.org nor the
- *       names of its contributors may be used to endorse or promote products
- *       derived from this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY EGRET-LABS.ORG AND CONTRIBUTORS "AS IS" AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL EGRET-LABS.ORG AND CONTRIBUTORS BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
- * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
+//////////////////////////////////////////////////////////////////////////////////////
+//
+//  Copyright (c) 2014-2015, Egret Technology Inc.
+//  All rights reserved.
+//  Redistribution and use in source and binary forms, with or without
+//  modification, are permitted provided that the following conditions are met:
+//
+//     * Redistributions of source code must retain the above copyright
+//       notice, this list of conditions and the following disclaimer.
+//     * Redistributions in binary form must reproduce the above copyright
+//       notice, this list of conditions and the following disclaimer in the
+//       documentation and/or other materials provided with the distribution.
+//     * Neither the name of the Egret nor the
+//       names of its contributors may be used to endorse or promote products
+//       derived from this software without specific prior written permission.
+//
+//  THIS SOFTWARE IS PROVIDED BY EGRET AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
+//  OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+//  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+//  IN NO EVENT SHALL EGRET AND CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+//  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+//  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;LOSS OF USE, DATA,
+//  OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+//  LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+//  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+//  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+//
+//////////////////////////////////////////////////////////////////////////////////////
 var egret;
 (function (egret) {
     var gui;
@@ -45,6 +47,10 @@ var egret;
                 this._textChanged = false;
                 this._text = "";
                 this.fontChanged = false;
+                this._isLetterSpacingChanged = false;
+                this._letterSpacing = 0;
+                this._isLineSpacingChanged = false;
+                this._lineSpacing = 0;
                 this.createChildrenCalled = false;
                 /**
                  * 上一次测量的宽度
@@ -124,6 +130,52 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
+            Object.defineProperty(__egretProto__, "letterSpacing", {
+                get: function () {
+                    return this._letterSpacing;
+                },
+                /**
+                 * 字符之间的距离
+                 * @default 0
+                 * @version 1.7.2
+                 * @param value
+                 */
+                set: function (value) {
+                    this._setLetterSpacing(value);
+                },
+                enumerable: true,
+                configurable: true
+            });
+            __egretProto__._setLetterSpacing = function (value) {
+                this._letterSpacing = value;
+                this._isLetterSpacingChanged = true;
+                this.invalidateProperties();
+                this.invalidateSize();
+                this.invalidateDisplayList();
+            };
+            Object.defineProperty(__egretProto__, "lineSpacing", {
+                get: function () {
+                    return this._lineSpacing;
+                },
+                /**
+                 * 行与行之间的距离
+                 * @default 0
+                 * @version 1.7.2
+                 * @param value
+                 */
+                set: function (value) {
+                    this._setLineSpacing(value);
+                },
+                enumerable: true,
+                configurable: true
+            });
+            __egretProto__._setLineSpacing = function (value) {
+                this._lineSpacing = value;
+                this._isLineSpacingChanged = true;
+                this.invalidateProperties();
+                this.invalidateSize();
+                this.invalidateDisplayList();
+            };
             /**
              * 创建子对象
              */
@@ -274,12 +326,12 @@ var egret;
              */
             __egretProto__.measure = function () {
                 //先提交属性，防止样式发生改变导致的测量不准确问题。
-                if (this._invalidatePropertiesFlag)
+                if (this._UIC_Props_._invalidatePropertiesFlag)
                     this.validateProperties();
                 if (this.isSpecialCase()) {
                     if (isNaN(this.lastUnscaledWidth)) {
-                        this._oldPreferWidth = NaN;
-                        this._oldPreferHeight = NaN;
+                        this._UIC_Props_._oldPreferWidth = NaN;
+                        this._UIC_Props_._oldPreferHeight = NaN;
                     }
                     else {
                         this.measureUsingWidth(this.lastUnscaledWidth);
@@ -305,6 +357,12 @@ var egret;
             __egretProto__.measureUsingWidth = function (w) {
                 if (this._textChanged) {
                     this._bitmapText.text = this._text;
+                }
+                if (this._isLetterSpacingChanged) {
+                    this._bitmapText.letterSpacing = this._letterSpacing;
+                }
+                if (this._isLineSpacingChanged) {
+                    this._bitmapText.lineSpacing = this._lineSpacing;
                 }
                 var padding = isNaN(this._padding) ? 0 : this._padding;
                 var paddingL = isNaN(this._paddingLeft) ? padding : this._paddingLeft;
@@ -346,15 +404,15 @@ var egret;
                     var firstTime = isNaN(this.lastUnscaledWidth) || this.lastUnscaledWidth != unscaledWidth;
                     this.lastUnscaledWidth = unscaledWidth;
                     if (firstTime) {
-                        this._oldPreferWidth = NaN;
-                        this._oldPreferHeight = NaN;
+                        this._UIC_Props_._oldPreferWidth = NaN;
+                        this._UIC_Props_._oldPreferHeight = NaN;
                         this.invalidateSize();
                         return;
                     }
                 }
                 //防止在父级validateDisplayList()阶段改变的text属性值，
                 //接下来直接调用自身的updateDisplayList()而没有经过measure(),使用的测量尺寸是上一次的错误值。
-                if (this._invalidateSizeFlag)
+                if (this._UIC_Props_._invalidateSizeFlag)
                     this.validateSize();
                 if (!this._bitmapText.visible)
                     this._bitmapText.visible = true;
@@ -367,7 +425,11 @@ var egret;
                     return;
                 this._bitmapText = new egret.BitmapText();
                 this._bitmapText.text = this._text;
+                this._bitmapText.letterSpacing = this._letterSpacing;
+                this._bitmapText.lineSpacing = this._lineSpacing;
                 this._textChanged = false;
+                this._isLetterSpacingChanged = false;
+                this._isLineSpacingChanged = false;
                 this._addToDisplayList(this._bitmapText);
             };
             /**
@@ -381,6 +443,14 @@ var egret;
                 if (this._textChanged) {
                     this._bitmapText.text = this._text;
                     this._textChanged = false;
+                }
+                if (this._isLetterSpacingChanged) {
+                    this._bitmapText.letterSpacing = this._letterSpacing;
+                    this._isLetterSpacingChanged = false;
+                }
+                if (this._isLineSpacingChanged) {
+                    this._bitmapText.lineSpacing = this._lineSpacing;
+                    this._isLineSpacingChanged = false;
                 }
             };
             return BitmapLabel;

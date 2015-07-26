@@ -5,6 +5,9 @@
 			"name": "core"
 		},
 		{
+			"name": "version_old"
+		},
+		{
 			"name": "res"
 		},
 		{
@@ -14,5 +17,5 @@
 	"native": {
 		"path_ignore": []
 	},
-	"egret_version": "1.7.0"
+	"egret_version": "2.0.2"
 }
